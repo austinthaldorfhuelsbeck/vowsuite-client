@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Dependencies
+import * as React from "react"
+import { useRoutes } from "react-router-dom"
+// Components
+import routes from "./routes"
+import { PageLoader } from "./components/common/PageLoader"
+import { PageLayout } from "./components/common/PageLayout"
+// Styles
+import { PageContainer } from "./styles/layouts/page-layout.style"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export const App: React.FC = () => {
+	// load routes
+	const content = useRoutes(routes)
+
+	// display loading while useRoutes resolve
+	return content ? (
+		<PageLayout>{content}</PageLayout>
+	) : (
+		<PageContainer>
+			<PageLoader />
+		</PageContainer>
+	)
 }
-
-export default App;
