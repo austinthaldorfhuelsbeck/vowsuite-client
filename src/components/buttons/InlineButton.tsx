@@ -11,10 +11,11 @@ import {
 interface Props {
 	icon: IconDefinition | null
 	title: string
+	onClick: (e: any) => any
 }
 
-export const InlineButton: React.FC<Props> = ({ icon, title }) => (
-	<TransparentButton>
+export const InlineButton: React.FC<Props> = ({ icon, title, onClick }) => (
+	<TransparentButton onClick={onClick}>
 		{icon && <FontAwesomeIcon icon={icon} />}
 		<ButtonTitle>{title}</ButtonTitle>
 	</TransparentButton>

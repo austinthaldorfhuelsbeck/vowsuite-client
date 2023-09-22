@@ -1,5 +1,9 @@
 // Dependencies
 import * as React from "react"
+import {
+	ModalDialog,
+	ModalDialogContainer,
+} from "../../styles/components/modal.style"
 
 interface ModalFormProps {
 	isOpen: boolean
@@ -38,8 +42,8 @@ export const Modal: React.FC<ModalFormProps> = ({
 	}, [isOpen])
 
 	return (
-		<dialog ref={modalRef} onKeyDown={onEscape} onClick={onClick}>
-			{children}
-		</dialog>
+		<ModalDialog ref={modalRef} onKeyDown={onEscape} onClick={onClick}>
+			<ModalDialogContainer>{children}</ModalDialogContainer>
+		</ModalDialog>
 	)
 }

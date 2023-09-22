@@ -2,13 +2,12 @@
 import * as React from "react"
 // Components
 import { Modal } from "./Modal"
-import { GalleryForm } from "../forms/GalleryForm"
 
-interface GalleryModalProps {
+interface VideoModalProps {
 	children: JSX.Element
 }
 
-export const GalleryModal: React.FC<GalleryModalProps> = ({ children }) => {
+export const VideoModal: React.FC<VideoModalProps> = ({ children }) => {
 	// state/handlers for isOpen
 	const [isOpen, setIsOpen] = React.useState<boolean>(false)
 	const openModal = () => setIsOpen(true)
@@ -18,7 +17,7 @@ export const GalleryModal: React.FC<GalleryModalProps> = ({ children }) => {
 		<>
 			<div onClick={openModal}>{children}</div>
 			<Modal isOpen={isOpen} closeModal={closeModal}>
-				<GalleryForm />
+				<span>Video Form!</span>
 			</Modal>
 		</>
 	)

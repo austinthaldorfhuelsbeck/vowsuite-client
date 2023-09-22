@@ -86,6 +86,11 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0 0 1.6rem;
     }
 
+    hr {
+        border-top: 1px solid var(--aluminium);
+        border-bottom: none;
+    }
+
     strong {
         font-weight: 500;
     }
