@@ -13,7 +13,7 @@ import {
 import { useGalleryContext } from "../../context/ContextProvider"
 
 export const Sidebar: React.FC = () => {
-	const { setGallery } = useGalleryContext()
+	const { gallery, setGallery } = useGalleryContext()
 	const onClick = (e: React.MouseEvent) => {
 		e.preventDefault()
 		setGallery(undefined)

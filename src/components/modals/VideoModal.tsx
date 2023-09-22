@@ -2,6 +2,7 @@
 import * as React from "react"
 // Components
 import { Modal } from "./Modal"
+import { useModal } from "../../hooks/useModal"
 
 interface VideoModalProps {
 	children: JSX.Element
@@ -9,14 +10,12 @@ interface VideoModalProps {
 
 export const VideoModal: React.FC<VideoModalProps> = ({ children }) => {
 	// state/handlers for isOpen
-	const [isOpen, setIsOpen] = React.useState<boolean>(false)
-	const openModal = () => setIsOpen(true)
-	const closeModal = () => setIsOpen(false)
+	const { isOpen, toggle } = useModal()
 
 	return (
 		<>
-			<div onClick={openModal}>{children}</div>
-			<Modal isOpen={isOpen} closeModal={closeModal}>
+			<div onClick={toggle}>{children}</div>
+			<Modal isOpen={isOpen} toggle={toggle}>
 				<span>Video Form!</span>
 			</Modal>
 		</>

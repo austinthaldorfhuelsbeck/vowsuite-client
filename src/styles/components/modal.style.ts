@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 export const ModalDialog = styled.dialog`
 	position: relative;
@@ -28,9 +28,60 @@ export const ModalDialogContainer = styled.div`
 	padding: 2.5rem;
 `
 
-export const ModalFormContainer = styled.form`
+export const ModalForm = styled.form`
 	position: relative;
 	color: var(--aluminium);
+`
+
+export const ModalFormContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 1rem;
+
+	label {
+		font-family: monospace;
+	}
+
+	input,
+	select {
+		padding: 1rem;
+		font: inherit;
+		background: transparent !important;
+		color: var(--aluminium);
+		border-top: none;
+		border-left: none;
+		border-right: none;
+		outline: none;
+		max-width: 100%;
+		vertical-align: bottom;
+	}
+
+	input {
+		width: 100%;
+	}
+
+	p {
+		font-size: 75%;
+		text-align: right;
+		color: var(--aluminium);
+		margin-bottom: 0;
+	}
+`
+
+export const ModalFormStyleContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 1rem;
+
+	label {
+		font-family: monospace;
+	}
+
+	input {
+		padding: 0;
+		margin-left: 1rem;
+	}
 `
 
 export const ModalFormCancel = styled.button`
@@ -42,18 +93,6 @@ export const ModalFormCancel = styled.button`
 	cursor: pointer;
 	position: absolute;
 	left: 95%;
-`
-
-export const ModalFormInput = styled.input`
-	padding: 0.5rem 0;
-	font: inherit;
-	background: transparent !important;
-	color: var(--aluminium);
-	border: none;
-	outline: none;
-	width: 100%;
-	max-width: 100%;
-	vertical-align: bottom;
 `
 
 export const ModalFormActionsContainer = styled.div`

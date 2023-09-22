@@ -1,130 +1,165 @@
 // Dependencies
 import * as React from "react"
 import {
+	useGalleriesContext,
 	useGalleryContext,
 	useUserContext,
 } from "../../context/ContextProvider"
-import { IGallery } from "../../interfaces/models"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { useAuth0 } from "@auth0/auth0-react"
+import { addGallery, updateGallery } from "../../services/galleries.service"
 // Data
-import { defaultGalleryStyle, imagePaths } from "../../utils/app-constants"
+import { IBaseGallery } from "../../interfaces/models"
+import { initialGalleryData } from "../../utils/initial-data"
+import { galleryFonts } from "../../utils/app-constants"
+// Components
+import { InlineButton } from "../buttons/InlineButton"
+import {
+	ColorInputGroup,
+	ControlGroup,
+	TextInputGroup,
+} from "../input-groups/input-groups"
+// Styles
 import {
 	ModalFormActionsContainer,
 	ModalFormCancel,
-	ModalFormContainer,
-	ModalFormInput,
+	ModalForm,
+	ModalFormStyleContainer,
 } from "../../styles/components/modal.style"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
-import { InlineButton } from "../buttons/InlineButton"
 
-export const GalleryForm: React.FC = () => {
+// useModal passed down from GalleryModal
+interface GalleryFormProps {
+	toggle: () => void
+}
+
+export const GalleryForm: React.FC<GalleryFormProps> = ({ toggle }) => {
+	// auth0
+	const { getAccessTokenSilently } = useAuth0()
+	// load context
+	const { galleries, setGalleries } = useGalleriesContext()
+	const { gallery, setGallery } = useGalleryContext()
 	const { userMetadata } = useUserContext()
-	const { gallery } = useGalleryContext()
-
-	// initial form data
+	// if current user, find user ID
 	const userId = userMetadata ? userMetadata.user_id : 0
-	const initialFormData: IGallery = {
-		gallery_id: new Date().valueOf(),
-		user_id: userId,
-		gallery_name: "",
-		img_URL: imagePaths.defaultUser,
-		font: defaultGalleryStyle.font,
-		hex1: defaultGalleryStyle.hex1,
-		hex2: defaultGalleryStyle.hex2,
-		hex3: defaultGalleryStyle.hex3,
-		videos: [],
-		created_at: new Date(),
-		updated_at: new Date(),
-	}
+
 	// initial form state
-	const [formData, setFormData] = React.useState<IGallery>(
-		gallery || initialFormData,
-	)
+	const [formData, setFormData] =
+		React.useState<IBaseGallery>(initialGalleryData)
 	React.useEffect(() => {
+		// load gallery if it was found
 		if (gallery) {
 			setFormData(gallery)
 		} else {
-			setFormData(initialFormData)
-		}
-		console.log(formData)
+			// otherwise, load initial data
+			setFormData(initialGalleryData)
+		} // then add user ID
+		setFormData({
+			...formData,
+			user_id: userId,
+		})
 	}, [gallery])
 
 	// event handlers
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log("Change Detected!")
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value,
 		})
 	}
+	const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault()
+		setFormData(initialGalleryData)
+		toggle()
+	}
+	const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+		e.preventDefault()
+		const getGalleryResponse = async (
+			formData: IBaseGallery,
+			id: number | undefined,
+		) => {
+			const audienceURL = process.env.REACT_APP_AUTH0_AUDIENCE
+			try {
+				const accessToken = await getAccessTokenSilently({
+					authorizationParams: {
+						audience: audienceURL,
+						scope: "read:current_user",
+					},
+				})
+				// API call
+				if (id) {
+					await updateGallery(accessToken, formData, id)
+				} else {
+					await addGallery(accessToken, formData)
+				}
+				// update list context
+				setGalleries([...galleries, { ...formData, videos: [] }])
+				// update selected gallery context
+				setGallery({ ...formData, videos: [] })
+				// clear form and close modal
+				setFormData(initialGalleryData)
+				toggle()
+			} catch (error: any) {
+				throw new Error(error)
+			}
+		}
+		// update or create
+		getGalleryResponse(formData, gallery?.gallery_id)
+	}
 
 	return (
-		<ModalFormContainer>
-			<ModalFormCancel>
+		<ModalForm>
+			<ModalFormCancel onClick={handleCancel}>
 				<FontAwesomeIcon icon={faXmark} />
 			</ModalFormCancel>
-			<label>Name</label>
-			<ModalFormInput
-				type="text"
-				name="gallery_name"
-				placeholder="Gallery Name"
+			<TextInputGroup
+				id="gallery_name"
+				title="Gallery Name"
 				maxLength={40}
 				onChange={handleChange}
 				value={formData.gallery_name}
 			/>
-			<hr />
-			<label>Background Image URL</label>
-			<ModalFormInput
-				type="text"
-				name="img_URL"
-				placeholder="Paste URL here"
+			<TextInputGroup
+				id="img_URL"
+				title="Background Image URL"
+				maxLength={undefined}
 				onChange={handleChange}
 				value={formData.img_URL}
 			/>
-			<hr />
-			<label>Font</label>
-			<ModalFormInput
-				type="text"
-				name="font"
-				placeholder="Gallery Font"
+			<ControlGroup
+				id="font"
+				title="Font"
+				options={galleryFonts}
 				onChange={handleChange}
 				value={formData.font}
 			/>
-			<hr />
-			<label>Hex1</label>
-			<ModalFormInput
-				type="text"
-				name="hex1"
-				placeholder="Hex 1"
-				onChange={handleChange}
-				value={formData.hex1}
-			/>
-			<hr />
-			<label>Hex2</label>
-			<ModalFormInput
-				type="text"
-				name="hex2"
-				placeholder="Hex 2"
-				onChange={handleChange}
-				value={formData.hex2}
-			/>
-			<hr />
-			<label>Hex3</label>
-			<ModalFormInput
-				type="text"
-				name="hex3"
-				placeholder="Hex 3"
-				onChange={handleChange}
-				value={formData.hex3}
-			/>
-			<hr />
+			<ModalFormStyleContainer>
+				<ColorInputGroup
+					id="hex1"
+					title="Color 1"
+					onChange={handleChange}
+					value={formData.hex1}
+				/>
+				<ColorInputGroup
+					id="hex2"
+					title="Color 2"
+					onChange={handleChange}
+					value={formData.hex2}
+				/>
+				<ColorInputGroup
+					id="hex3"
+					title="Color 3"
+					onChange={handleChange}
+					value={formData.hex3}
+				/>
+			</ModalFormStyleContainer>
 			<ModalFormActionsContainer>
 				<InlineButton
-					onClick={(e: any) => e.preventDefault()}
+					onClick={handleSubmit}
 					icon={null}
 					title="Submit"
 				/>
 			</ModalFormActionsContainer>
-		</ModalFormContainer>
+		</ModalForm>
 	)
 }

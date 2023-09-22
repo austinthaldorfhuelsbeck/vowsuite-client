@@ -9,7 +9,7 @@ export const TabButton = styled(Link)`
 	font-size: 14px;
 	line-height: 16px;
 	background-color: var(--dark-aluminium);
-	max-width: 20rem;
+	max-width: 22rem;
 	padding: 1rem 0;
 	border-radius: 1rem 1rem 0 0;
 

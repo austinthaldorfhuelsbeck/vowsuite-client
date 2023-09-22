@@ -7,26 +7,22 @@ import {
 
 interface ModalFormProps {
 	isOpen: boolean
-	closeModal: () => void
+	toggle: () => void
 	children: JSX.Element
 }
 
 export const Modal: React.FC<ModalFormProps> = ({
 	isOpen,
-	closeModal,
+	toggle,
 	children,
 }) => {
 	// ref object
 	const modalRef = React.useRef<HTMLDialogElement>(null)
 
 	// event listeners
-	const onEscape = (e: React.KeyboardEvent<HTMLDialogElement>) => {
-		e.preventDefault()
-		if (e.key === "Escape") closeModal()
-	}
 	const onClick = (e: React.MouseEvent<HTMLDialogElement>) => {
 		e.preventDefault()
-		if (e.target === modalRef.current) closeModal()
+		if (e.target === modalRef.current) toggle()
 	}
 
 	// open and close when isOpen changes
@@ -42,7 +38,7 @@ export const Modal: React.FC<ModalFormProps> = ({
 	}, [isOpen])
 
 	return (
-		<ModalDialog ref={modalRef} onKeyDown={onEscape} onClick={onClick}>
+		<ModalDialog ref={modalRef} onClick={onClick}>
 			<ModalDialogContainer>{children}</ModalDialogContainer>
 		</ModalDialog>
 	)
