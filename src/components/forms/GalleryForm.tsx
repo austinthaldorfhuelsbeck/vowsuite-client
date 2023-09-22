@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { useAuth0 } from "@auth0/auth0-react"
-import { addGallery, updateGallery } from "../../services/galleries.service"
+import { createGallery, updateGallery } from "../../services/galleries.service"
 // Data
 import { IBaseGallery } from "../../interfaces/models"
 import { initialGalleryData } from "../../utils/initial-data"
@@ -51,7 +51,7 @@ export const GalleryForm: React.FC<GalleryFormProps> = ({ toggle }) => {
 		if (gallery) {
 			setFormData(gallery)
 		} else {
-			// otherwise, load initial data
+			// otherwise, load initial data again
 			setFormData(initialGalleryData)
 		} // then add user ID
 		setFormData({
@@ -90,7 +90,7 @@ export const GalleryForm: React.FC<GalleryFormProps> = ({ toggle }) => {
 				if (id) {
 					await updateGallery(accessToken, formData, id)
 				} else {
-					await addGallery(accessToken, formData)
+					await createGallery(accessToken, formData)
 				}
 				// update list context
 				setGalleries([...galleries, { ...formData, videos: [] }])

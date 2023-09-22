@@ -14,6 +14,12 @@ export const ContentBlockHeader = styled.h4`
 	color: var(--white);
 `
 
+export const ContentBlockSubheader = styled.p`
+	font-family: monospace;
+	font-size: 65%;
+	margin-left: 1rem;
+`
+
 export const ContentBlockListItem = styled.li`
 	width: 30rem;
 	display: inline-grid;
@@ -23,7 +29,6 @@ export const ContentBlockListItem = styled.li`
 	border-radius: 5px;
 	padding: 0.8rem;
 	margin: 1.2rem;
-	font-size: 65%;
 
 	&:hover {
 		transform: scale(1.03);
@@ -31,7 +36,7 @@ export const ContentBlockListItem = styled.li`
 	}
 
 	& h4 {
-		margin: 1.5rem auto auto auto;
+		margin: 1.5rem auto auto 0;
 		color: var(--aluminium);
 	}
 `

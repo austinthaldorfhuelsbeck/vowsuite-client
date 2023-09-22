@@ -1,19 +1,27 @@
 // Dependencies
 import * as React from "react"
-import { Link } from "react-router-dom"
 import { IVideo } from "../../interfaces/models"
 // Styles
 import {
 	ContentBlockHeader,
 	ContentBlockImg,
 	ContentBlockListItem,
+	ContentBlockSubheader,
 } from "../../styles/components/content-block.style"
+import { useVideoContext } from "../../context/ContextProvider"
+import { VideoModal } from "../modals/VideoModal"
 
 interface VideoListItemProps {
 	video: IVideo
 }
 
 export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
+	const { setVideo } = useVideoContext()
+	const handleClick = (e: React.MouseEvent<HTMLLIElement>, video: IVideo) => {
+		e.preventDefault()
+		setVideo(video)
+	}
+
 	// format date nicely
 	const updatedDate: string = new Date(video.updated_at).toLocaleDateString(
 		"en-us",
@@ -25,12 +33,19 @@ export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
 	)
 
 	return (
-		<ContentBlockListItem>
-			<Link to={`/studio/videos/${video.video_id}`}>
-				<ContentBlockImg src={video.img_URL} alt={video.video_name} />
-				<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
-				{`Updated - ${updatedDate}`}
-			</Link>
+		<ContentBlockListItem onClick={(e: any) => handleClick(e, video)}>
+			<VideoModal>
+				<>
+					<ContentBlockImg
+						src={video.img_URL}
+						alt={video.video_name}
+					/>
+					<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
+					<ContentBlockSubheader>
+						{`Updated - ${updatedDate}`}
+					</ContentBlockSubheader>
+				</>
+			</VideoModal>
 		</ContentBlockListItem>
 	)
 }

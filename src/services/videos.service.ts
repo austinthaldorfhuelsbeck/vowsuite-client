@@ -1,22 +1,22 @@
 import * as Axios from "axios"
 import { IApiResponse } from "../interfaces/api"
 import { callExternalApi } from "./external-api.service"
-import { IBaseGallery } from "../interfaces/models"
+import { IVideo } from "../interfaces/models"
 
-export const createGallery = async (
+export const createVideo = async (
 	accessToken: string,
-	gallery: IBaseGallery,
+	video: IVideo,
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
-		url: `${apiUrl}/galleries`,
+		url: `${apiUrl}/videos`,
 		method: "POST",
 		headers: {
 			"content-type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
 		},
-		data: gallery,
+		data: video,
 	}
 
 	const { data, error } = (await callExternalApi({ config })) as IApiResponse
@@ -27,21 +27,21 @@ export const createGallery = async (
 	}
 }
 
-export const updateGallery = async (
+export const updateVideo = async (
 	accessToken: string,
-	gallery: IBaseGallery,
+	video: IVideo,
 	id: number,
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
-		url: `${apiUrl}/galleries/${id}`,
+		url: `${apiUrl}/videos/${id}`,
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
 		},
-		data: gallery,
+		data: video,
 	}
 
 	const { data, error } = (await callExternalApi({ config })) as IApiResponse

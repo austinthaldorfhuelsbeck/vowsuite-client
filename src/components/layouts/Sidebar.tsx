@@ -14,7 +14,7 @@ import { useGalleryContext } from "../../context/ContextProvider"
 
 export const Sidebar: React.FC = () => {
 	const { gallery, setGallery } = useGalleryContext()
-	const onClick = (e: React.MouseEvent) => {
+	const handleClick = (e: React.MouseEvent) => {
 		e.preventDefault()
 		setGallery(undefined)
 	}
@@ -25,7 +25,7 @@ export const Sidebar: React.FC = () => {
 				<InlineButton
 					icon={faFolderPlus}
 					title="New Gallery"
-					onClick={onClick}
+					onClick={handleClick}
 				/>
 			</GalleryModal>
 			<GalleryList />
