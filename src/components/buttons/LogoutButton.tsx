@@ -2,10 +2,10 @@
 import * as React from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 // Components
-import { NavButton } from "../../styles/components/nav-bar.style"
+import { NavButton, NavProfileImg } from "../../styles/components/nav-bar.style"
 
 export const LogoutButton: React.FC = () => {
-	const { logout } = useAuth0()
+	const { user, logout } = useAuth0()
 
 	// Go home on logout
 	const onLogout = () => {
@@ -16,5 +16,7 @@ export const LogoutButton: React.FC = () => {
 		})
 	}
 
+	if (user?.picture)
+		return <NavProfileImg src={user.picture} onClick={onLogout} />
 	return <NavButton onClick={onLogout}>Log Out</NavButton>
 }
