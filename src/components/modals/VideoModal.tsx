@@ -15,9 +15,9 @@ export const VideoModal: React.FC<VideoModalProps> = ({ children }) => {
 	return (
 		<>
 			<div onClick={toggle}>{children}</div>
-			<Modal isOpen={isOpen} toggle={toggle}>
+			{/* <Modal isOpen={isOpen} toggle={toggle}>
 				<VideoForm toggle={toggle} />
-			</Modal>
+			</Modal> */}
 		</>
 	)
 }

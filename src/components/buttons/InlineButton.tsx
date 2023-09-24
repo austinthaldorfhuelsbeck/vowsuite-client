@@ -11,7 +11,7 @@ import {
 interface Props {
 	icon: IconDefinition | null
 	title: string
-	onClick: (e: any) => any
+	onClick: ((e: any) => any) | undefined
 }
 
 export const InlineButton: React.FC<Props> = ({ icon, title, onClick }) => (

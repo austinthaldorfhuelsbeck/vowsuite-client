@@ -41,9 +41,7 @@ export const VideoForm: React.FC<VideoFormProps> = ({ toggle }) => {
 	React.useEffect(() => {
 		// load video if it was found
 		if (video) {
-			console.log("Found ", video.video_name)
 			setFormData({ ...video, gallery_id: galleryId })
-			console.log("Form data: ", formData)
 		} else {
 			setFormData({ ...initialVideoData, gallery_id: galleryId })
 		}

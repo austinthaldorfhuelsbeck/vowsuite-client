@@ -3,7 +3,7 @@ import * as React from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import { getUserByEmail } from "../services/users.service"
 // Data
-import { IGallery, IUser, IVideo } from "../interfaces/models"
+import { ICompany, IGallery, IUser, IVideo } from "../interfaces/models"
 // Components
 import { PageLoader } from "../components/common/PageLoader"
 
@@ -39,6 +39,14 @@ interface IVideoContext {
 const IVideoContextState = {
 	video: undefined,
 	setVideo: () => {},
+}
+interface ICompanyContext {
+	company: ICompany | undefined
+	setCompany: React.Dispatch<React.SetStateAction<ICompany | undefined>>
+}
+const ICompanyContextState = {
+	company: undefined,
+	setCompany: () => {},
 }
 
 // DEFINE CONTEXTS
@@ -76,6 +84,16 @@ export const useVideoContext = () => {
 	}
 	return video
 }
+// Company
+const CompanyContext =
+	React.createContext<ICompanyContext>(ICompanyContextState)
+export const useCompanyContext = () => {
+	const company = React.useContext(CompanyContext)
+	if (company === undefined) {
+		throw new Error("useCompanyContext must be used with a CompanyContext")
+	}
+	return company
+}
 
 // LOAD USER AND BUILD PROVIDER
 
@@ -94,6 +112,9 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 		undefined,
 	)
 	const [video, setVideo] = React.useState<IVideo | undefined>(undefined)
+	const [company, setCompany] = React.useState<ICompany | undefined>(
+		undefined,
+	)
 
 	// load initial user metadata
 	React.useEffect(() => {
@@ -111,6 +132,7 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 				const userResponse = await getUserByEmail(accessToken, email)
 
 				setUserMetadata(userResponse.data)
+				setCompany(userResponse.data.company)
 				setGalleries(userResponse.data.galleries)
 				setGallery(userResponse.data.galleries[0])
 				// no video selected by default
@@ -126,13 +148,15 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
 	return (
 		<UserContext.Provider value={{ userMetadata, setUserMetadata }}>
-			<GalleriesContext.Provider value={{ galleries, setGalleries }}>
-				<GalleryContext.Provider value={{ gallery, setGallery }}>
-					<VideoContext.Provider value={{ video, setVideo }}>
-						{children}
-					</VideoContext.Provider>
-				</GalleryContext.Provider>
-			</GalleriesContext.Provider>
+			<CompanyContext.Provider value={{ company, setCompany }}>
+				<GalleriesContext.Provider value={{ galleries, setGalleries }}>
+					<GalleryContext.Provider value={{ gallery, setGallery }}>
+						<VideoContext.Provider value={{ video, setVideo }}>
+							{children}
+						</VideoContext.Provider>
+					</GalleryContext.Provider>
+				</GalleriesContext.Provider>
+			</CompanyContext.Provider>
 		</UserContext.Provider>
 	)
 }

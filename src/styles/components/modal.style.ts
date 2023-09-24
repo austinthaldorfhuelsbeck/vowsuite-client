@@ -6,6 +6,7 @@ export const ModalDialog = styled.dialog`
 	background-color: rgba(58, 58, 58);
 	border-width: 0;
 	padding: 0;
+	padding-top: 2rem;
 	width: 50rem;
 	border-radius: 0.5rem;
 
@@ -92,7 +93,8 @@ export const ModalFormCancel = styled.button`
 	border: none;
 	cursor: pointer;
 	position: absolute;
-	left: 95%;
+	left: 90%;
+	top: 3%;
 `
 
 export const ModalFormActionsContainer = styled.div`

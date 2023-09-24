@@ -53,3 +53,18 @@ export interface IVideo {
 	created_at: Date
 	updated_at: Date
 }
+
+export interface ICompany {
+	company_id: number
+	user_id: number
+	company_name: string
+	img_URL: string
+	website_URL: string
+	youtube_URL: string
+	instagram_URL: string
+	facebook_URL: string
+	vimeo_URL: string
+	tiktok_URL: string
+	created_at: Date
+	updated_at: Date
+}

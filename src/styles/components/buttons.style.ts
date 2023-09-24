@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export const TabButton = styled(Link)`
+export const TabButton = styled.button`
 	cursor: pointer;
 	margin-left: 1rem;
 	font-weight: 500;
@@ -9,8 +8,9 @@ export const TabButton = styled(Link)`
 	font-size: 14px;
 	line-height: 16px;
 	background-color: var(--dark-aluminium);
-	max-width: 22rem;
+	width: 22rem;
 	padding: 1rem 0;
+	border: none;
 	border-radius: 1rem 1rem 0 0;
 
 	&:hover {
@@ -34,7 +34,7 @@ export const TransparentButton = styled.button`
 	user-select: none;
 	transition: background 0.3s ease-out, color 0.3s ease-out;
 	min-width: 10rem;
-	max-width: 25rem;
+	width: 100%;
 	height: 5rem;
 	padding: 1rem 1rem;
 	font-size: 1.4rem;

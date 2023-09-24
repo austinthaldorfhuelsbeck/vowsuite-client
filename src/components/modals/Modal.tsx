@@ -1,26 +1,29 @@
 // Dependencies
 import * as React from "react"
+import { useModal } from "../../hooks/useModal"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
+// Styles
 import {
 	ModalDialog,
 	ModalDialogContainer,
+	ModalFormCancel,
 } from "../../styles/components/modal.style"
+import { BlankDiv } from "../../styles/components/util.style"
 
-interface ModalFormProps {
-	isOpen: boolean
-	toggle: () => void
-	children: JSX.Element
+interface ModalRefs {
+	button: JSX.Element
+	content: JSX.Element
 }
 
-export const Modal: React.FC<ModalFormProps> = ({
-	isOpen,
-	toggle,
-	children,
-}) => {
+export const Modal: React.FC<ModalRefs> = ({ button, content }) => {
 	// ref object
 	const modalRef = React.useRef<HTMLDialogElement>(null)
+	// modal opener hook
+	const { isOpen, toggle } = useModal()
 
 	// event listeners
-	const onClick = (e: React.MouseEvent<HTMLDialogElement>) => {
+	const onBackgroundClick = (e: React.MouseEvent<HTMLDialogElement>) => {
 		e.preventDefault()
 		if (e.target === modalRef.current) toggle()
 	}
@@ -38,8 +41,18 @@ export const Modal: React.FC<ModalFormProps> = ({
 	}, [isOpen])
 
 	return (
-		<ModalDialog ref={modalRef} onClick={onClick}>
-			<ModalDialogContainer>{children}</ModalDialogContainer>
-		</ModalDialog>
+		<>
+			<BlankDiv onClick={toggle}>{button}</BlankDiv>
+			<ModalDialog ref={modalRef} onClick={onBackgroundClick}>
+				<ModalDialogContainer>
+					<>
+						<ModalFormCancel onClick={toggle}>
+							<FontAwesomeIcon icon={faXmark} />
+						</ModalFormCancel>
+						{content}
+					</>
+				</ModalDialogContainer>
+			</ModalDialog>
+		</>
 	)
 }
