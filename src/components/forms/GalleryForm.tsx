@@ -20,7 +20,8 @@ import {
 	ModalForm,
 	ModalFormStyleContainer,
 } from "../../styles/components/modal.style"
-import { GallerySubmitButton } from "../buttons/GallerySubmitButton"
+import { GallerySubmitButton } from "../buttons/forms/GallerySubmitButton"
+import { ClearButton } from "../buttons/forms/ClearButton"
 
 export const GalleryForm: React.FC = () => {
 	// load context
@@ -56,10 +57,17 @@ export const GalleryForm: React.FC = () => {
 			[e.target.name]: e.target.value,
 		})
 	}
-	const handleClear = () => setFormData(initialGalleryData)
+	const handleClear = () =>
+		setFormData(
+			// tack on the user ID
+			userMetadata?.user_id
+				? { ...initialGalleryData, user_id: userMetadata.user_id }
+				: initialGalleryData,
+		)
 
 	return (
 		<ModalForm>
+			{/* <span>{`User ID: ${formData.user_id}`}</span> */}
 			<TextInputGroup
 				id="gallery_name"
 				title="Gallery Name"
@@ -102,10 +110,8 @@ export const GalleryForm: React.FC = () => {
 				/>
 			</ModalFormStyleContainer>
 			<ModalFormActionsContainer>
-				<GallerySubmitButton
-					formData={formData}
-					handleClear={handleClear}
-				/>
+				<ClearButton onClear={handleClear} />
+				<GallerySubmitButton formData={formData} />
 			</ModalFormActionsContainer>
 		</ModalForm>
 	)

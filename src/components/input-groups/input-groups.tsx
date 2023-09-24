@@ -54,7 +54,6 @@ export const ControlGroup: React.FC<ControlGroupProps> = ({
 		<ModalFormContainer>
 			<label htmlFor={id}>{title}</label>
 			<select id={id} name={id} onChange={onChange} value={value}>
-				<option>{`--Choose a ${title}--`}</option>
 				{options.map((option, index) => (
 					<option key={index}>{option}</option>
 				))}

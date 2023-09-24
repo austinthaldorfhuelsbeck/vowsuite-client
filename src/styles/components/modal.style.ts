@@ -99,7 +99,7 @@ export const ModalFormCancel = styled.button`
 
 export const ModalFormActionsContainer = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 	padding: 3rem 0rem 0rem 0rem;
 	margin-bottom: -1rem;
 `

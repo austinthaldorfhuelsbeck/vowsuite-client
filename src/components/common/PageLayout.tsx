@@ -2,7 +2,7 @@
 import * as React from "react"
 // Components
 import { NavBar } from "../navigation/NavBar"
-import { PageFooter } from "../landing/PageFooter"
+import { PageFooter } from "../static/PageFooter"
 // Styles
 import {
 	PageContainer,

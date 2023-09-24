@@ -1,51 +1,39 @@
 // Dependencies
 import * as React from "react"
-import { useAuth0 } from "@auth0/auth0-react"
 import {
 	useGalleryContext,
 	useVideoContext,
 } from "../../context/ContextProvider"
-import { createVideo, updateVideo } from "../../services/videos.service"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
 // Data
 import { IVideo } from "../../interfaces/models"
 import { initialVideoData } from "../../utils/initial-data"
 // Components
 import { TextInputGroup } from "../input-groups/input-groups"
-import { InlineButton } from "../buttons/InlineButton"
+import { ClearButton } from "../buttons/forms/ClearButton"
+import { VideoSubmitButton } from "../buttons/forms/VideoSubmitButton"
 // Styles
 import {
 	ModalForm,
 	ModalFormActionsContainer,
-	ModalFormCancel,
 } from "../../styles/components/modal.style"
 
-// useModal passed down from VideoModal
-interface VideoFormProps {
-	toggle: () => void
-}
-
-export const VideoForm: React.FC<VideoFormProps> = ({ toggle }) => {
-	// auth0
-	const { getAccessTokenSilently } = useAuth0()
+export const VideoForm: React.FC = () => {
 	// load context
-	const { gallery, setGallery } = useGalleryContext()
-	const { video, setVideo } = useVideoContext()
-	// if current gallery, find gallery ID
-	const galleryId: number = gallery ? gallery.gallery_id : 0
+	const { gallery } = useGalleryContext()
+	const { video } = useVideoContext()
 
-	const [formData, setFormData] = React.useState<IVideo>(
-		video || initialVideoData,
-	)
+	// create and set form state
+	// add the gallery ID if possible
+	const [formData, setFormData] = React.useState<IVideo>(initialVideoData)
 	React.useEffect(() => {
-		// load video if it was found
-		if (video) {
-			setFormData({ ...video, gallery_id: galleryId })
+		if (video && gallery) {
+			setFormData({ ...video, gallery_id: gallery.gallery_id })
+		} else if (gallery) {
+			setFormData({ ...initialVideoData, gallery_id: gallery.gallery_id })
 		} else {
-			setFormData({ ...initialVideoData, gallery_id: galleryId })
+			setFormData(initialVideoData)
 		}
-	}, [video])
+	}, [video]) // do ^ every time the video is changed
 
 	// event handlers
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,57 +42,16 @@ export const VideoForm: React.FC<VideoFormProps> = ({ toggle }) => {
 			[e.target.name]: e.target.value,
 		})
 	}
-	const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault()
-		setFormData(initialVideoData)
-		toggle()
-	}
-	const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-		e.preventDefault()
-		const getVideoResponse = async (
-			formData: IVideo,
-			id: number | undefined,
-		) => {
-			const audienceURL = process.env.REACT_APP_AUTH0_AUDIENCE
-			try {
-				const accessToken = await getAccessTokenSilently({
-					authorizationParams: {
-						audience: audienceURL,
-						scope: "read:current_user",
-					},
-				})
-				// API call
-				if (id) {
-					await updateVideo(accessToken, formData, id)
-					// refresh to get update from API
-					window.location.reload()
-				} else {
-					await createVideo(accessToken, formData)
-					// update list context
-					if (gallery)
-						setGallery({
-							...gallery,
-							videos: [...gallery.videos, formData],
-						})
-				}
-				// update selected video context
-				setVideo(initialVideoData)
-				// clear form and close modal
-				setFormData(initialVideoData)
-				toggle()
-			} catch (error: any) {
-				throw new Error(error)
-			}
-		}
-		// update or create
-		getVideoResponse(formData, video?.video_id)
-	}
+	const handleClear = () =>
+		setFormData(
+			// tack on the gallery ID
+			gallery?.gallery_id
+				? { ...initialVideoData, gallery_id: gallery.gallery_id }
+				: initialVideoData,
+		)
 
 	return (
 		<ModalForm>
-			<ModalFormCancel onClick={handleCancel}>
-				<FontAwesomeIcon icon={faXmark} />
-			</ModalFormCancel>
 			<TextInputGroup
 				id="video_name"
 				title="Video Name"
@@ -127,11 +74,8 @@ export const VideoForm: React.FC<VideoFormProps> = ({ toggle }) => {
 				value={formData.img_URL}
 			/>
 			<ModalFormActionsContainer>
-				<InlineButton
-					onClick={handleSubmit}
-					icon={null}
-					title="Submit"
-				/>
+				<ClearButton onClear={handleClear} />
+				<VideoSubmitButton formData={formData} />
 			</ModalFormActionsContainer>
 		</ModalForm>
 	)

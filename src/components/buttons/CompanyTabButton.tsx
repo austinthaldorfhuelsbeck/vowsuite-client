@@ -2,7 +2,7 @@
 import * as React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGear, faPlus } from "@fortawesome/free-solid-svg-icons"
-import { useUserContext } from "../../context/ContextProvider"
+import { useCompanyContext } from "../../context/ContextProvider"
 // Components
 import { Modal } from "../modals/Modal"
 import { CompanyForm } from "../forms/CompanyForm"
@@ -10,16 +10,14 @@ import { CompanyForm } from "../forms/CompanyForm"
 import { TabButton, ButtonTitle } from "../../styles/components/buttons.style"
 
 export const CompanyTabButton: React.FC = () => {
-	const { userMetadata } = useUserContext()
+	const { company } = useCompanyContext()
 	// button shows company name or "new company"
 	return (
 		<Modal
 			button={
-				userMetadata?.company ? (
+				company ? (
 					<TabButton>
-						<ButtonTitle>
-							{userMetadata.company.company_name}
-						</ButtonTitle>
+						<ButtonTitle>{company.company_name}</ButtonTitle>
 						<FontAwesomeIcon icon={faGear} />
 					</TabButton>
 				) : (

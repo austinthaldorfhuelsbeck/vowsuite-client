@@ -9,12 +9,13 @@ import { ICompany } from "../../interfaces/models"
 import { initialCompanyData } from "../../utils/initial-data"
 // Components
 import { TextInputGroup } from "../input-groups/input-groups"
+import { CompanySubmitButton } from "../buttons/forms/CompanySubmitButton"
+import { ClearButton } from "../buttons/forms/ClearButton"
 // Styles
 import {
 	ModalForm,
 	ModalFormActionsContainer,
 } from "../../styles/components/modal.style"
-import { CompanySubmitButton } from "../buttons/CompanySubmitButton"
 
 export const CompanyForm: React.FC = () => {
 	// load context
@@ -22,25 +23,21 @@ export const CompanyForm: React.FC = () => {
 	const { company } = useCompanyContext()
 
 	// create and set form state
+	// add the user ID if possible
 	const [formData, setFormData] = React.useState<ICompany>(initialCompanyData)
 	React.useEffect(() => {
-		if (company) {
+		if (company && userMetadata?.user_id) {
 			// load company data
-			setFormData(company)
-		} else {
-			// if not found, load initial data again
-			setFormData(initialCompanyData)
-		} // then add user ID
-		const userId: number | undefined = userMetadata
-			? userMetadata.user_id
-			: undefined
-		if (userId)
-			// user could theoretically be undefined
+			setFormData({ ...company, user_id: userMetadata.user_id })
+		} else if (userMetadata?.user_id) {
 			setFormData({
-				...formData,
-				user_id: userId,
+				...initialCompanyData,
+				user_id: userMetadata.user_id,
 			})
-	}, [company]) // do ^ every time the company is changed (once)
+		} else {
+			setFormData(initialCompanyData)
+		}
+	}, [company]) // do ^ every time the company is changed
 
 	// event handlers
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,10 +46,17 @@ export const CompanyForm: React.FC = () => {
 			[e.target.name]: e.target.value,
 		})
 	}
-	const handleClear = () => setFormData(initialCompanyData)
+	const handleClear = () =>
+		setFormData(
+			// tack on the user ID
+			userMetadata?.user_id
+				? { ...initialCompanyData, user_id: userMetadata.user_id }
+				: initialCompanyData,
+		)
 
 	return (
 		<ModalForm>
+			{/* <span>{`User ID: ${formData.user_id}`}</span> */}
 			<TextInputGroup
 				id="company_name"
 				title="Company Name"
@@ -110,10 +114,8 @@ export const CompanyForm: React.FC = () => {
 				value={formData.tiktok_URL}
 			/>
 			<ModalFormActionsContainer>
-				<CompanySubmitButton
-					formData={formData}
-					handleClear={handleClear}
-				/>
+				<ClearButton onClear={handleClear} />
+				<CompanySubmitButton formData={formData} />
 			</ModalFormActionsContainer>
 		</ModalForm>
 	)

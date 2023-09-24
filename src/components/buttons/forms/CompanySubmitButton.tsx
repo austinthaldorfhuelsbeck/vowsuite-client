@@ -4,21 +4,23 @@ import { useAuth0 } from "@auth0/auth0-react"
 import {
 	useCompanyContext,
 	useUserContext,
-} from "../../context/ContextProvider"
-import { createCompany, updateCompany } from "../../services/companies.service"
+} from "../../../context/ContextProvider"
+import {
+	createCompany,
+	updateCompany,
+} from "../../../services/companies.service"
 // Data
-import { ICompany } from "../../interfaces/models"
+import { ICompany } from "../../../interfaces/models"
 // Components
-import { InlineButton } from "./InlineButton"
+import { InlineButton } from "../InlineButton"
+import { IApiResponse } from "../../../interfaces/api"
 
 interface CompanySubmitButtonProps {
 	formData: ICompany
-	handleClear: () => void
 }
 
 export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 	formData,
-	handleClear,
 }) => {
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
@@ -43,21 +45,25 @@ export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 					},
 				})
 				// API call
-				if (id) {
-					await updateCompany(accessToken, formData, id)
-				} else {
-					await createCompany(accessToken, formData)
+				let response: IApiResponse = {
+					data: null,
+					error: null,
 				}
-				// update user context
-				if (userMetadata)
-					setUserMetadata({ ...userMetadata, company: formData })
-				// update selected company context
-				setCompany(formData)
-				// clear form
-				handleClear()
+				if (id) {
+					response = await updateCompany(accessToken, formData, id)
+				} else {
+					response = await createCompany(accessToken, formData)
+				}
+				// update context if response is successful
+				if (response?.data) {
+					// user context
+					if (userMetadata)
+						setUserMetadata({ ...userMetadata, company: formData })
+					// company context
+					setCompany(formData)
+				}
 			} catch (error: any) {
 				throw new Error(error)
-				console.log(error)
 			}
 		}
 		// call the async function on submit

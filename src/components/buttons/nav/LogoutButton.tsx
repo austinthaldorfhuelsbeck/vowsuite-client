@@ -2,7 +2,10 @@
 import * as React from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 // Components
-import { NavButton, NavProfileImg } from "../../styles/components/nav-bar.style"
+import {
+	NavButton,
+	NavProfileImg,
+} from "../../../styles/components/nav-bar.style"
 
 export const LogoutButton: React.FC = () => {
 	const { user, logout } = useAuth0()

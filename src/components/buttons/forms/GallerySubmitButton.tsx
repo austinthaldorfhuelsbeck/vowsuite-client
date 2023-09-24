@@ -4,21 +4,23 @@ import { useAuth0 } from "@auth0/auth0-react"
 import {
 	useGalleriesContext,
 	useGalleryContext,
-} from "../../context/ContextProvider"
-import { createGallery, updateGallery } from "../../services/galleries.service"
+} from "../../../context/ContextProvider"
+import {
+	createGallery,
+	updateGallery,
+} from "../../../services/galleries.service"
 // Data
-import { IBaseGallery } from "../../interfaces/models"
+import { IBaseGallery } from "../../../interfaces/models"
 // Components
-import { InlineButton } from "./InlineButton"
+import { InlineButton } from "../InlineButton"
+import { IApiResponse } from "../../../interfaces/api"
 
 interface GallerySubmitButtonProps {
 	formData: IBaseGallery
-	handleClear: () => void
 }
 
 export const GallerySubmitButton: React.FC<GallerySubmitButtonProps> = ({
 	formData,
-	handleClear,
 }) => {
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
@@ -43,17 +45,22 @@ export const GallerySubmitButton: React.FC<GallerySubmitButtonProps> = ({
 					},
 				})
 				// API call
-				if (id) {
-					await updateGallery(accessToken, formData, id)
-				} else {
-					await createGallery(accessToken, formData)
+				let response: IApiResponse = {
+					data: null,
+					error: null,
 				}
-				// update list context
-				setGalleries([...galleries, { ...formData, videos: [] }])
-				// update selected gallery context
-				setGallery({ ...formData, videos: [] })
-				// clear form
-				handleClear()
+				if (id) {
+					response = await updateGallery(accessToken, formData, id)
+				} else {
+					response = await createGallery(accessToken, formData)
+				}
+				// update context if successful
+				if (response?.data) {
+					// update list context
+					setGalleries([...galleries, { ...formData, videos: [] }])
+					// update selected gallery context
+					setGallery({ ...formData, videos: [] })
+				}
 			} catch (error: any) {
 				throw new Error(error)
 			}
