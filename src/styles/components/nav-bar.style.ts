@@ -20,7 +20,7 @@ export const NavBarContainer = styled.nav`
 	flex-shrink: 0;
 	height: 80px;
 	max-width: 1200px;
-	padding: 0 24px;
+	padding: 0 2rem;
 	margin: 0;
 `
 

@@ -57,6 +57,7 @@ export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 				handleClear()
 			} catch (error: any) {
 				throw new Error(error)
+				console.log(error)
 			}
 		}
 		// call the async function on submit

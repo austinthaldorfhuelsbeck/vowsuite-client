@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export const TabButton = styled.button`
 	cursor: pointer;
@@ -40,4 +41,11 @@ export const TransparentButton = styled.button`
 	font-size: 1.4rem;
 	letter-spacing: 0.11rem;
 	line-height: 2.4rem;
+
+	@media (max-width: 715px) {
+		min-width: 0;
+		& label {
+			font-size: 0;
+		}
+	}
 `
