@@ -1,7 +1,7 @@
 // Dependencies
 import * as React from "react"
 // Data
-import { copy, footerResourceList } from "../../utils/app-constants"
+import { copy, footerResourceList } from "../../data/app-constants"
 // Components
 import { PageFooterLink } from "../../styles/layouts/page-layout.style"
 // Styles

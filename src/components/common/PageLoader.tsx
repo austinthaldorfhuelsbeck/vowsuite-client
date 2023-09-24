@@ -1,7 +1,7 @@
 // Dependencies
 import * as React from "react"
 // Data
-import { imagePaths } from "../../utils/app-constants"
+import { imagePaths } from "../../data/app-constants"
 // Styles
 import { Loader } from "../../styles/layouts/page-layout.style"
 

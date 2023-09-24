@@ -6,11 +6,11 @@ import {
 } from "../../context/ContextProvider"
 // Data
 import { ICompany } from "../../interfaces/models"
-import { initialCompanyData } from "../../utils/initial-data"
+import { initialCompanyData } from "../../data/initial-data"
 // Components
 import { TextInputGroup } from "../input-groups/input-groups"
-import { CompanySubmitButton } from "../buttons/forms/CompanySubmitButton"
-import { ClearButton } from "../buttons/forms/ClearButton"
+import { CompanySubmitButton } from "../buttons/api/CompanySubmitButton"
+import { ClearButton } from "../buttons/api/ClearButton"
 // Styles
 import {
 	ModalForm,

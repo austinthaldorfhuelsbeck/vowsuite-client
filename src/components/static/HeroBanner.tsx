@@ -2,7 +2,7 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
 // Data
-import { copy, heroResource } from "../../utils/app-constants"
+import { copy, heroResource } from "../../data/app-constants"
 // Styles
 import {
 	HeroBannerContainer,

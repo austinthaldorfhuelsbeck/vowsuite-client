@@ -39,4 +39,11 @@ export const copy: IStringHash = {
 	heroTitle: "Deliver videos with Vowsuite",
 	heroBody: "It's the best for delivering videos.",
 	footerMessage: "Copyright © 2023 Vowsuite, Inc. All Rights Reserved.",
+	confirmDeleteHeader: "Are you sure?",
+	confirmDeleteMessage:
+		"Deleting is permanent. You will not be able to recover this object.",
+}
+
+export const baseUrls: IStringHash = {
+	galleryPage: "https://galleries.vowsuite.com",
 }

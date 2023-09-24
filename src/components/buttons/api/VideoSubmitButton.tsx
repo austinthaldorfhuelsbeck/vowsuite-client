@@ -54,10 +54,10 @@ export const VideoSubmitButton: React.FC<VideoSubmitButtonProps> = ({
 					if (gallery)
 						setGallery({
 							...gallery,
-							videos: [...gallery.videos, formData],
+							videos: [...gallery.videos, response.data],
 						})
 					// video context
-					setVideo(formData)
+					setVideo(response.data)
 				}
 			} catch (error: any) {
 				throw new Error(error)

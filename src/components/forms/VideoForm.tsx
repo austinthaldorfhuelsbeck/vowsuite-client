@@ -6,11 +6,11 @@ import {
 } from "../../context/ContextProvider"
 // Data
 import { IVideo } from "../../interfaces/models"
-import { initialVideoData } from "../../utils/initial-data"
+import { initialVideoData } from "../../data/initial-data"
 // Components
 import { TextInputGroup } from "../input-groups/input-groups"
-import { ClearButton } from "../buttons/forms/ClearButton"
-import { VideoSubmitButton } from "../buttons/forms/VideoSubmitButton"
+import { ClearButton } from "../buttons/api/ClearButton"
+import { VideoSubmitButton } from "../buttons/api/VideoSubmitButton"
 // Styles
 import {
 	ModalForm,

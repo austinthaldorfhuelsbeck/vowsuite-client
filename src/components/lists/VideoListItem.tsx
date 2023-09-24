@@ -1,6 +1,8 @@
 // Dependencies
 import * as React from "react"
 import { IVideo } from "../../interfaces/models"
+import { formatDate } from "../../services/util.service"
+import { useVideoContext } from "../../context/ContextProvider"
 // Components
 import { ContextMenu } from "../menus/ContextMenu"
 // Styles
@@ -10,7 +12,10 @@ import {
 	ContentBlockListItem,
 	ContentBlockSubheader,
 } from "../../styles/components/content-block.style"
-import { useVideoContext } from "../../context/ContextProvider"
+import { Modal } from "../modals/Modal"
+import { ContentContainer } from "../../styles/components/util.style"
+import { ModalResource } from "../../interfaces/common"
+import { videoContextList } from "../../data/context-lists"
 
 interface VideoListItemProps {
 	video: IVideo
@@ -24,26 +29,27 @@ export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
 		setVideo(video)
 	}
 
-	// format date nicely
-	const updatedDate: string = new Date(video.updated_at).toLocaleDateString(
-		"en-us",
-		{
-			year: "numeric",
-			month: "short",
-			day: "numeric",
-		},
-	)
+	const renderMenu = (resources: ModalResource[]) =>
+		resources.map((resource, index) => (
+			<Modal
+				key={index}
+				button={resource.button}
+				content={resource.content}
+			/>
+		))
 
 	return (
 		<ContentBlockListItem onClick={(e: any) => handleClick(e, video)}>
 			<ContentBlockImg src={video.img_URL} alt={video.video_name} />
 			<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
-			<ContentBlockSubheader>
-				{`Updated - ${updatedDate}`}
-			</ContentBlockSubheader>
-			<ContextMenu>
-				<span>Context is everything</span>
-			</ContextMenu>
+			<ContentContainer>
+				<ContentBlockSubheader>
+					{`Updated - ${formatDate(video.updated_at)}`}
+				</ContentBlockSubheader>
+				<ContextMenu>
+					<>{renderMenu(videoContextList)}</>
+				</ContextMenu>
+			</ContentContainer>
 		</ContentBlockListItem>
 	)
 }

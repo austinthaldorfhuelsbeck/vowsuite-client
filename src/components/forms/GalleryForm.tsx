@@ -6,8 +6,8 @@ import {
 } from "../../context/ContextProvider"
 // Data
 import { IBaseGallery } from "../../interfaces/models"
-import { initialGalleryData } from "../../utils/initial-data"
-import { galleryFonts } from "../../utils/app-constants"
+import { initialGalleryData } from "../../data/initial-data"
+import { galleryFonts } from "../../data/app-constants"
 // Components
 import {
 	ColorInputGroup,
@@ -20,8 +20,8 @@ import {
 	ModalForm,
 	ModalFormStyleContainer,
 } from "../../styles/components/modal.style"
-import { GallerySubmitButton } from "../buttons/forms/GallerySubmitButton"
-import { ClearButton } from "../buttons/forms/ClearButton"
+import { GallerySubmitButton } from "../buttons/api/GallerySubmitButton"
+import { ClearButton } from "../buttons/api/ClearButton"
 
 export const GalleryForm: React.FC = () => {
 	// load context

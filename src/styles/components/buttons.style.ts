@@ -50,3 +50,14 @@ export const TransparentButton = styled.button`
 		}
 	}
 `
+
+export const ContextMenuButton = styled.button`
+	align-self: center;
+	margin-left: auto;
+	padding: 0.3rem 1.5rem;
+	color: var(--white);
+	background: none;
+	border: none;
+	border-radius: 0.5rem;
+	cursor: pointer;
+`

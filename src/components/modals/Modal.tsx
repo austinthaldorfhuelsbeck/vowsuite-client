@@ -9,7 +9,7 @@ import {
 	ModalDialogContainer,
 	ModalFormCancel,
 } from "../../styles/components/modal.style"
-import { BlankDiv } from "../../styles/components/util.style"
+import { BlankSpan } from "../../styles/components/util.style"
 
 interface ModalRefs {
 	button: JSX.Element
@@ -42,7 +42,7 @@ export const Modal: React.FC<ModalRefs> = ({ button, content }) => {
 
 	return (
 		<>
-			<BlankDiv onClick={toggle}>{button}</BlankDiv>
+			<BlankSpan onClick={toggle}>{button}</BlankSpan>
 			<ModalDialog ref={modalRef} onClick={onBackgroundClick}>
 				<ModalDialogContainer>
 					<>
