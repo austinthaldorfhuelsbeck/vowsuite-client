@@ -11,15 +11,16 @@ export const GalleryList: React.FC = () => {
 
 	return (
 		<List>
-			{galleries.map(
-				(currentGallery) =>
-					currentGallery && (
-						<GalleryListItem
-							key={currentGallery.gallery_id}
-							currentGallery={currentGallery}
-						/>
-					),
-			)}
+			{galleries?.length > 0 &&
+				galleries.map(
+					(currentGallery) =>
+						currentGallery && (
+							<GalleryListItem
+								key={currentGallery.gallery_id}
+								currentGallery={currentGallery}
+							/>
+						),
+				)}
 		</List>
 	)
 }

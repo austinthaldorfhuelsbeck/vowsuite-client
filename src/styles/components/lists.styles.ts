@@ -22,14 +22,6 @@ export const SelectorListItem = styled.li`
 	&:hover {
 		color: var(--white);
 		background-color: rgba(255, 255, 255, 0.15);
-
-		& label {
-			text-decoration-line: underline;
-			text-decoration-style: solid;
-			text-decoration-color: var(--indigo);
-			text-decoration-thickness: 2px;
-			text-underline-offset: 8px;
-		}
 	}
 
 	${(props) =>
@@ -37,14 +29,6 @@ export const SelectorListItem = styled.li`
 		css`
 			color: var(--white);
 			background-color: rgba(255, 255, 255, 0.15);
-
-			& label {
-				text-decoration-line: underline;
-				text-decoration-style: solid;
-				text-decoration-color: var(--indigo);
-				text-decoration-thickness: 2px;
-				text-underline-offset: 8px;
-			}
 		`}
 `
 

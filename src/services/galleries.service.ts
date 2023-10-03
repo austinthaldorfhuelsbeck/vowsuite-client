@@ -51,3 +51,26 @@ export const updateGallery = async (
 		error,
 	}
 }
+
+export const deleteGallery = async (
+	accessToken: string,
+	id: number,
+): Promise<IApiResponse> => {
+	const apiUrl = process.env.REACT_APP_API_SERVER_URL
+
+	const config: Axios.AxiosRequestConfig = {
+		url: `${apiUrl}/galleries/${id}`,
+		method: "DELETE",
+		headers: {
+			"content-type": "application/json",
+			Authorization: `Bearer ${accessToken}`,
+		},
+	}
+
+	const { data, error } = (await callExternalApi({ config })) as IApiResponse
+
+	return {
+		data,
+		error,
+	}
+}

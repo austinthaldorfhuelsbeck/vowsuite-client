@@ -7,6 +7,8 @@ import { faFolder } from "@fortawesome/free-solid-svg-icons"
 // Styles
 import { SelectorListItem } from "../../styles/components/lists.styles"
 import { ButtonTitle } from "../../styles/components/buttons.style"
+import { ContextMenu } from "../menus/ContextMenu"
+import { galleryContextList, renderMenu } from "../../data/context-lists"
 
 interface GalleryListItemProps {
 	currentGallery: IGallery
@@ -24,6 +26,9 @@ export const GalleryListItem: React.FC<GalleryListItemProps> = ({
 		>
 			<FontAwesomeIcon icon={faFolder} />
 			<ButtonTitle>{currentGallery.gallery_name}</ButtonTitle>
+			<ContextMenu>
+				<>{renderMenu(galleryContextList)}</>
+			</ContextMenu>
 		</SelectorListItem>
 	)
 }

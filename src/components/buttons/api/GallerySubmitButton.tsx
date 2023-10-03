@@ -57,9 +57,17 @@ export const GallerySubmitButton: React.FC<GallerySubmitButtonProps> = ({
 				// update context if successful
 				if (response?.data) {
 					// update list context
-					setGalleries([...galleries, { ...formData, videos: [] }])
+					console.log("Galleries: ", galleries)
+					if (galleries?.length > 0) {
+						setGalleries([
+							...galleries,
+							{ ...response.data, videos: [] },
+						])
+					} else {
+						setGalleries([{ ...response.data }])
+					}
 					// update selected gallery context
-					setGallery({ ...formData, videos: [] })
+					setGallery({ ...response.data, videos: [] })
 				}
 			} catch (error: any) {
 				throw new Error(error)

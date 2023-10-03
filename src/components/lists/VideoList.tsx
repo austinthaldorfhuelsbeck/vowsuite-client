@@ -11,8 +11,8 @@ import { List } from "../../styles/components/lists.styles"
 export const VideoList: React.FC = () => {
 	const { gallery } = useGalleryContext()
 
-	if (!gallery?.videos) return <span>Loading...</span>
-	if (gallery?.videos.length === 0) return <VideosNotFound />
+	if (!gallery?.videos || gallery?.videos.length === 0)
+		return <VideosNotFound />
 	return (
 		<List>
 			{gallery.videos.map((video: IVideo) => (

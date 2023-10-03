@@ -12,10 +12,8 @@ import {
 	ContentBlockListItem,
 	ContentBlockSubheader,
 } from "../../styles/components/content-block.style"
-import { Modal } from "../modals/Modal"
 import { ContentContainer } from "../../styles/components/util.style"
-import { ModalResource } from "../../interfaces/common"
-import { videoContextList } from "../../data/context-lists"
+import { renderMenu, videoContextList } from "../../data/context-lists"
 
 interface VideoListItemProps {
 	video: IVideo
@@ -28,15 +26,6 @@ export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
 		e.preventDefault()
 		setVideo(video)
 	}
-
-	const renderMenu = (resources: ModalResource[]) =>
-		resources.map((resource, index) => (
-			<Modal
-				key={index}
-				button={resource.button}
-				content={resource.content}
-			/>
-		))
 
 	return (
 		<ContentBlockListItem onClick={(e: any) => handleClick(e, video)}>

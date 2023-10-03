@@ -41,7 +41,7 @@ export const GlobalStyles = createGlobalStyle`
     h6 {
         font-family: var(--font-secondary);
         font-weight: 600;
-        color: rgba(0, 0, 0, 0.86);
+        color: var(--aluminium)
     }
 
     h1,

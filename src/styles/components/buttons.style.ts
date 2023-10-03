@@ -52,9 +52,9 @@ export const TransparentButton = styled.button`
 `
 
 export const ContextMenuButton = styled.button`
-	align-self: center;
+	align-self: end;
 	margin-left: auto;
-	padding: 0.3rem 1.5rem;
+	padding: 0.3rem;
 	color: var(--white);
 	background: none;
 	border: none;

@@ -7,6 +7,7 @@ import { PageLoader } from "./components/common/PageLoader"
 import { PageLayout } from "./components/common/PageLayout"
 // Styles
 import { PageContainer } from "./styles/layouts/page-layout.style"
+import { ContextProvider } from "./context/ContextProvider"
 
 export const App: React.FC = () => {
 	// load routes
@@ -14,7 +15,9 @@ export const App: React.FC = () => {
 
 	// display loading while useRoutes resolve
 	return content ? (
-		<PageLayout>{content}</PageLayout>
+		<ContextProvider>
+			<PageLayout>{content}</PageLayout>
+		</ContextProvider>
 	) : (
 		<PageContainer>
 			<PageLoader />
