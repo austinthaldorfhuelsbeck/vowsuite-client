@@ -67,5 +67,7 @@ export const VideoSubmitButton: React.FC<VideoSubmitButtonProps> = ({
 		getVideoResponse(formData, video?.video_id)
 	}
 
-	return <InlineButton onClick={handleSubmit} icon={null} title="Submit" />
+	return (
+		<InlineButton onClick={handleSubmit} icon={undefined} title="Submit" />
+	)
 }

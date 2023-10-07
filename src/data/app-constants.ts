@@ -42,6 +42,7 @@ export const copy: IStringHash = {
 	confirmDeleteHeader: "Are you sure?",
 	confirmDeleteMessage:
 		"Deleting is permanent. You will not be able to recover this object.",
+	formSuccess: "Form has been submitted successfully!",
 }
 
 export const baseUrls: IStringHash = {

@@ -9,7 +9,6 @@ import { IVideo } from "../../interfaces/models"
 import { initialVideoData } from "../../data/initial-data"
 // Components
 import { TextInputGroup } from "../input-groups/input-groups"
-import { ClearButton } from "../buttons/api/ClearButton"
 import { VideoSubmitButton } from "../buttons/api/VideoSubmitButton"
 // Styles
 import {
@@ -50,33 +49,35 @@ export const VideoForm: React.FC = () => {
 				: initialVideoData,
 		)
 
-	return (
-		<ModalForm>
-			<TextInputGroup
-				id="video_name"
-				title="Video Name"
-				maxLength={40}
-				onChange={handleChange}
-				value={formData.video_name}
-			/>
-			<TextInputGroup
-				id="video_URL"
-				title="Video URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.video_URL}
-			/>
-			<TextInputGroup
-				id="img_URL"
-				title="Image URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.img_URL}
-			/>
-			<ModalFormActionsContainer>
-				<ClearButton onClear={handleClear} />
-				<VideoSubmitButton formData={formData} />
-			</ModalFormActionsContainer>
-		</ModalForm>
-	)
+	return <ModalForm></ModalForm>
+
+	// return (
+	// 	<ModalForm>
+	// 		<TextInputGroup
+	// 			id="video_name"
+	// 			title="Video Name"
+	// 			maxLength={40}
+	// 			onChange={handleChange}
+	// 			value={formData.video_name}
+	// 		/>
+	// 		<TextInputGroup
+	// 			id="video_URL"
+	// 			title="Video URL"
+	// 			maxLength={undefined}
+	// 			onChange={handleChange}
+	// 			value={formData.video_URL}
+	// 		/>
+	// 		<TextInputGroup
+	// 			id="img_URL"
+	// 			title="Image URL"
+	// 			maxLength={undefined}
+	// 			onChange={handleChange}
+	// 			value={formData.img_URL}
+	// 		/>
+	// 		<ModalFormActionsContainer>
+	// 			<ClearButton onClear={handleClear} />
+	// 			<VideoSubmitButton formData={formData} />
+	// 		</ModalFormActionsContainer>
+	// 	</ModalForm>
+	// )
 }

@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const ContentBlockContainer = styled.div`
 	display: grid;
-	width: 100%;
+
 	padding: 1rem;
 	margin-left: 2rem;
 	background-color: rgba(255, 255, 255, 0.08);

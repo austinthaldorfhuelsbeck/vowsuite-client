@@ -4,118 +4,89 @@ import { useUserContext } from "../../context/ContextProvider"
 // Data
 import { ICompany } from "../../interfaces/models"
 import { initialCompanyData } from "../../data/initial-data"
+import {
+	company_name_validation,
+	img_URL_validation,
+	website_URL_validation,
+	youtube_URL_validation,
+	instagram_URL_validation,
+	facebook_URL_validation,
+	vimeo_URL_validation,
+	tiktok_URL_validation,
+} from "../../utils/inputValidation"
 // Components
 import { TextInputGroup } from "../input-groups/input-groups"
-import { CompanySubmitButton } from "../buttons/api/CompanySubmitButton"
-import { ClearButton } from "../buttons/api/ClearButton"
 // Styles
 import {
+	FormSuccess,
 	ModalForm,
 	ModalFormActionsContainer,
 } from "../../styles/components/modal.style"
+import { FormProvider, useForm } from "react-hook-form"
+import { InlineButton } from "../buttons/InlineButton"
+import { copy } from "../../data/app-constants"
 
 export const CompanyForm: React.FC = () => {
 	// load context
 	const { userMetadata } = useUserContext()
-
-	// create and set form state
-	// add the user ID if possible
-	const [formData, setFormData] = React.useState<ICompany>(initialCompanyData)
-	React.useEffect(() => {
-		if (userMetadata?.company && userMetadata?.user_id) {
-			// load company data
-			setFormData({
-				...userMetadata.company,
-				user_id: userMetadata.user_id,
-			})
-		} else if (userMetadata?.user_id) {
-			setFormData({
-				...initialCompanyData,
-				user_id: userMetadata.user_id,
-			})
-		} else {
-			setFormData(initialCompanyData)
+	// determine initial form data from context
+	let initialFormData: ICompany = initialCompanyData
+	if (userMetadata?.company && userMetadata?.user_id) {
+		// load company data if the user has a company
+		initialFormData = {
+			...userMetadata.company,
+			user_id: userMetadata.user_id,
 		}
-	}, [userMetadata?.company]) // do ^ every time the company is changed
-
-	// event handlers
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFormData({
-			...formData,
-			[e.target.name]: e.target.value,
-		})
+	} else if (userMetadata?.user_id) {
+		// load initial company data if the user exists
+		initialFormData = {
+			...initialCompanyData,
+			user_id: userMetadata.user_id,
+		}
 	}
-	const handleClear = () =>
-		setFormData(
-			// tack on the user ID
-			userMetadata?.user_id
-				? { ...initialCompanyData, user_id: userMetadata.user_id }
-				: initialCompanyData,
-		)
+
+	// state and handlers
+	const methods = useForm({ defaultValues: initialFormData })
+	const [success, setSuccess] = React.useState<boolean>(false)
+	const handleClear = () => {
+		methods.reset()
+		setSuccess(false)
+	}
+	const handleSubmit = methods.handleSubmit((data: any) => {
+		console.log(data)
+		methods.reset()
+		setSuccess(true)
+	})
 
 	return (
-		<ModalForm>
-			{/* <span>{`User ID: ${formData.user_id}`}</span> */}
-			<TextInputGroup
-				id="company_name"
-				title="Company Name"
-				maxLength={40}
-				onChange={handleChange}
-				value={formData.company_name}
-			/>
-			<TextInputGroup
-				id="img_URL"
-				title="Logo URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.img_URL}
-			/>
-			<TextInputGroup
-				id="website_URL"
-				title="Website URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.website_URL}
-			/>
-			<TextInputGroup
-				id="youtube_URL"
-				title="Youtube URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.youtube_URL}
-			/>
-			<TextInputGroup
-				id="instagram_URL"
-				title="Instagram URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.instagram_URL}
-			/>
-			<TextInputGroup
-				id="facebook_URL"
-				title="Facebook URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.facebook_URL}
-			/>
-			<TextInputGroup
-				id="vimeo_URL"
-				title="Vimeo URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.vimeo_URL}
-			/>
-			<TextInputGroup
-				id="tiktok_URL"
-				title="TikTok URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.tiktok_URL}
-			/>
-			<ModalFormActionsContainer>
-				<ClearButton onClear={handleClear} />
-				<CompanySubmitButton formData={formData} />
-			</ModalFormActionsContainer>
-		</ModalForm>
+		<FormProvider {...methods}>
+			<ModalForm
+				onSubmit={(e: any) => e.preventDefault()}
+				noValidate
+				autoComplete="off"
+			>
+				<TextInputGroup {...company_name_validation} />
+				<TextInputGroup {...img_URL_validation} />
+				<TextInputGroup {...website_URL_validation} />
+				<TextInputGroup {...youtube_URL_validation} />
+				<TextInputGroup {...instagram_URL_validation} />
+				<TextInputGroup {...facebook_URL_validation} />
+				<TextInputGroup {...vimeo_URL_validation} />
+				<TextInputGroup {...tiktok_URL_validation} />
+				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
+				<ModalFormActionsContainer>
+					<InlineButton
+						icon={undefined}
+						title="Clear"
+						onClick={handleClear}
+					/>
+					<InlineButton
+						icon={undefined}
+						title="Submit"
+						onClick={handleSubmit}
+					/>
+				</ModalFormActionsContainer>
+			</ModalForm>
+		</FormProvider>
 	)
 }

@@ -9,11 +9,7 @@ import { IBaseGallery } from "../../interfaces/models"
 import { initialGalleryData } from "../../data/initial-data"
 import { galleryFonts } from "../../data/app-constants"
 // Components
-import {
-	ColorInputGroup,
-	ControlGroup,
-	TextInputGroup,
-} from "../input-groups/input-groups"
+import { TextInputGroup } from "../input-groups/input-groups"
 // Styles
 import {
 	ModalFormActionsContainer,
@@ -21,7 +17,6 @@ import {
 	ModalFormStyleContainer,
 } from "../../styles/components/modal.style"
 import { GallerySubmitButton } from "../buttons/api/GallerySubmitButton"
-import { ClearButton } from "../buttons/api/ClearButton"
 
 export const GalleryForm: React.FC = () => {
 	// load context
@@ -65,54 +60,56 @@ export const GalleryForm: React.FC = () => {
 				: initialGalleryData,
 		)
 
-	return (
-		<ModalForm>
-			{/* <span>{`User ID: ${formData.user_id}`}</span> */}
-			<TextInputGroup
-				id="gallery_name"
-				title="Gallery Name"
-				maxLength={40}
-				onChange={handleChange}
-				value={formData.gallery_name}
-			/>
-			<TextInputGroup
-				id="img_URL"
-				title="Background Image URL"
-				maxLength={undefined}
-				onChange={handleChange}
-				value={formData.img_URL}
-			/>
-			<ControlGroup
-				id="font"
-				title="Font"
-				options={galleryFonts}
-				onChange={handleChange}
-				value={formData.font}
-			/>
-			<ModalFormStyleContainer>
-				<ColorInputGroup
-					id="hex1"
-					title="Color 1"
-					onChange={handleChange}
-					value={formData.hex1}
-				/>
-				<ColorInputGroup
-					id="hex2"
-					title="Color 2"
-					onChange={handleChange}
-					value={formData.hex2}
-				/>
-				<ColorInputGroup
-					id="hex3"
-					title="Color 3"
-					onChange={handleChange}
-					value={formData.hex3}
-				/>
-			</ModalFormStyleContainer>
-			<ModalFormActionsContainer>
-				<ClearButton onClear={handleClear} />
-				<GallerySubmitButton formData={formData} />
-			</ModalFormActionsContainer>
-		</ModalForm>
-	)
+	return <ModalForm></ModalForm>
+
+	// return (
+	// 	<ModalForm>
+	// 		{/* <span>{`User ID: ${formData.user_id}`}</span> */}
+	// 		<TextInputGroup
+	// 			id="gallery_name"
+	// 			title="Gallery Name"
+	// 			maxLength={40}
+	// 			onChange={handleChange}
+	// 			value={formData.gallery_name}
+	// 		/>
+	// 		<TextInputGroup
+	// 			id="img_URL"
+	// 			title="Background Image URL"
+	// 			maxLength={undefined}
+	// 			onChange={handleChange}
+	// 			value={formData.img_URL}
+	// 		/>
+	// 		<ControlGroup
+	// 			id="font"
+	// 			title="Font"
+	// 			options={galleryFonts}
+	// 			onChange={handleChange}
+	// 			value={formData.font}
+	// 		/>
+	// 		<ModalFormStyleContainer>
+	// 			<ColorInputGroup
+	// 				id="hex1"
+	// 				title="Color 1"
+	// 				onChange={handleChange}
+	// 				value={formData.hex1}
+	// 			/>
+	// 			<ColorInputGroup
+	// 				id="hex2"
+	// 				title="Color 2"
+	// 				onChange={handleChange}
+	// 				value={formData.hex2}
+	// 			/>
+	// 			<ColorInputGroup
+	// 				id="hex3"
+	// 				title="Color 3"
+	// 				onChange={handleChange}
+	// 				value={formData.hex3}
+	// 			/>
+	// 		</ModalFormStyleContainer>
+	// 		<ModalFormActionsContainer>
+	// 			<ClearButton onClear={handleClear} />
+	// 			<GallerySubmitButton formData={formData} />
+	// 		</ModalFormActionsContainer>
+	// 	</ModalForm>
+	// )
 }

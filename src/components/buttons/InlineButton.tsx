@@ -9,7 +9,7 @@ import {
 } from "../../styles/components/buttons.style"
 
 interface Props {
-	icon: IconDefinition | null
+	icon: IconDefinition | undefined
 	title: string
 	onClick: ((e: any) => any) | undefined
 }

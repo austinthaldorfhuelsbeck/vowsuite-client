@@ -86,5 +86,7 @@ export const GallerySubmitButton: React.FC<GallerySubmitButtonProps> = ({
 		getGalleryResponse(formData, gallery?.gallery_id)
 	}
 
-	return <InlineButton onClick={handleSubmit} icon={null} title="Submit" />
+	return (
+		<InlineButton onClick={handleSubmit} icon={undefined} title="Submit" />
+	)
 }

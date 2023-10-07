@@ -14,10 +14,12 @@ import { IApiResponse } from "../../../interfaces/api"
 
 interface CompanySubmitButtonProps {
 	formData: ICompany
+	setError: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 	formData,
+	setError,
 }) => {
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
@@ -50,11 +52,16 @@ export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 				} else {
 					response = await createCompany(accessToken, formData)
 				}
-				// update context if response is successful
+				// update context/error based on response
 				if (response?.data) {
 					// user context
 					if (userMetadata)
 						setUserMetadata({ ...userMetadata, company: formData })
+					// no error
+					setError(undefined)
+				} else if (response?.error) {
+					// if error, set error
+					setError(response.error.message)
 				}
 			} catch (error: any) {
 				throw new Error(error)
@@ -64,5 +71,7 @@ export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 		getCompanyResponse(formData, userMetadata?.company.company_id)
 	}
 
-	return <InlineButton onClick={handleSubmit} icon={null} title="Submit" />
+	return (
+		<InlineButton onClick={handleSubmit} icon={undefined} title="Submit" />
+	)
 }
