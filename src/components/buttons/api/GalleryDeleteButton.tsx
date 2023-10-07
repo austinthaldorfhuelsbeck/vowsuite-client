@@ -5,8 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { IApiResponse } from "../../../interfaces/api"
 import { InlineButton } from "../InlineButton"
 import {
-	useGalleriesContext,
 	useGalleryContext,
+	useUserContext,
 } from "../../../context/ContextProvider"
 import { deleteGallery } from "../../../services/galleries.service"
 
@@ -14,8 +14,8 @@ export const GalleryDeleteButton: React.FC = () => {
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
 	// context
-	const { galleries, setGalleries } = useGalleriesContext()
-	const { gallery, setGallery } = useGalleryContext()
+	const { userMetadata, setUserMetadata } = useUserContext()
+	const { gallery } = useGalleryContext()
 
 	const handleDelete = (e: React.MouseEvent<HTMLLIElement>) => {
 		e.preventDefault()
@@ -37,14 +37,15 @@ export const GalleryDeleteButton: React.FC = () => {
 				// update context if response is successful
 				if (response.data) {
 					// galleries context
-					if (galleries)
-						setGalleries({
-							...galleries.filter(
-								(g) => g?.gallery_id !== gallery?.gallery_id,
-							),
+					if (userMetadata?.galleries)
+						setUserMetadata({
+							...userMetadata,
+							galleries: [
+								...userMetadata.galleries.filter(
+									(g) => g?.gallery_id !== id,
+								),
+							],
 						})
-					// gallery context
-					setGallery(undefined)
 				}
 			} catch (error: any) {
 				throw new Error(error)

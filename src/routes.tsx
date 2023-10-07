@@ -4,7 +4,6 @@ import { AuthenticationGuard } from "./components/common/AuthenticationGuard"
 import { Studio } from "./components/layouts/Studio"
 import { CallbackPage } from "./pages/CallbackPage"
 import { NotFoundPage } from "./pages/NotFoundPage"
-import { Debug } from "./components/layouts/Debug"
 
 const routes: RouteObject[] = [
 	{
@@ -16,10 +15,6 @@ const routes: RouteObject[] = [
 			{
 				path: "studio",
 				element: <AuthenticationGuard component={Studio} />,
-			},
-			{
-				path: "debug",
-				element: <Debug />,
 			},
 			{
 				path: "callback",

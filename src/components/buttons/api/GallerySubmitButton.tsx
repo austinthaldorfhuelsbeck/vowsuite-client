@@ -2,8 +2,8 @@
 import * as React from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import {
-	useGalleriesContext,
 	useGalleryContext,
+	useUserContext,
 } from "../../../context/ContextProvider"
 import {
 	createGallery,
@@ -25,8 +25,8 @@ export const GallerySubmitButton: React.FC<GallerySubmitButtonProps> = ({
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
 	// context
+	const { userMetadata, setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
-	const { galleries, setGalleries } = useGalleriesContext()
 
 	const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
 		e.preventDefault()
@@ -55,19 +55,28 @@ export const GallerySubmitButton: React.FC<GallerySubmitButtonProps> = ({
 					response = await createGallery(accessToken, formData)
 				}
 				// update context if successful
-				if (response?.data) {
+				if (response?.data && userMetadata) {
+					console.log(response.data)
 					// update list context
-					console.log("Galleries: ", galleries)
-					if (galleries?.length > 0) {
-						setGalleries([
-							...galleries,
-							{ ...response.data, videos: [] },
-						])
-					} else {
-						setGalleries([{ ...response.data }])
-					}
-					// update selected gallery context
-					setGallery({ ...response.data, videos: [] })
+					// if (userMetadata?.galleries?.length) {
+					// 	setUserMetadata({
+					// 		...userMetadata,
+					// 		galleries: [
+					// 			...userMetadata.galleries,
+					// 			{ ...response.data, videos: [] },
+					// 		],
+					// 	})
+					// } else {
+					// 	setUserMetadata({
+					// 		...userMetadata,
+					// 		galleries: [
+					// 			...userMetadata.galleries,
+					// 			...response.data,
+					// 		],
+					// 	})
+					// }
+					// // update selected gallery context
+					// setGallery({ ...response.data, videos: [] })
 				}
 			} catch (error: any) {
 				throw new Error(error)

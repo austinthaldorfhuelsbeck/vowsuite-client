@@ -3,7 +3,7 @@ import * as React from "react"
 import { useAuth0 } from "@auth0/auth0-react"
 import { getUserByEmail } from "../services/users.service"
 // Data
-import { ICompany, IGallery, IUser, IVideo } from "../interfaces/models"
+import { IGallery, IUser, IVideo } from "../interfaces/models"
 // Components
 import { PageLoader } from "../components/common/PageLoader"
 
@@ -15,14 +15,6 @@ interface IUserContext {
 const IUserContextState = {
 	userMetadata: undefined,
 	setUserMetadata: () => {},
-}
-interface IGalleriesContext {
-	galleries: (IGallery | undefined)[]
-	setGalleries: React.Dispatch<React.SetStateAction<(IGallery | undefined)[]>>
-}
-const IGalleriesContextState = {
-	galleries: [],
-	setGalleries: () => {},
 }
 interface IGalleryContext {
 	gallery: IGallery | undefined
@@ -40,18 +32,10 @@ const IVideoContextState = {
 	video: undefined,
 	setVideo: () => {},
 }
-interface ICompanyContext {
-	company: ICompany | undefined
-	setCompany: React.Dispatch<React.SetStateAction<ICompany | undefined>>
-}
-const ICompanyContextState = {
-	company: undefined,
-	setCompany: () => {},
-}
 
 // DEFINE CONTEXTS
 
-// Users
+// User
 const UserContext = React.createContext<IUserContext>(IUserContextState)
 export const useUserContext = () => {
 	const user = React.useContext(UserContext)
@@ -60,11 +44,6 @@ export const useUserContext = () => {
 	}
 	return user
 }
-// Galleries
-const GalleriesContext = React.createContext<IGalleriesContext>(
-	IGalleriesContextState,
-)
-export const useGalleriesContext = () => React.useContext(GalleriesContext)
 // Gallery
 const GalleryContext =
 	React.createContext<IGalleryContext>(IGalleryContextState)
@@ -84,16 +63,6 @@ export const useVideoContext = () => {
 	}
 	return video
 }
-// Company
-const CompanyContext =
-	React.createContext<ICompanyContext>(ICompanyContextState)
-export const useCompanyContext = () => {
-	const company = React.useContext(CompanyContext)
-	if (company === undefined) {
-		throw new Error("useCompanyContext must be used with a CompanyContext")
-	}
-	return company
-}
 
 // LOAD USER AND BUILD PROVIDER
 
@@ -105,16 +74,10 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 	const [userMetadata, setUserMetadata] = React.useState<IUser | undefined>(
 		undefined,
 	)
-	const [galleries, setGalleries] = React.useState<(IGallery | undefined)[]>(
-		[],
-	)
 	const [gallery, setGallery] = React.useState<IGallery | undefined>(
 		undefined,
 	)
 	const [video, setVideo] = React.useState<IVideo | undefined>(undefined)
-	const [company, setCompany] = React.useState<ICompany | undefined>(
-		undefined,
-	)
 
 	// load initial user metadata
 	React.useEffect(() => {
@@ -132,8 +95,6 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 				const userResponse = await getUserByEmail(accessToken, email)
 
 				setUserMetadata(userResponse.data)
-				setCompany(userResponse.data.company)
-				setGalleries(userResponse.data.galleries)
 				setGallery(userResponse.data.galleries[0])
 				// no video selected by default
 			} catch (error: any) {
@@ -148,15 +109,11 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 
 	return (
 		<UserContext.Provider value={{ userMetadata, setUserMetadata }}>
-			<CompanyContext.Provider value={{ company, setCompany }}>
-				<GalleriesContext.Provider value={{ galleries, setGalleries }}>
-					<GalleryContext.Provider value={{ gallery, setGallery }}>
-						<VideoContext.Provider value={{ video, setVideo }}>
-							{children}
-						</VideoContext.Provider>
-					</GalleryContext.Provider>
-				</GalleriesContext.Provider>
-			</CompanyContext.Provider>
+			<GalleryContext.Provider value={{ gallery, setGallery }}>
+				<VideoContext.Provider value={{ video, setVideo }}>
+					{children}
+				</VideoContext.Provider>
+			</GalleryContext.Provider>
 		</UserContext.Provider>
 	)
 }

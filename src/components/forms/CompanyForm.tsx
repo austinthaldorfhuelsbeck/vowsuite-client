@@ -1,9 +1,6 @@
 // Dependencies
 import * as React from "react"
-import {
-	useCompanyContext,
-	useUserContext,
-} from "../../context/ContextProvider"
+import { useUserContext } from "../../context/ContextProvider"
 // Data
 import { ICompany } from "../../interfaces/models"
 import { initialCompanyData } from "../../data/initial-data"
@@ -20,15 +17,17 @@ import {
 export const CompanyForm: React.FC = () => {
 	// load context
 	const { userMetadata } = useUserContext()
-	const { company } = useCompanyContext()
 
 	// create and set form state
 	// add the user ID if possible
 	const [formData, setFormData] = React.useState<ICompany>(initialCompanyData)
 	React.useEffect(() => {
-		if (company && userMetadata?.user_id) {
+		if (userMetadata?.company && userMetadata?.user_id) {
 			// load company data
-			setFormData({ ...company, user_id: userMetadata.user_id })
+			setFormData({
+				...userMetadata.company,
+				user_id: userMetadata.user_id,
+			})
 		} else if (userMetadata?.user_id) {
 			setFormData({
 				...initialCompanyData,
@@ -37,7 +36,7 @@ export const CompanyForm: React.FC = () => {
 		} else {
 			setFormData(initialCompanyData)
 		}
-	}, [company]) // do ^ every time the company is changed
+	}, [userMetadata?.company]) // do ^ every time the company is changed
 
 	// event handlers
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

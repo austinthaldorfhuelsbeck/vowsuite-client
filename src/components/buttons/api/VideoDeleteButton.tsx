@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react"
 import { IApiResponse } from "../../../interfaces/api"
 import {
 	useGalleryContext,
+	useUserContext,
 	useVideoContext,
 } from "../../../context/ContextProvider"
 import { deleteVideo } from "../../../services/videos.service"
@@ -14,6 +15,7 @@ export const VideoDeleteButton: React.FC = () => {
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
 	// context
+	const { userMetadata, setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	const { video, setVideo } = useVideoContext()
 
@@ -36,16 +38,23 @@ export const VideoDeleteButton: React.FC = () => {
 				)
 				// update context if response is successful
 				if (response.data) {
+					// video context
+					setVideo(undefined)
 					// gallery context
-					if (gallery)
+					if (gallery) {
 						setGallery({
 							...gallery,
 							videos: gallery.videos.filter(
-								(v) => v.video_id !== video?.video_id,
+								(v) => v.video_id !== id,
 							),
 						})
-					// video context
-					setVideo(undefined)
+						// user context
+						if (userMetadata)
+							setUserMetadata({
+								...userMetadata,
+								galleries: [...userMetadata.galleries, gallery],
+							})
+					}
 				}
 			} catch (error: any) {
 				throw new Error(error)

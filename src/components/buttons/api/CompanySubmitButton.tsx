@@ -1,10 +1,7 @@
 // Dependencies
 import * as React from "react"
 import { useAuth0 } from "@auth0/auth0-react"
-import {
-	useCompanyContext,
-	useUserContext,
-} from "../../../context/ContextProvider"
+import { useUserContext } from "../../../context/ContextProvider"
 import {
 	createCompany,
 	updateCompany,
@@ -25,7 +22,6 @@ export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 	// auth0
 	const { getAccessTokenSilently } = useAuth0()
 	// context
-	const { company, setCompany } = useCompanyContext()
 	const { userMetadata, setUserMetadata } = useUserContext()
 
 	const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
@@ -59,15 +55,13 @@ export const CompanySubmitButton: React.FC<CompanySubmitButtonProps> = ({
 					// user context
 					if (userMetadata)
 						setUserMetadata({ ...userMetadata, company: formData })
-					// company context
-					setCompany(formData)
 				}
 			} catch (error: any) {
 				throw new Error(error)
 			}
 		}
 		// call the async function on submit
-		getCompanyResponse(formData, company?.company_id)
+		getCompanyResponse(formData, userMetadata?.company.company_id)
 	}
 
 	return <InlineButton onClick={handleSubmit} icon={null} title="Submit" />
