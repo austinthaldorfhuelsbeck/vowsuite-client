@@ -25,6 +25,7 @@ export const GalleryDeleteButton: React.FC = () => {
 				// gallery
 				setGallery(undefined)
 				// user
+				console.log("response: ", response.data)
 				setUserMetadata(response.data)
 			}
 		}
