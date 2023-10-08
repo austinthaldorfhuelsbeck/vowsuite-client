@@ -2,82 +2,99 @@
 import * as React from "react"
 import {
 	useGalleryContext,
+	useUserContext,
 	useVideoContext,
 } from "../../context/ContextProvider"
 // Data
 import { IVideo } from "../../interfaces/models"
 import { initialVideoData } from "../../data/initial-data"
-// Components
-import { InputGroup } from "./InputGroups"
-import { VideoSubmitButton } from "../buttons/api/VideoSubmitButton"
 // Styles
 import {
+	FormError,
+	FormSuccess,
 	ModalForm,
 	ModalFormActionsContainer,
 } from "../../styles/components/modal.style"
+import { FormProvider, useForm } from "react-hook-form"
+import { IApiResponse } from "../../interfaces/api"
+import { createVideo, updateVideo } from "../../services/videos.service"
+import { copy } from "../../data/app-constants"
+import { InlineButton } from "../buttons/InlineButton"
+import {
+	img_URL_validation,
+	video_URL_validation,
+	video_name_validation,
+} from "../../utils/inputValidation"
+import { InputGroup } from "./InputGroups"
 
 export const VideoForm: React.FC = () => {
 	// load context
-	const { gallery } = useGalleryContext()
-	const { video } = useVideoContext()
+	const { userMetadata, setUserMetadata } = useUserContext()
+	const { gallery, setGallery } = useGalleryContext()
+	const { video, setVideo } = useVideoContext()
+	// determine initial form data from context
+	let initialFormData: IVideo = video ? video : initialVideoData
 
-	// create and set form state
-	// add the gallery ID if possible
-	const [formData, setFormData] = React.useState<IVideo>(initialVideoData)
-	React.useEffect(() => {
-		if (video && gallery) {
-			setFormData({ ...video, gallery_id: gallery.gallery_id })
-		} else if (gallery) {
-			setFormData({ ...initialVideoData, gallery_id: gallery.gallery_id })
-		} else {
-			setFormData(initialVideoData)
-		}
-	}, [video]) // do ^ every time the video is changed
-
-	// event handlers
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setFormData({
-			...formData,
-			[e.target.name]: e.target.value,
-		})
+	// state
+	const methods = useForm({ defaultValues: initialFormData })
+	const [success, setSuccess] = React.useState<boolean>(false)
+	const [error, setError] = React.useState<string | undefined>(undefined)
+	// handlers
+	const handleClear = () => {
+		methods.reset(initialVideoData)
+		setSuccess(false)
+		setError(undefined)
 	}
-	const handleClear = () =>
-		setFormData(
-			// tack on the gallery ID
-			gallery?.gallery_id
-				? { ...initialVideoData, gallery_id: gallery.gallery_id }
-				: initialVideoData,
-		)
+	const handleSubmit = methods.handleSubmit(async (formData: IVideo) => {
+		const request: IVideo = gallery
+			? { ...formData, gallery_id: gallery.gallery_id }
+			: formData
+		// call API
+		const response: IApiResponse = video
+			? await updateVideo(request, video.video_id)
+			: await createVideo(request)
+		// response is the full parent gallery
+		if (response.data) {
+			// update user context
 
-	return <ModalForm></ModalForm>
+			// update gallery context
+			setGallery(response.data)
+			// update video context
+			setVideo(request)
+			// update success banner
+			setSuccess(true)
+		}
+		if (response.error) {
+			// update error banner
+			setError(response.error.message)
+		}
+	})
 
-	// return (
-	// 	<ModalForm>
-	// 		<TextInputGroup
-	// 			id="video_name"
-	// 			title="Video Name"
-	// 			maxLength={40}
-	// 			onChange={handleChange}
-	// 			value={formData.video_name}
-	// 		/>
-	// 		<TextInputGroup
-	// 			id="video_URL"
-	// 			title="Video URL"
-	// 			maxLength={undefined}
-	// 			onChange={handleChange}
-	// 			value={formData.video_URL}
-	// 		/>
-	// 		<TextInputGroup
-	// 			id="img_URL"
-	// 			title="Image URL"
-	// 			maxLength={undefined}
-	// 			onChange={handleChange}
-	// 			value={formData.img_URL}
-	// 		/>
-	// 		<ModalFormActionsContainer>
-	// 			<ClearButton onClear={handleClear} />
-	// 			<VideoSubmitButton formData={formData} />
-	// 		</ModalFormActionsContainer>
-	// 	</ModalForm>
-	// )
+	return (
+		<FormProvider {...methods}>
+			<ModalForm
+				onSubmit={(e: any) => e.preventDefault()}
+				noValidate
+				autoComplete="off"
+			>
+				<InputGroup {...video_name_validation} />
+				<InputGroup {...video_URL_validation} />
+				<InputGroup {...img_URL_validation} />
+				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
+				{error && <FormError>{error}</FormError>}
+				<ModalFormActionsContainer>
+					<InlineButton
+						icon={undefined}
+						title="Clear"
+						onClick={handleClear}
+					/>
+					<InlineButton
+						icon={undefined}
+						title="Submit"
+						onClick={handleSubmit}
+					/>
+				</ModalFormActionsContainer>
+			</ModalForm>
+		</FormProvider>
+	)
 }

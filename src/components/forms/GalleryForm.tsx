@@ -17,10 +17,14 @@ import {
 	ModalForm,
 	FormSuccess,
 	FormError,
+	ModalFormStyleContainer,
 } from "../../styles/components/modal.style"
 import {
 	font_validation,
 	gallery_name_validation,
+	hex1_validation,
+	hex2_validation,
+	hex3_validation,
 	img_URL_validation,
 } from "../../utils/inputValidation"
 import { InlineButton } from "../buttons/InlineButton"
@@ -33,12 +37,12 @@ export const GalleryForm: React.FC = () => {
 	const { gallery, setGallery } = useGalleryContext()
 	// determine initial form data from context
 	let initialFormData: IBaseGallery = initialGalleryData
-	if (userMetadata?.user_id) {
+	if (userMetadata) {
 		if (gallery) {
 			// load selected gallery and userID
 			initialFormData = { ...gallery, user_id: userMetadata.user_id }
 		} else {
-			// load userID
+			// load userID to initial data
 			initialFormData = {
 				...initialGalleryData,
 				user_id: userMetadata.user_id,
@@ -92,6 +96,11 @@ export const GalleryForm: React.FC = () => {
 				<InputGroup {...gallery_name_validation} />
 				<InputGroup {...img_URL_validation} />
 				<ControlInputGroup {...font_validation} />
+				<ModalFormStyleContainer>
+					<InputGroup {...hex1_validation} />
+					<InputGroup {...hex2_validation} />
+					<InputGroup {...hex3_validation} />
+				</ModalFormStyleContainer>
 				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
 				{error && <FormError>{error}</FormError>}
 				<ModalFormActionsContainer>
@@ -109,55 +118,4 @@ export const GalleryForm: React.FC = () => {
 			</ModalForm>
 		</FormProvider>
 	)
-
-	// return (
-	// 	<ModalForm>
-	// 		{/* <span>{`User ID: ${formData.user_id}`}</span> */}
-	// 		<TextInputGroup
-	// 			id="gallery_name"
-	// 			title="Gallery Name"
-	// 			maxLength={40}
-	// 			onChange={handleChange}
-	// 			value={formData.gallery_name}
-	// 		/>
-	// 		<TextInputGroup
-	// 			id="img_URL"
-	// 			title="Background Image URL"
-	// 			maxLength={undefined}
-	// 			onChange={handleChange}
-	// 			value={formData.img_URL}
-	// 		/>
-	// 		<ControlGroup
-	// 			id="font"
-	// 			title="Font"
-	// 			options={galleryFonts}
-	// 			onChange={handleChange}
-	// 			value={formData.font}
-	// 		/>
-	// 		<ModalFormStyleContainer>
-	// 			<ColorTextInputGroup
-	// 				id="hex1"
-	// 				title="Color 1"
-	// 				onChange={handleChange}
-	// 				value={formData.hex1}
-	// 			/>
-	// 			<ColorTextInputGroup
-	// 				id="hex2"
-	// 				title="Color 2"
-	// 				onChange={handleChange}
-	// 				value={formData.hex2}
-	// 			/>
-	// 			<ColorTextInputGroup
-	// 				id="hex3"
-	// 				title="Color 3"
-	// 				onChange={handleChange}
-	// 				value={formData.hex3}
-	// 			/>
-	// 		</ModalFormStyleContainer>
-	// 		<ModalFormActionsContainer>
-	// 			<ClearButton onClear={handleClear} />
-	// 			<GallerySubmitButton formData={formData} />
-	// 		</ModalFormActionsContainer>
-	// 	</ModalForm>
-	// )
 }

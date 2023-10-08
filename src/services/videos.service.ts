@@ -3,10 +3,7 @@ import { IApiResponse } from "../interfaces/api"
 import { callExternalApi } from "./external-api.service"
 import { IVideo } from "../interfaces/models"
 
-export const createVideo = async (
-	accessToken: string,
-	video: IVideo,
-): Promise<IApiResponse> => {
+export const createVideo = async (video: IVideo): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
@@ -14,7 +11,6 @@ export const createVideo = async (
 		method: "POST",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 		data: video,
 	}
@@ -28,7 +24,6 @@ export const createVideo = async (
 }
 
 export const updateVideo = async (
-	accessToken: string,
 	video: IVideo,
 	id: number,
 ): Promise<IApiResponse> => {
@@ -39,7 +34,6 @@ export const updateVideo = async (
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 		data: video,
 	}
@@ -52,10 +46,7 @@ export const updateVideo = async (
 	}
 }
 
-export const deleteVideo = async (
-	accessToken: string,
-	id: number,
-): Promise<IApiResponse> => {
+export const deleteVideo = async (id: number): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
@@ -63,7 +54,6 @@ export const deleteVideo = async (
 		method: "DELETE",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 	}
 

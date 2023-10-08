@@ -34,7 +34,6 @@ const IVideoContextState = {
 }
 
 // DEFINE CONTEXTS
-
 // User
 const UserContext = React.createContext<IUserContext>(IUserContextState)
 export const useUserContext = () => {
@@ -70,7 +69,7 @@ interface ProviderProps {
 	children: React.ReactNode
 }
 export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
-	const { user, getAccessTokenSilently } = useAuth0()
+	const { user } = useAuth0()
 	const [userMetadata, setUserMetadata] = React.useState<IUser | undefined>(
 		undefined,
 	)
@@ -82,28 +81,12 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 	// load initial user metadata
 	React.useEffect(() => {
 		const getUserResponse = async (email: string) => {
-			const audienceUrl = process.env.REACT_APP_AUTH0_AUDIENCE
-
-			try {
-				const accessToken = await getAccessTokenSilently({
-					authorizationParams: {
-						audience: audienceUrl,
-						scope: "read:current_user",
-					},
-				})
-
-				const userResponse = await getUserByEmail(accessToken, email)
-
-				setUserMetadata(userResponse.data)
-				setGallery(undefined)
-				// no video selected by default
-			} catch (error: any) {
-				throw new Error()
-			}
+			const userResponse = await getUserByEmail(email)
+			setUserMetadata(userResponse.data)
+			setGallery(undefined)
 		}
-
 		if (user?.email) getUserResponse(user.email)
-	}, [user, getAccessTokenSilently])
+	}, [user])
 
 	if (!userMetadata) return <PageLoader />
 

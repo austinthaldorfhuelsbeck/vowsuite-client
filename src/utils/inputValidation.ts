@@ -34,6 +34,23 @@ export const gallery_name_validation = {
 	},
 }
 
+export const video_name_validation = {
+	label: "Video Name",
+	type: "text",
+	id: "video_name",
+	placeholder: "Name your video",
+	validation: {
+		required: {
+			value: true,
+			message: "Video name required",
+		},
+		maxLength: {
+			value: 40,
+			message: "40 characters max",
+		},
+	},
+}
+
 export const img_URL_validation = {
 	label: "Image URL",
 	type: "text",
@@ -42,6 +59,19 @@ export const img_URL_validation = {
 	validation: {
 		required: {
 			value: false,
+		},
+	},
+}
+
+export const video_URL_validation = {
+	label: "Video URL",
+	type: "text",
+	id: "video_URL",
+	placeholder: "Video URL",
+	validation: {
+		required: {
+			value: true,
+			message: "Video URL required",
 		},
 	},
 }
@@ -127,6 +157,42 @@ export const font_validation = {
 		required: {
 			value: true,
 			message: "Select a font",
+		},
+	},
+}
+
+export const hex1_validation = {
+	label: "Color 1",
+	type: "text",
+	id: "hex1",
+	placeholder: undefined,
+	validation: {
+		required: {
+			value: false,
+		},
+	},
+}
+
+export const hex2_validation = {
+	label: "Color 2",
+	type: "text",
+	id: "hex2",
+	placeholder: undefined,
+	validation: {
+		required: {
+			value: false,
+		},
+	},
+}
+
+export const hex3_validation = {
+	label: "Color 3",
+	type: "text",
+	id: "hex3",
+	placeholder: undefined,
+	validation: {
+		required: {
+			value: false,
 		},
 	},
 }

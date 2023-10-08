@@ -11,7 +11,7 @@ import { deleteGallery } from "../../../services/galleries.service"
 
 export const GalleryDeleteButton: React.FC = () => {
 	// context
-	const { userMetadata, setUserMetadata } = useUserContext()
+	const { setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 
 	const handleDelete = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -22,16 +22,10 @@ export const GalleryDeleteButton: React.FC = () => {
 			const response: IApiResponse = await deleteGallery(id)
 			// update context if response is successful
 			if (response.data) {
-				if (userMetadata?.galleries)
-					setUserMetadata({
-						...userMetadata,
-						galleries: [
-							...userMetadata.galleries.filter(
-								(g) => g?.gallery_id !== id,
-							),
-						],
-					})
+				// gallery
 				setGallery(undefined)
+				// user
+				setUserMetadata(response.data)
 			}
 		}
 		// call the async function on click if confirm
