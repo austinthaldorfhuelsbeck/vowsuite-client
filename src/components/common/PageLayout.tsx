@@ -1,7 +1,7 @@
 // Dependencies
 import * as React from "react"
 // Components
-import { NavBar } from "../navigation/NavBar"
+import { NavBar } from "../nav/NavBar"
 import { PageFooter } from "../static/PageFooter"
 // Styles
 import {

@@ -3,7 +3,7 @@ import * as React from "react"
 import {
 	ContentBlockHeader,
 	ContentBlockSubheader,
-} from "../../styles/components/content-block.style"
+} from "../../styles/components/content.style"
 import { faFileCircleQuestion } from "@fortawesome/free-solid-svg-icons"
 import { BigIcon } from "../../styles/components/util.style"
 import { copy } from "../../data/app-constants"

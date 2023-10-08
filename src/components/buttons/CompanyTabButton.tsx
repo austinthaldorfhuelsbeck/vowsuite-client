@@ -3,7 +3,7 @@ import * as React from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGear, faPlus } from "@fortawesome/free-solid-svg-icons"
 // Components
-import { Modal } from "../modals/Modal"
+import { Modal } from "../menus/Modal"
 import { CompanyForm } from "../forms/CompanyForm"
 // Styles
 import { TabButton, ButtonTitle } from "../../styles/components/buttons.style"

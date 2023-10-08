@@ -4,7 +4,7 @@ import { useGalleryContext } from "../../context/ContextProvider"
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons"
 // Components
 import { GalleryList } from "../lists/GalleryList"
-import { Modal } from "../modals/Modal"
+import { Modal } from "../menus/Modal"
 // Styles
 import {
 	GalleryContainer,

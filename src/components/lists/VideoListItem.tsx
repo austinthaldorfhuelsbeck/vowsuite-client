@@ -11,7 +11,7 @@ import {
 	ContentBlockImg,
 	ContentBlockListItem,
 	ContentBlockSubheader,
-} from "../../styles/components/content-block.style"
+} from "../../styles/components/content.style"
 import { ContentContainer } from "../../styles/components/util.style"
 import { renderMenu, videoContextList } from "../../data/context-lists"
 

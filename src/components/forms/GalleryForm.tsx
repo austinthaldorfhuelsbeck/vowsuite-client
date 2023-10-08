@@ -15,8 +15,6 @@ import { ControlInputGroup, InputGroup } from "./InputGroups"
 import {
 	ModalFormActionsContainer,
 	ModalForm,
-	FormSuccess,
-	FormError,
 	ModalFormStyleContainer,
 } from "../../styles/components/modal.style"
 import {
@@ -28,8 +26,9 @@ import {
 	img_URL_validation,
 } from "../../utils/inputValidation"
 import { InlineButton } from "../buttons/InlineButton"
-import { IApiResponse } from "../../interfaces/api"
+import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createGallery, updateGallery } from "../../services/galleries.service"
+import { Alert } from "../../styles/components/content.style"
 
 export const GalleryForm: React.FC = () => {
 	// load context
@@ -53,7 +52,7 @@ export const GalleryForm: React.FC = () => {
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
 	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<string | undefined>(undefined)
+	const [error, setError] = React.useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = () => {
 		methods.reset(initialGalleryData)
@@ -81,7 +80,7 @@ export const GalleryForm: React.FC = () => {
 			}
 			if (response.error) {
 				// update error banner
-				setError(response.error.message)
+				setError(response.error)
 			}
 		},
 	)
@@ -101,8 +100,11 @@ export const GalleryForm: React.FC = () => {
 					<InputGroup {...hex2_validation} />
 					<InputGroup {...hex3_validation} />
 				</ModalFormStyleContainer>
-				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
-				{error && <FormError>{error}</FormError>}
+				{(success || error) && (
+					<Alert error={error !== undefined}>
+						{error ? error.message : copy.formSuccess}
+					</Alert>
+				)}
 				<ModalFormActionsContainer>
 					<InlineButton
 						icon={undefined}

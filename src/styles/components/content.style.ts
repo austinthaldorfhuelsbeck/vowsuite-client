@@ -51,3 +51,14 @@ export const ContentBlockImg = styled.img`
 	margin-left: auto;
 	margin-right: auto;
 `
+
+export const Alert = styled.div<{ error: boolean }>`
+	font-family: monospace;
+	padding: 0.5rem;
+	margin-top: 1rem;
+	border-radius: 1rem;
+	background-color: ${(props) =>
+		props.error ? "var(--orange)" : "var(--emerald)"};
+	color: ${(props) =>
+		props.error ? "var(--white)" : "var(--dark-aluminium)"};
+`

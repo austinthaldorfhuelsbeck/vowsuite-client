@@ -1,12 +1,10 @@
 // Dependencies
 import * as React from "react"
 // Styles
-import {
-	FormError,
-	ModalFormContainer,
-} from "../../styles/components/modal.style"
+import { ModalFormContainer } from "../../styles/components/modal.style"
 import { useFormContext } from "react-hook-form"
 import { findInputError, isFormInvalid } from "../../utils"
+import { Alert } from "../../styles/components/content.style"
 
 // Data
 interface BaseProps {
@@ -89,7 +87,7 @@ export const ControlInputGroup: React.FC<ControlGroupProps> = ({
 }
 
 const InputError: React.FC<{ message: string }> = ({ message }) => {
-	return <FormError>{message}</FormError>
+	return <Alert error={true}>{message}</Alert>
 }
 
 // export const ColorTextInputGroup: React.FC<TextInputGroupProps> = ({

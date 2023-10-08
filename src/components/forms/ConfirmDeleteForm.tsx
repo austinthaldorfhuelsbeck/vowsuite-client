@@ -7,7 +7,7 @@ import {
 import {
 	ContentBlockHeader,
 	ContentBlockSubheader,
-} from "../../styles/components/content-block.style"
+} from "../../styles/components/content.style"
 import { copy } from "../../data/app-constants"
 
 interface VideoDeleteFormProps {

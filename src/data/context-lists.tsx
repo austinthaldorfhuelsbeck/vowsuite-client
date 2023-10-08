@@ -8,7 +8,8 @@ import { VideoDeleteForm } from "../components/forms/ConfirmDeleteForm"
 import { VideoDeleteButton } from "../components/buttons/api/VideoDeleteButton"
 import { GalleryForm } from "../components/forms/GalleryForm"
 import { GalleryDeleteButton } from "../components/buttons/api/GalleryDeleteButton"
-import { Modal } from "../components/modals/Modal"
+import { Modal } from "../components/menus/Modal"
+import { GalleryLink } from "../components/static/GalleryLink"
 
 export const renderMenu = (resources: ModalResource[]) =>
 	resources.map((resource, index) => (
@@ -71,9 +72,9 @@ export const galleryContextList: ModalResource[] = [
 		button: (
 			<ContextListItem>
 				<FontAwesomeIcon icon={faLink} />
-				<ButtonTitle>Copy Link</ButtonTitle>
+				<ButtonTitle>View Link</ButtonTitle>
 			</ContextListItem>
 		),
-		content: <span>Link copied!</span>,
+		content: <GalleryLink />,
 	},
 ]

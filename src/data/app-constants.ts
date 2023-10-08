@@ -43,6 +43,7 @@ export const copy: IStringHash = {
 	confirmDeleteMessage:
 		"Deleting is permanent. You will not be able to recover this object.",
 	formSuccess: "Form has been submitted successfully!",
+	linkCopySuccess: "Link has been copied successfully!",
 	galleryNotFoundHeader: "No Gallery Selected",
 	galleryNotFoundSubheader:
 		"Select a Gallery, or click New Gallery to create your first gallery",
@@ -51,5 +52,6 @@ export const copy: IStringHash = {
 }
 
 export const baseUrls: IStringHash = {
-	galleryPage: "https://galleries.vowsuite.com",
+	// galleryPage: "https://vowsuite.com/galleries",
+	galleryPage: "https://localhost:4040/galleries",
 }

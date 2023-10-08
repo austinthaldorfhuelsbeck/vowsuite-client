@@ -10,8 +10,6 @@ import { IVideo } from "../../interfaces/models"
 import { initialVideoData } from "../../data/initial-data"
 // Styles
 import {
-	FormError,
-	FormSuccess,
 	ModalForm,
 	ModalFormActionsContainer,
 } from "../../styles/components/modal.style"
@@ -26,6 +24,7 @@ import {
 	video_name_validation,
 } from "../../utils/inputValidation"
 import { InputGroup } from "./InputGroups"
+import { Alert } from "../../styles/components/content.style"
 
 export const VideoForm: React.FC = () => {
 	// load context
@@ -80,8 +79,8 @@ export const VideoForm: React.FC = () => {
 				<InputGroup {...video_name_validation} />
 				<InputGroup {...video_URL_validation} />
 				<InputGroup {...img_URL_validation} />
-				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
-				{error && <FormError>{error}</FormError>}
+				{success && <Alert error={!success}>{copy.formSuccess}</Alert>}
+				{error && <Alert error={error !== undefined}>{error}</Alert>}
 				<ModalFormActionsContainer>
 					<InlineButton
 						icon={undefined}

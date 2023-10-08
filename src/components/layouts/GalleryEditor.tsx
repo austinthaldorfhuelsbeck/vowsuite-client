@@ -14,9 +14,9 @@ import { VideoList } from "../lists/VideoList"
 import {
 	ContentBlockContainer,
 	ContentBlockHeader,
-} from "../../styles/components/content-block.style"
+} from "../../styles/components/content.style"
 import { NavBarContainer } from "../../styles/components/nav-bar.style"
-import { Modal } from "../modals/Modal"
+import { Modal } from "../menus/Modal"
 import { VideoForm } from "../forms/VideoForm"
 
 export const GalleryEditor: React.FC = () => {

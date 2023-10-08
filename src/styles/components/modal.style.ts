@@ -9,6 +9,7 @@ export const ModalDialog = styled.dialog`
 	padding-top: 2rem;
 	width: 50rem;
 	border-radius: 0.5rem;
+	cursor: default;
 
 	&::backdrop {
 		position: fixed;
@@ -102,19 +103,4 @@ export const ModalFormActionsContainer = styled.div`
 	justify-content: space-between;
 	padding: 3rem 0rem 0rem 0rem;
 	margin-bottom: -1rem;
-`
-
-export const FormError = styled.p`
-	font-family: monospace;
-	background-color: var(--orange);
-	padding: 0.5rem;
-	border-radius: 1rem;
-`
-
-export const FormSuccess = styled.p`
-	font-family: monospace;
-	background-color: var(--emerald);
-	padding: 0.5rem;
-	border-radius: 1rem;
-	color: var(--dark-aluminium);
 `
