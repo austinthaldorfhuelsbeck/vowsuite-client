@@ -10,7 +10,7 @@ import { IBaseGallery } from "../../interfaces/models"
 import { initialGalleryData } from "../../data/initial-data"
 import { copy } from "../../data/app-constants"
 // Components
-import { ControlInputGroup, TextInputGroup } from "./InputGroups"
+import { ControlInputGroup, InputGroup } from "./InputGroups"
 // Styles
 import {
 	ModalFormActionsContainer,
@@ -82,6 +82,7 @@ export const GalleryForm: React.FC = () => {
 				setGallery({ ...formData, videos: [] })
 				// update success banner
 				setSuccess(true)
+				await new Promise(() => setTimeout(handleClear, 3000))
 			}
 			if (response.error) {
 				// update error banner
@@ -97,8 +98,9 @@ export const GalleryForm: React.FC = () => {
 				noValidate
 				autoComplete="off"
 			>
-				<TextInputGroup {...gallery_name_validation} />
-				<TextInputGroup {...img_URL_validation} />
+				<InputGroup {...gallery_name_validation} />
+				{/* <img src={gallery?.img_URL} alt="Gallery Image" /> */}
+				<InputGroup {...img_URL_validation} />
 				<ControlInputGroup {...font_validation} />
 				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
 				{error && <FormError>{error}</FormError>}

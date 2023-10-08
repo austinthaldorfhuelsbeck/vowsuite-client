@@ -9,20 +9,20 @@ import { useFormContext } from "react-hook-form"
 import { findInputError, isFormInvalid } from "../../utils"
 
 // Data
-interface InputGroupProps {
+interface BaseProps {
 	label: string
 	id: string
 	validation: any
 }
-interface TextGroupProps extends InputGroupProps {
+interface InputGroupProps extends BaseProps {
 	type: string
-	placeholder: string
+	placeholder: string | undefined
 }
-interface ControlGroupProps extends InputGroupProps {
+interface ControlGroupProps extends BaseProps {
 	options: string[]
 }
 
-export const TextInputGroup: React.FC<TextGroupProps> = ({
+export const InputGroup: React.FC<InputGroupProps> = ({
 	label,
 	type,
 	id,

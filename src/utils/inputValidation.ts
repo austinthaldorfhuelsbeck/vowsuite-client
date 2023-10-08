@@ -122,6 +122,7 @@ export const font_validation = {
 	label: "Font",
 	id: "font",
 	options: galleryFonts,
+	placeholder: undefined,
 	validation: {
 		required: {
 			value: true,

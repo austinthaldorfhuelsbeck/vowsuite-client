@@ -18,7 +18,7 @@ import {
 	tiktok_URL_validation,
 } from "../../utils/inputValidation"
 // Components
-import { TextInputGroup } from "./InputGroups"
+import { InputGroup } from "./InputGroups"
 // Styles
 import {
 	FormError,
@@ -85,14 +85,14 @@ export const CompanyForm: React.FC = () => {
 				noValidate
 				autoComplete="off"
 			>
-				<TextInputGroup {...company_name_validation} />
-				<TextInputGroup {...img_URL_validation} />
-				<TextInputGroup {...website_URL_validation} />
-				<TextInputGroup {...youtube_URL_validation} />
-				<TextInputGroup {...instagram_URL_validation} />
-				<TextInputGroup {...facebook_URL_validation} />
-				<TextInputGroup {...vimeo_URL_validation} />
-				<TextInputGroup {...tiktok_URL_validation} />
+				<InputGroup {...company_name_validation} />
+				<InputGroup {...img_URL_validation} />
+				<InputGroup {...website_URL_validation} />
+				<InputGroup {...youtube_URL_validation} />
+				<InputGroup {...instagram_URL_validation} />
+				<InputGroup {...facebook_URL_validation} />
+				<InputGroup {...vimeo_URL_validation} />
+				<InputGroup {...tiktok_URL_validation} />
 				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
 				{error && <FormError>{error}</FormError>}
 				<ModalFormActionsContainer>
