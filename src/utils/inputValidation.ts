@@ -1,3 +1,5 @@
+import { galleryFonts } from "../data/app-constants"
+
 export const company_name_validation = {
 	label: "Company Name",
 	type: "text",
@@ -7,6 +9,23 @@ export const company_name_validation = {
 		required: {
 			value: true,
 			message: "Company name required",
+		},
+		maxLength: {
+			value: 40,
+			message: "40 characters max",
+		},
+	},
+}
+
+export const gallery_name_validation = {
+	label: "Gallery Name",
+	type: "text",
+	id: "gallery_name",
+	placeholder: "Name your gallery",
+	validation: {
+		required: {
+			value: true,
+			message: "Gallery name required",
 		},
 		maxLength: {
 			value: 40,
@@ -95,6 +114,18 @@ export const tiktok_URL_validation = {
 	validation: {
 		required: {
 			value: false,
+		},
+	},
+}
+
+export const font_validation = {
+	label: "Font",
+	id: "font",
+	options: galleryFonts,
+	validation: {
+		required: {
+			value: true,
+			message: "Select a font",
 		},
 	},
 }

@@ -8,7 +8,7 @@ import {
 import { IVideo } from "../../interfaces/models"
 import { initialVideoData } from "../../data/initial-data"
 // Components
-import { TextInputGroup } from "../input-groups/input-groups"
+import { TextInputGroup } from "./InputGroups"
 import { VideoSubmitButton } from "../buttons/api/VideoSubmitButton"
 // Styles
 import {

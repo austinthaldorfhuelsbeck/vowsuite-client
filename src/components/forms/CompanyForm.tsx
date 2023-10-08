@@ -1,9 +1,12 @@
 // Dependencies
 import * as React from "react"
 import { useUserContext } from "../../context/ContextProvider"
+import { FormProvider, useForm } from "react-hook-form"
+import { getCompanyResponse } from "../../services/get-response.service"
 // Data
 import { ICompany } from "../../interfaces/models"
 import { initialCompanyData } from "../../data/initial-data"
+import { copy } from "../../data/app-constants"
 import {
 	company_name_validation,
 	img_URL_validation,
@@ -15,20 +18,20 @@ import {
 	tiktok_URL_validation,
 } from "../../utils/inputValidation"
 // Components
-import { TextInputGroup } from "../input-groups/input-groups"
+import { TextInputGroup } from "./InputGroups"
 // Styles
 import {
+	FormError,
 	FormSuccess,
 	ModalForm,
 	ModalFormActionsContainer,
 } from "../../styles/components/modal.style"
-import { FormProvider, useForm } from "react-hook-form"
 import { InlineButton } from "../buttons/InlineButton"
-import { copy } from "../../data/app-constants"
+import { IApiResponse } from "../../interfaces/api"
 
 export const CompanyForm: React.FC = () => {
 	// load context
-	const { userMetadata } = useUserContext()
+	const { userMetadata, setUserMetadata } = useUserContext()
 	// determine initial form data from context
 	let initialFormData: ICompany = initialCompanyData
 	if (userMetadata?.company && userMetadata?.user_id) {
@@ -45,17 +48,34 @@ export const CompanyForm: React.FC = () => {
 		}
 	}
 
-	// state and handlers
+	// state
 	const methods = useForm({ defaultValues: initialFormData })
 	const [success, setSuccess] = React.useState<boolean>(false)
+	const [error, setError] = React.useState<string | undefined>(undefined)
+	// handlers
 	const handleClear = () => {
-		methods.reset()
+		methods.reset(initialCompanyData)
 		setSuccess(false)
+		setError(undefined)
 	}
-	const handleSubmit = methods.handleSubmit((data: any) => {
-		console.log(data)
-		methods.reset()
-		setSuccess(true)
+	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
+		// call API
+		const response: IApiResponse = await getCompanyResponse(
+			formData,
+			userMetadata?.company.company_id,
+		)
+		if (response.data) {
+			// update context
+			if (userMetadata) {
+				setUserMetadata({ ...userMetadata, company: formData })
+			}
+			// update success banner
+			setSuccess(true)
+		}
+		if (response.error) {
+			// update error banner
+			setError(response.error.message)
+		}
 	})
 
 	return (
@@ -74,6 +94,7 @@ export const CompanyForm: React.FC = () => {
 				<TextInputGroup {...vimeo_URL_validation} />
 				<TextInputGroup {...tiktok_URL_validation} />
 				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
+				{error && <FormError>{error}</FormError>}
 				<ModalFormActionsContainer>
 					<InlineButton
 						icon={undefined}

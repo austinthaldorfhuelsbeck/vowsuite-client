@@ -4,7 +4,6 @@ import { callExternalApi } from "./external-api.service"
 import { IBaseGallery } from "../interfaces/models"
 
 export const createGallery = async (
-	accessToken: string,
 	gallery: IBaseGallery,
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
@@ -14,7 +13,6 @@ export const createGallery = async (
 		method: "POST",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 		data: gallery,
 	}
@@ -28,7 +26,6 @@ export const createGallery = async (
 }
 
 export const updateGallery = async (
-	accessToken: string,
 	gallery: IBaseGallery,
 	id: number,
 ): Promise<IApiResponse> => {
@@ -39,7 +36,6 @@ export const updateGallery = async (
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 		data: gallery,
 	}

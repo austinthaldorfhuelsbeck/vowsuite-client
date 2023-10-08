@@ -4,7 +4,6 @@ import { callExternalApi } from "./external-api.service"
 import { ICompany } from "../interfaces/models"
 
 export const createCompany = async (
-	accessToken: string,
 	copmany: ICompany,
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
@@ -14,7 +13,6 @@ export const createCompany = async (
 		method: "POST",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 		data: copmany,
 	}
@@ -28,7 +26,6 @@ export const createCompany = async (
 }
 
 export const updateCompany = async (
-	accessToken: string,
 	copmany: ICompany,
 	id: number,
 ): Promise<IApiResponse> => {
@@ -39,7 +36,6 @@ export const updateCompany = async (
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 		data: copmany,
 	}
