@@ -43,6 +43,11 @@ export const copy: IStringHash = {
 	confirmDeleteMessage:
 		"Deleting is permanent. You will not be able to recover this object.",
 	formSuccess: "Form has been submitted successfully!",
+	galleryNotFoundHeader: "No Gallery Selected",
+	galleryNotFoundSubheader:
+		"Select a Gallery, or click New Gallery to create your first gallery",
+	videosNotFoundHeader: "Gallery Empty",
+	videosNotFoundSubheader: "Click New Video to upload to the gallery",
 }
 
 export const baseUrls: IStringHash = {

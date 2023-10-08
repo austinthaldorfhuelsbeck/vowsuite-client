@@ -15,15 +15,3 @@ export const getCompanyResponse = async (
 		return await createCompany(formData)
 	}
 }
-
-export const getGalleryResponse = async (
-	formData: IBaseGallery,
-	id: number | undefined,
-) => {
-	// API call: update/create based on id
-	if (id) {
-		return await updateGallery(formData, id)
-	} else {
-		return await createGallery(formData)
-	}
-}

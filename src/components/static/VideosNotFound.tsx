@@ -6,13 +6,14 @@ import {
 } from "../../styles/components/content-block.style"
 import { faVideoSlash } from "@fortawesome/free-solid-svg-icons"
 import { BigIcon } from "../../styles/components/util.style"
+import { copy } from "../../data/app-constants"
 
 export const VideosNotFound: React.FC = () => {
 	return (
 		<>
-			<ContentBlockHeader>Gallery Empty</ContentBlockHeader>
+			<ContentBlockHeader>{copy.videosNotFoundHeader}</ContentBlockHeader>
 			<ContentBlockSubheader>
-				Click New Video to upload to the gallery
+				{copy.videosNotFoundSubheader}
 			</ContentBlockSubheader>
 			<BigIcon icon={faVideoSlash} />
 		</>

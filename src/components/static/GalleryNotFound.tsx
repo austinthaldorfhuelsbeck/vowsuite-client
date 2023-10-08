@@ -6,13 +6,16 @@ import {
 } from "../../styles/components/content-block.style"
 import { faFileCircleQuestion } from "@fortawesome/free-solid-svg-icons"
 import { BigIcon } from "../../styles/components/util.style"
+import { copy } from "../../data/app-constants"
 
 export const GalleryNotFound: React.FC = () => {
 	return (
 		<>
-			<ContentBlockHeader>Gallery Not Found</ContentBlockHeader>
+			<ContentBlockHeader>
+				{copy.galleryNotFoundHeader}
+			</ContentBlockHeader>
 			<ContentBlockSubheader>
-				Click New Gallery to create your first gallery
+				{copy.galleryNotFoundSubheader}
 			</ContentBlockSubheader>
 			<BigIcon icon={faFileCircleQuestion} />
 		</>

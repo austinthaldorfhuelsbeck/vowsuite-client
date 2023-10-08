@@ -95,7 +95,7 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 				const userResponse = await getUserByEmail(accessToken, email)
 
 				setUserMetadata(userResponse.data)
-				setGallery(userResponse.data.galleries[0])
+				setGallery(undefined)
 				// no video selected by default
 			} catch (error: any) {
 				throw new Error()

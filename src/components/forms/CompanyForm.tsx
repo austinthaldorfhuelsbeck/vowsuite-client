@@ -67,7 +67,7 @@ export const CompanyForm: React.FC = () => {
 		if (response.data) {
 			// update context
 			if (userMetadata) {
-				setUserMetadata({ ...userMetadata, company: formData })
+				setUserMetadata({ ...userMetadata, company: response.data })
 			}
 			// update success banner
 			setSuccess(true)

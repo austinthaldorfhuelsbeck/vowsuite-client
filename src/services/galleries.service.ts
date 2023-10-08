@@ -31,13 +31,26 @@ export const updateGallery = async (
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
+	// transform gallery data to the format
+	// the API is expecting
+	const updatedGallery = {
+		gallery_id: gallery.gallery_id,
+		user_id: gallery.user_id,
+		gallery_name: gallery.gallery_name,
+		img_URL: gallery.img_URL,
+		hex1: gallery.hex1,
+		hex2: gallery.hex2,
+		hex3: gallery.hex3,
+		updated_at: new Date(),
+	}
+
 	const config: Axios.AxiosRequestConfig = {
 		url: `${apiUrl}/galleries/${id}`,
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
 		},
-		data: gallery,
+		data: updatedGallery,
 	}
 
 	const { data, error } = (await callExternalApi({ config })) as IApiResponse
@@ -48,10 +61,7 @@ export const updateGallery = async (
 	}
 }
 
-export const deleteGallery = async (
-	accessToken: string,
-	id: number,
-): Promise<IApiResponse> => {
+export const deleteGallery = async (id: number): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
@@ -59,7 +69,6 @@ export const deleteGallery = async (
 		method: "DELETE",
 		headers: {
 			"content-type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
 		},
 	}
 

@@ -18,7 +18,6 @@ import {
 	FormSuccess,
 	FormError,
 } from "../../styles/components/modal.style"
-import { getGalleryResponse } from "../../services/get-response.service"
 import {
 	font_validation,
 	gallery_name_validation,
@@ -26,6 +25,7 @@ import {
 } from "../../utils/inputValidation"
 import { InlineButton } from "../buttons/InlineButton"
 import { IApiResponse } from "../../interfaces/api"
+import { createGallery, updateGallery } from "../../services/galleries.service"
 
 export const GalleryForm: React.FC = () => {
 	// load context
@@ -44,9 +44,6 @@ export const GalleryForm: React.FC = () => {
 				user_id: userMetadata.user_id,
 			}
 		}
-	} else if (gallery) {
-		// load selected gallery
-		initialFormData = gallery
 	}
 
 	// state
@@ -62,27 +59,21 @@ export const GalleryForm: React.FC = () => {
 	const handleSubmit = methods.handleSubmit(
 		async (formData: IBaseGallery) => {
 			// call API
-			const response: IApiResponse = await getGalleryResponse(
-				formData,
-				gallery?.gallery_id,
-			)
+			const response: IApiResponse = gallery
+				? await updateGallery(formData, gallery.gallery_id)
+				: await createGallery(formData)
 			if (response.data) {
 				// update user context
 				if (userMetadata) {
 					setUserMetadata({
 						...userMetadata,
-						// add gallery to list
-						galleries: [
-							...userMetadata.galleries,
-							{ ...formData, videos: [] },
-						],
+						galleries: response.data,
 					})
 				}
 				// update gallery context
 				setGallery({ ...formData, videos: [] })
 				// update success banner
 				setSuccess(true)
-				await new Promise(() => setTimeout(handleClear, 3000))
 			}
 			if (response.error) {
 				// update error banner
@@ -99,7 +90,6 @@ export const GalleryForm: React.FC = () => {
 				autoComplete="off"
 			>
 				<InputGroup {...gallery_name_validation} />
-				{/* <img src={gallery?.img_URL} alt="Gallery Image" /> */}
 				<InputGroup {...img_URL_validation} />
 				<ControlInputGroup {...font_validation} />
 				{success && <FormSuccess>{copy.formSuccess}</FormSuccess>}
