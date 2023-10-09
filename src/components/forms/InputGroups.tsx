@@ -89,23 +89,3 @@ export const ControlInputGroup: React.FC<ControlGroupProps> = ({
 const InputError: React.FC<{ message: string }> = ({ message }) => {
 	return <Alert error={true}>{message}</Alert>
 }
-
-// export const ColorTextInputGroup: React.FC<TextInputGroupProps> = ({
-// 	id,
-// 	title,
-// 	onChange,
-// 	value,
-// }) => {
-// 	return (
-// 		<ModalFormStyleContainer>
-// 			<label htmlFor={id}>{title}</label>
-// 			<input
-// 				type="color"
-// 				id={id}
-// 				name={id}
-// 				onChange={onChange}
-// 				value={value}
-// 			/>
-// 		</ModalFormStyleContainer>
-// 	)
-// }

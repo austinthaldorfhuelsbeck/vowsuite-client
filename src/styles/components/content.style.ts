@@ -31,7 +31,6 @@ export const ContentBlockListItem = styled.li`
 	margin: 1.2rem;
 
 	&:hover {
-		transform: scale(1.03);
 		background: hsla(0, 0%, 100%, 0.219);
 	}
 

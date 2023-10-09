@@ -6,6 +6,9 @@ export const List = styled.ul`
 `
 
 export const SelectorListItem = styled.li`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 	background-color: rgba(255, 255, 255, 0.08);
 	cursor: pointer;
 	padding: 1rem;

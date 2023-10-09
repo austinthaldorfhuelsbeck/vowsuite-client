@@ -14,6 +14,8 @@ import {
 } from "../../styles/components/content.style"
 import { ContentContainer } from "../../styles/components/util.style"
 import { renderMenu, videoContextList } from "../../data/context-lists"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
 
 interface VideoListItemProps {
 	video: IVideo
@@ -35,9 +37,10 @@ export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
 				<ContentBlockSubheader>
 					{`Updated - ${formatDate(video.updated_at)}`}
 				</ContentBlockSubheader>
-				<ContextMenu>
-					<>{renderMenu(videoContextList)}</>
-				</ContextMenu>
+				<ContextMenu
+					button={<FontAwesomeIcon icon={faEllipsis} />}
+					content={<>{renderMenu(videoContextList)}</>}
+				/>
 			</ContentContainer>
 		</ContentBlockListItem>
 	)

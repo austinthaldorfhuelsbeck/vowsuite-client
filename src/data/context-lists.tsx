@@ -10,6 +10,7 @@ import { GalleryForm } from "../components/forms/GalleryForm"
 import { GalleryDeleteButton } from "../components/buttons/api/GalleryDeleteButton"
 import { Modal } from "../components/menus/Modal"
 import { GalleryLink } from "../components/static/GalleryLink"
+import { UserProfileForm } from "../components/forms/UserProfileForm"
 
 export const renderMenu = (resources: ModalResource[]) =>
 	resources.map((resource, index) => (
@@ -76,5 +77,17 @@ export const galleryContextList: ModalResource[] = [
 			</ContextListItem>
 		),
 		content: <GalleryLink />,
+	},
+]
+
+export const profileContextList: ModalResource[] = [
+	{
+		button: (
+			<ContextListItem>
+				<FontAwesomeIcon icon={faPencil} />
+				<ButtonTitle>Edit User Profile</ButtonTitle>
+			</ContextListItem>
+		),
+		content: <UserProfileForm />,
 	},
 ]

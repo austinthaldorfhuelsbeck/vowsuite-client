@@ -1,27 +1,33 @@
 // Dependencies
 import * as React from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
 // Styles
 import { BlankSpan } from "../../styles/components/util.style"
 import { ContextMenuContainer } from "../../styles/components/context-menu.style"
 import { ContextMenuButton } from "../../styles/components/buttons.style"
 
 interface ContextMenuProps {
-	children: JSX.Element
+	button: JSX.Element
+	content: JSX.Element
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({ children }) => {
+export const ContextMenu: React.FC<ContextMenuProps> = ({
+	button,
+	content,
+}) => {
 	// ref for clicking outside
 	const ref = React.useRef<HTMLDivElement>(null)
 
 	// menu display state
 	const [isMenu, setIsMenu] = React.useState<boolean>(false)
 	const flipMenu = (currentState: boolean) => setIsMenu(!currentState)
+	const [x, setX] = React.useState<number>(0)
+	const [y, setY] = React.useState<number>(0)
 
 	// event handlers
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
+		setX(e.clientX - 150)
+		setY(e.clientY + 20)
 		flipMenu(isMenu)
 	}
 
@@ -44,9 +50,13 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({ children }) => {
 	return (
 		<BlankSpan ref={ref}>
 			<ContextMenuButton onClick={handleClick}>
-				<FontAwesomeIcon icon={faEllipsis} />
+				{button}
 			</ContextMenuButton>
-			{isMenu && <ContextMenuContainer>{children}</ContextMenuContainer>}
+			{isMenu && (
+				<ContextMenuContainer x={x} y={y}>
+					{content}
+				</ContextMenuContainer>
+			)}
 		</BlankSpan>
 	)
 }

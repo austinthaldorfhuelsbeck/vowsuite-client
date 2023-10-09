@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { List } from "./lists.styles"
 
-export const ContextMenuContainer = styled(List)`
+export const ContextMenuContainer = styled(List)<{ x: number; y: number }>`
 	position: absolute;
+	left: ${(props) => `${props.x}px`};
+	top: ${(props) => `${props.y}px`};
 	min-width: 16rem;
 	background-color: var(--dark-aluminium);
 	border-radius: 0.5rem;

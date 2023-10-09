@@ -14,7 +14,7 @@ import {
 	ModalFormActionsContainer,
 } from "../../styles/components/modal.style"
 import { FormProvider, useForm } from "react-hook-form"
-import { IApiResponse } from "../../interfaces/api"
+import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createVideo, updateVideo } from "../../services/videos.service"
 import { copy } from "../../data/app-constants"
 import { InlineButton } from "../buttons/InlineButton"
@@ -37,7 +37,7 @@ export const VideoForm: React.FC = () => {
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
 	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<string | undefined>(undefined)
+	const [error, setError] = React.useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = () => {
 		methods.reset(initialVideoData)
@@ -65,7 +65,7 @@ export const VideoForm: React.FC = () => {
 		}
 		if (response.error) {
 			// update error banner
-			setError(response.error.message)
+			setError(response.error)
 		}
 	})
 
@@ -79,8 +79,11 @@ export const VideoForm: React.FC = () => {
 				<InputGroup {...video_name_validation} />
 				<InputGroup {...video_URL_validation} />
 				<InputGroup {...img_URL_validation} />
-				{success && <Alert error={!success}>{copy.formSuccess}</Alert>}
-				{error && <Alert error={error !== undefined}>{error}</Alert>}
+				{(success || error) && (
+					<Alert error={error !== undefined}>
+						{error ? error.message : copy.formSuccess}
+					</Alert>
+				)}
 				<ModalFormActionsContainer>
 					<InlineButton
 						icon={undefined}

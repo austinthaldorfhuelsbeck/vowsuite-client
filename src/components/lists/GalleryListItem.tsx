@@ -3,7 +3,7 @@ import * as React from "react"
 import { IGallery } from "../../interfaces/models"
 import { useGalleryContext } from "../../context/ContextProvider"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFolder } from "@fortawesome/free-solid-svg-icons"
+import { faEllipsis, faFolder } from "@fortawesome/free-solid-svg-icons"
 // Styles
 import { SelectorListItem } from "../../styles/components/lists.styles"
 import { ButtonTitle } from "../../styles/components/buttons.style"
@@ -24,11 +24,14 @@ export const GalleryListItem: React.FC<GalleryListItemProps> = ({
 			aria-selected={currentGallery === gallery}
 			onClick={() => setGallery(currentGallery)}
 		>
-			<FontAwesomeIcon icon={faFolder} />
-			<ButtonTitle>{currentGallery.gallery_name}</ButtonTitle>
-			<ContextMenu>
-				<>{renderMenu(galleryContextList)}</>
-			</ContextMenu>
+			<ButtonTitle>
+				<FontAwesomeIcon icon={faFolder} />
+				{" " + currentGallery.gallery_name}
+			</ButtonTitle>
+			<ContextMenu
+				button={<FontAwesomeIcon icon={faEllipsis} />}
+				content={<>{renderMenu(galleryContextList)}</>}
+			/>
 		</SelectorListItem>
 	)
 }
