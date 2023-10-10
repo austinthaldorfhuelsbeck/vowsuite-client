@@ -51,7 +51,11 @@ export const ContentBlockImg = styled.img`
 	margin-right: auto;
 `
 
-export const Alert = styled.div<{ error: boolean }>`
+interface AlertProps {
+	error: boolean
+}
+
+export const Alert = styled.div<AlertProps>`
 	font-family: monospace;
 	padding: 0.5rem;
 	margin-top: 1rem;

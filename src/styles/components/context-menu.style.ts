@@ -1,7 +1,12 @@
 import styled from "styled-components"
 import { List } from "./lists.styles"
 
-export const ContextMenuContainer = styled(List)<{ x: number; y: number }>`
+interface ContextMenuProps {
+	x: number
+	y: number
+}
+
+export const ContextMenuContainer = styled(List)<ContextMenuProps>`
 	position: absolute;
 	left: ${(props) => `${props.x}px`};
 	top: ${(props) => `${props.y}px`};
