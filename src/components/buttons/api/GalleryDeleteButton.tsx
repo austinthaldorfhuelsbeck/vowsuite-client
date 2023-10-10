@@ -16,7 +16,7 @@ export const GalleryDeleteButton: React.FC = () => {
 
 	const handleDelete = (e: React.MouseEvent<HTMLLIElement>) => {
 		e.preventDefault()
-		// function to delete a video
+		// function to delete a gallery
 		const getGalleryResponse = async (id: number) => {
 			// API call
 			const response: IApiResponse = await deleteGallery(id)
@@ -25,7 +25,6 @@ export const GalleryDeleteButton: React.FC = () => {
 				// gallery
 				setGallery(undefined)
 				// user
-				console.log("response: ", response.data)
 				setUserMetadata(response.data)
 			}
 		}
