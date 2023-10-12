@@ -27,6 +27,7 @@ import {
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
+import { getUser } from "../../services/users.service"
 
 export const VideoForm: React.FC = () => {
 	// load context
@@ -57,7 +58,7 @@ export const VideoForm: React.FC = () => {
 		// response is the full parent gallery
 		if (response.data) {
 			// update user context
-
+			setUserMetadata((await getUser(response.data.user_id)).data)
 			// update gallery context
 			setGallery(response.data)
 			// update video context

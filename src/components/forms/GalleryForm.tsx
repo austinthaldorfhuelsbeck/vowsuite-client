@@ -34,6 +34,7 @@ import {
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
+import { getUser } from "../../services/users.service"
 
 export const GalleryForm: React.FC = () => {
 	// load context
@@ -73,13 +74,10 @@ export const GalleryForm: React.FC = () => {
 			if (response.data) {
 				// update user context
 				if (userMetadata) {
-					setUserMetadata({
-						...userMetadata,
-						galleries: response.data,
-					})
+					setUserMetadata((await getUser(response.data.user_id)).data)
 				}
 				// update gallery context
-				setGallery({ ...formData, videos: [] })
+				setGallery(response.data)
 				// update success banner
 				setSuccess(true)
 			}
