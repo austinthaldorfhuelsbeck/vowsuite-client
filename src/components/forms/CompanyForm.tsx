@@ -56,8 +56,11 @@ export const CompanyForm: React.FC = () => {
 	}
 	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
 		// call API
-		const response: IApiResponse = userMetadata?.company.company_id
-			? await updateCompany(formData)
+		const response: IApiResponse = userMetadata?.company
+			? await updateCompany({
+					...formData,
+					company_id: userMetadata.company.company_id,
+			  })
 			: await createCompany(formData)
 		// returns a company
 		if (response.data) {
