@@ -8,7 +8,6 @@ import {
 	PageContainer,
 	PageContent,
 } from "../../styles/layouts/page-layout.style"
-import { ContextProvider } from "../../context/ContextProvider"
 
 interface Props {
 	children: JSX.Element

@@ -13,14 +13,12 @@ import {
 
 export const Studio: React.FC = () => {
 	return (
-		<ContextProvider>
-			<StudioContainer>
-				<CompanyTabButton />
-				<DashboardContainer>
-					<Sidebar />
-					<GalleryEditor />
-				</DashboardContainer>
-			</StudioContainer>
-		</ContextProvider>
+		<StudioContainer>
+			<CompanyTabButton />
+			<DashboardContainer>
+				<Sidebar />
+				<GalleryEditor />
+			</DashboardContainer>
+		</StudioContainer>
 	)
 }

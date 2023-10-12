@@ -1,12 +1,15 @@
-export interface IUser {
+export interface IBaseUser {
 	user_id: number
 	user_name: string
 	email: string
 	img_URL: string
-	company: ICompany
-	galleries: IGallery[]
 	created_at: Date
 	updated_at: Date
+}
+
+export interface IUser extends IBaseUser {
+	company: ICompany
+	galleries: IGallery[]
 }
 
 export interface ICompany {

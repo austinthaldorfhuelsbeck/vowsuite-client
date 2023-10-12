@@ -1,4 +1,21 @@
-import { galleryFonts } from "../data/app-constants"
+import { galleryFonts } from "../../../data/app-constants"
+
+export const user_name_validation = {
+	label: "Name",
+	type: "text",
+	id: "user_name",
+	placeholder: "Your full name",
+	validation: {
+		required: {
+			value: true,
+			message: "User name required",
+		},
+		maxLength: {
+			value: 80,
+			message: "80 characters max",
+		},
+	},
+}
 
 export const company_name_validation = {
 	label: "Company Name",
@@ -144,6 +161,23 @@ export const tiktok_URL_validation = {
 	validation: {
 		required: {
 			value: false,
+		},
+	},
+}
+
+export const user_email_validation = {
+	label: "Email",
+	type: "email",
+	id: "email",
+	placeholder: "Your email address",
+	validation: {
+		required: {
+			value: true,
+			message: "Email required",
+		},
+		maxLength: {
+			value: 80,
+			message: "80 characters max",
 		},
 	},
 }

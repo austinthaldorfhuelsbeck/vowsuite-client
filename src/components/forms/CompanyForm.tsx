@@ -2,7 +2,6 @@
 import * as React from "react"
 import { useUserContext } from "../../context/ContextProvider"
 import { FormProvider, useForm } from "react-hook-form"
-import { getCompanyResponse } from "../../services/get-response.service"
 // Data
 import { ICompany } from "../../interfaces/models"
 import { initialCompanyData } from "../../data/initial-data"
@@ -16,17 +15,15 @@ import {
 	facebook_URL_validation,
 	vimeo_URL_validation,
 	tiktok_URL_validation,
-} from "../../utils/inputValidation"
+} from "./utils/inputValidation"
 // Components
 import { InputGroup } from "./InputGroups"
 // Styles
-import {
-	ModalForm,
-	ModalFormActionsContainer,
-} from "../../styles/components/modal.style"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import { InlineButton } from "../buttons/InlineButton"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { Alert } from "../../styles/components/content.style"
+import { createCompany, updateCompany } from "../../services/companies.service"
 
 export const CompanyForm: React.FC = () => {
 	// load context
@@ -59,10 +56,10 @@ export const CompanyForm: React.FC = () => {
 	}
 	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
 		// call API
-		const response: IApiResponse = await getCompanyResponse(
-			formData,
-			userMetadata?.company.company_id,
-		)
+		const response: IApiResponse = userMetadata?.company.company_id
+			? await updateCompany(formData)
+			: await createCompany(formData)
+		// returns a company
 		if (response.data) {
 			// update context
 			if (userMetadata) {
@@ -72,14 +69,13 @@ export const CompanyForm: React.FC = () => {
 			setSuccess(true)
 		}
 		if (response.error) {
-			// update error banner
 			setError(response.error)
 		}
 	})
 
 	return (
 		<FormProvider {...methods}>
-			<ModalForm
+			<Form
 				onSubmit={(e: any) => e.preventDefault()}
 				noValidate
 				autoComplete="off"
@@ -97,7 +93,7 @@ export const CompanyForm: React.FC = () => {
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
-				<ModalFormActionsContainer>
+				<FormActionsContainer>
 					<InlineButton
 						icon={undefined}
 						title="Clear"
@@ -108,8 +104,8 @@ export const CompanyForm: React.FC = () => {
 						title="Submit"
 						onClick={handleSubmit}
 					/>
-				</ModalFormActionsContainer>
-			</ModalForm>
+				</FormActionsContainer>
+			</Form>
 		</FormProvider>
 	)
 }

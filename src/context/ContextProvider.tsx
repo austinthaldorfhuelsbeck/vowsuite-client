@@ -88,7 +88,7 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 		if (user?.email) getUserResponse(user.email)
 	}, [user])
 
-	if (!userMetadata) return <PageLoader />
+	if (!userMetadata) return <>{children}</>
 
 	return (
 		<UserContext.Provider value={{ userMetadata, setUserMetadata }}>

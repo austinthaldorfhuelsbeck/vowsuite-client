@@ -30,12 +30,12 @@ export const ModalDialogContainer = styled.div`
 	padding: 2.5rem;
 `
 
-export const ModalForm = styled.form`
+export const Form = styled.form`
 	position: relative;
 	color: var(--aluminium);
 `
 
-export const ModalFormContainer = styled.div`
+export const FormContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding-bottom: 1rem;
@@ -70,7 +70,7 @@ export const ModalFormContainer = styled.div`
 	}
 `
 
-export const ModalFormStyleContainer = styled.div`
+export const FormStyleContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -86,7 +86,7 @@ export const ModalFormStyleContainer = styled.div`
 	}
 `
 
-export const ModalFormCancel = styled.button`
+export const FormCancel = styled.button`
 	color: rgba(255, 255, 255, 0.5);
 	font-size: 150%;
 	text-align: right;
@@ -98,7 +98,7 @@ export const ModalFormCancel = styled.button`
 	top: 3%;
 `
 
-export const ModalFormActionsContainer = styled.div`
+export const FormActionsContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 	padding: 3rem 0rem 0rem 0rem;

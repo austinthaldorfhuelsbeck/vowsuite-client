@@ -1,4 +1,10 @@
-import { ICompany, IBaseGallery, IVideo, IUser } from "../interfaces/models"
+import {
+	ICompany,
+	IBaseGallery,
+	IVideo,
+	IUser,
+	IBaseUser,
+} from "../interfaces/models"
 import { defaultGalleryStyle, imagePaths } from "./app-constants"
 
 // gallery form data
@@ -46,13 +52,11 @@ export const initialCompanyData: ICompany = {
 }
 
 // user form data
-export const initialUserData: IUser = {
+export const initialUserData: IBaseUser = {
 	user_id: 0,
 	user_name: "",
 	email: "",
 	img_URL: imagePaths.defaultUser,
-	company: initialCompanyData,
-	galleries: [],
 	created_at: new Date(),
 	updated_at: new Date(),
 }

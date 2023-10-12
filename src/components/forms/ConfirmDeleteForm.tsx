@@ -1,9 +1,6 @@
 // Dependencies
 import * as React from "react"
-import {
-	ModalForm,
-	ModalFormActionsContainer,
-} from "../../styles/components/modal.style"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import {
 	ContentBlockHeader,
 	ContentBlockSubheader,
@@ -18,12 +15,12 @@ export const VideoDeleteForm: React.FC<VideoDeleteFormProps> = ({
 	children,
 }) => {
 	return (
-		<ModalForm>
+		<Form>
 			<ContentBlockHeader>{copy.confirmDeleteHeader}</ContentBlockHeader>
 			<ContentBlockSubheader>
 				{copy.confirmDeleteMessage}
 			</ContentBlockSubheader>
-			<ModalFormActionsContainer>{children}</ModalFormActionsContainer>
-		</ModalForm>
+			<FormActionsContainer>{children}</FormActionsContainer>
+		</Form>
 	)
 }

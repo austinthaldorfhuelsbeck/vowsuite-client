@@ -4,7 +4,7 @@ import { callExternalApi } from "./external-api.service"
 import { ICompany } from "../interfaces/models"
 
 export const createCompany = async (
-	copmany: ICompany,
+	company: ICompany,
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
@@ -14,7 +14,7 @@ export const createCompany = async (
 		headers: {
 			"content-type": "application/json",
 		},
-		data: copmany,
+		data: company,
 	}
 
 	const { data, error } = (await callExternalApi({ config })) as IApiResponse
@@ -26,18 +26,17 @@ export const createCompany = async (
 }
 
 export const updateCompany = async (
-	copmany: ICompany,
-	id: number,
+	company: ICompany,
 ): Promise<IApiResponse> => {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
-		url: `${apiUrl}/companies/${id}`,
+		url: `${apiUrl}/companies/${company.company_id}`,
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
 		},
-		data: copmany,
+		data: company,
 	}
 
 	const { data, error } = (await callExternalApi({ config })) as IApiResponse

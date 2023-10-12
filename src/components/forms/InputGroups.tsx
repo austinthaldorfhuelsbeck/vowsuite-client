@@ -1,9 +1,9 @@
 // Dependencies
 import * as React from "react"
 // Styles
-import { ModalFormContainer } from "../../styles/components/modal.style"
+import { FormContainer } from "../../styles/components/modal.style"
 import { useFormContext } from "react-hook-form"
-import { findInputError, isFormInvalid } from "../../utils"
+import { findInputError, isFormInvalid } from "./utils"
 import { Alert } from "../../styles/components/content.style"
 
 // Data
@@ -36,7 +36,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
 	const isInvalid = isFormInvalid(inputErrors)
 
 	return (
-		<ModalFormContainer>
+		<FormContainer>
 			<label htmlFor={id}>{label}</label>
 			{isInvalid && (
 				<InputError
@@ -50,7 +50,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
 				placeholder={placeholder}
 				{...register(id, validation)}
 			/>
-		</ModalFormContainer>
+		</FormContainer>
 	)
 }
 
@@ -69,7 +69,7 @@ export const ControlInputGroup: React.FC<ControlGroupProps> = ({
 	const isInvalid = isFormInvalid(inputErrors)
 
 	return (
-		<ModalFormContainer>
+		<FormContainer>
 			<label htmlFor={id}>{label}</label>
 			{isInvalid && (
 				<InputError
@@ -82,7 +82,7 @@ export const ControlInputGroup: React.FC<ControlGroupProps> = ({
 					<option key={index}>{option}</option>
 				))}
 			</select>
-		</ModalFormContainer>
+		</FormContainer>
 	)
 }
 

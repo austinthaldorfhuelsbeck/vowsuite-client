@@ -13,12 +13,9 @@ export const HeroBannerContainer = styled.div`
 
 export const HeroBannerHeadline = styled.h1`
 	letter-spacing: -1.5px;
-
-	/* responsive */
-
 	margin: 2.4rem 0 8px 0;
-
 	font-size: 4.8rem;
+	color: var(--white);
 `
 
 export const HeroBannerDescription = styled.p`

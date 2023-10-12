@@ -13,9 +13,9 @@ import { copy } from "../../data/app-constants"
 import { ControlInputGroup, InputGroup } from "./InputGroups"
 // Styles
 import {
-	ModalFormActionsContainer,
-	ModalForm,
-	ModalFormStyleContainer,
+	FormActionsContainer,
+	Form,
+	FormStyleContainer,
 } from "../../styles/components/modal.style"
 import {
 	font_validation,
@@ -24,7 +24,7 @@ import {
 	hex2_validation,
 	hex3_validation,
 	img_URL_validation,
-} from "../../utils/inputValidation"
+} from "./utils/inputValidation"
 import { InlineButton } from "../buttons/InlineButton"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createGallery, updateGallery } from "../../services/galleries.service"
@@ -87,7 +87,7 @@ export const GalleryForm: React.FC = () => {
 
 	return (
 		<FormProvider {...methods}>
-			<ModalForm
+			<Form
 				onSubmit={(e: any) => e.preventDefault()}
 				noValidate
 				autoComplete="off"
@@ -95,17 +95,17 @@ export const GalleryForm: React.FC = () => {
 				<InputGroup {...gallery_name_validation} />
 				<InputGroup {...img_URL_validation} />
 				<ControlInputGroup {...font_validation} />
-				<ModalFormStyleContainer>
+				<FormStyleContainer>
 					<InputGroup {...hex1_validation} />
 					<InputGroup {...hex2_validation} />
 					<InputGroup {...hex3_validation} />
-				</ModalFormStyleContainer>
+				</FormStyleContainer>
 				{(success || error) && (
 					<Alert error={error !== undefined}>
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
-				<ModalFormActionsContainer>
+				<FormActionsContainer>
 					<InlineButton
 						icon={undefined}
 						title="Clear"
@@ -116,8 +116,8 @@ export const GalleryForm: React.FC = () => {
 						title="Submit"
 						onClick={handleSubmit}
 					/>
-				</ModalFormActionsContainer>
-			</ModalForm>
+				</FormActionsContainer>
+			</Form>
 		</FormProvider>
 	)
 }

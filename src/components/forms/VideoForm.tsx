@@ -9,10 +9,7 @@ import {
 import { IVideo } from "../../interfaces/models"
 import { initialVideoData } from "../../data/initial-data"
 // Styles
-import {
-	ModalForm,
-	ModalFormActionsContainer,
-} from "../../styles/components/modal.style"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import { FormProvider, useForm } from "react-hook-form"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createVideo, updateVideo } from "../../services/videos.service"
@@ -22,7 +19,7 @@ import {
 	img_URL_validation,
 	video_URL_validation,
 	video_name_validation,
-} from "../../utils/inputValidation"
+} from "./utils/inputValidation"
 import { InputGroup } from "./InputGroups"
 import { Alert } from "../../styles/components/content.style"
 
@@ -71,7 +68,7 @@ export const VideoForm: React.FC = () => {
 
 	return (
 		<FormProvider {...methods}>
-			<ModalForm
+			<Form
 				onSubmit={(e: any) => e.preventDefault()}
 				noValidate
 				autoComplete="off"
@@ -84,7 +81,7 @@ export const VideoForm: React.FC = () => {
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
-				<ModalFormActionsContainer>
+				<FormActionsContainer>
 					<InlineButton
 						icon={undefined}
 						title="Clear"
@@ -95,8 +92,8 @@ export const VideoForm: React.FC = () => {
 						title="Submit"
 						onClick={handleSubmit}
 					/>
-				</ModalFormActionsContainer>
-			</ModalForm>
+				</FormActionsContainer>
+			</Form>
 		</FormProvider>
 	)
 }
