@@ -24,6 +24,11 @@ import { InlineButton } from "../buttons/InlineButton"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { Alert } from "../../styles/components/content.style"
 import { createCompany, updateCompany } from "../../services/companies.service"
+import {
+	faArrowAltCircleRight,
+	faCancel,
+	faRefresh,
+} from "@fortawesome/free-solid-svg-icons"
 
 export const CompanyForm: React.FC = () => {
 	// load context
@@ -49,8 +54,8 @@ export const CompanyForm: React.FC = () => {
 	const [success, setSuccess] = React.useState<boolean>(false)
 	const [error, setError] = React.useState<IAppError | undefined>(undefined)
 	// handlers
-	const handleClear = () => {
-		methods.reset(initialCompanyData)
+	const handleClear = (data: ICompany) => {
+		methods.reset(data)
 		setSuccess(false)
 		setError(undefined)
 	}
@@ -97,13 +102,20 @@ export const CompanyForm: React.FC = () => {
 					</Alert>
 				)}
 				<FormActionsContainer>
+					{userMetadata?.company && (
+						<InlineButton
+							icon={faRefresh}
+							title="Reset"
+							onClick={() => handleClear(initialFormData)}
+						/>
+					)}
 					<InlineButton
-						icon={undefined}
+						icon={faCancel}
 						title="Clear"
-						onClick={handleClear}
+						onClick={() => handleClear(initialCompanyData)}
 					/>
 					<InlineButton
-						icon={undefined}
+						icon={faArrowAltCircleRight}
 						title="Submit"
 						onClick={handleSubmit}
 					/>

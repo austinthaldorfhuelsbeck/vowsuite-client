@@ -44,9 +44,6 @@ export const TransparentButton = styled.button`
 
 	@media (max-width: 715px) {
 		min-width: 0;
-		& label {
-			font-size: 0;
-		}
 	}
 `
 

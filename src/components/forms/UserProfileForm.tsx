@@ -80,11 +80,13 @@ export const UserProfileForm: React.FC = () => {
 					</Alert>
 				)}
 				<FormActionsContainer>
-					<InlineButton
-						icon={faRefresh}
-						title="Reset"
-						onClick={() => handleClear(initialFormData)}
-					/>
+					{userMetadata && (
+						<InlineButton
+							icon={faRefresh}
+							title="Reset"
+							onClick={() => handleClear(initialFormData)}
+						/>
+					)}
 					<InlineButton
 						icon={faCancel}
 						title="Clear"
