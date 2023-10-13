@@ -9,7 +9,7 @@ export const SelectorListItem = styled.li`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	background-color: rgba(255, 255, 255, 0.08);
+	background-color: rgba(255, 255, 255, 0.04);
 	cursor: pointer;
 	padding: 1rem;
 	padding-bottom: 2.5rem;
@@ -31,7 +31,7 @@ export const SelectorListItem = styled.li`
 		props["aria-selected"] &&
 		css`
 			color: var(--white);
-			background-color: rgba(255, 255, 255, 0.15);
+			background-color: rgba(255, 255, 255, 0.2);
 		`}
 `
 

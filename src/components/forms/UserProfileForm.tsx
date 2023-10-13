@@ -55,12 +55,13 @@ export const UserProfileForm: React.FC = () => {
 		// returns a user
 		if (response.data) {
 			// update context
-			console.log(response.data)
 			if (userMetadata) setUserMetadata(response.data)
 			setSuccess(true)
+			setTimeout(setSuccess, 3000, false)
 		}
 		if (response.error) {
 			setError(response.error)
+			setTimeout(setError, 3000, undefined)
 		}
 	})
 

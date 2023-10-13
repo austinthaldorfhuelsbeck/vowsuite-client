@@ -32,6 +32,7 @@ export const GalleryListItem: React.FC<GalleryListItemProps> = ({
 			try {
 				await navigator.clipboard.writeText(text)
 				setSuccess(true)
+				setTimeout(setSuccess, 3000, false)
 			} catch (err) {
 				console.error("Failed to copy: ", err)
 			}

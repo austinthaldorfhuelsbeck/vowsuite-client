@@ -82,10 +82,12 @@ export const GalleryForm: React.FC = () => {
 				setGallery(response.data)
 				// update success banner
 				setSuccess(true)
+				setTimeout(setSuccess, 3000, false)
 			}
 			if (response.error) {
 				// update error banner
 				setError(response.error)
+				setTimeout(setError, 3000, undefined)
 			}
 		},
 	)

@@ -65,10 +65,12 @@ export const VideoForm: React.FC = () => {
 			setVideo(request)
 			// update success banner
 			setSuccess(true)
+			setTimeout(setSuccess, 3000, false)
 		}
 		if (response.error) {
 			// update error banner
 			setError(response.error)
+			setTimeout(setError, 3000, undefined)
 		}
 	})
 

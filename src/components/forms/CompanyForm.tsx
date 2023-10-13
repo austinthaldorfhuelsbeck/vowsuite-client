@@ -75,9 +75,11 @@ export const CompanyForm: React.FC = () => {
 			}
 			// update success banner
 			setSuccess(true)
+			setTimeout(setSuccess, 3000, false)
 		}
 		if (response.error) {
 			setError(response.error)
+			setTimeout(setError, 3000, undefined)
 		}
 	})
 
