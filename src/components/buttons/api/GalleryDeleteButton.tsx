@@ -8,7 +8,7 @@ import {
 	useUserContext,
 } from "../../../context/ContextProvider"
 import { deleteGallery } from "../../../services/galleries.service"
-import { getUser } from "../../../services/users.service"
+import { readUser } from "../../../services/users.service"
 import { IGallery } from "../../../interfaces/models"
 
 export const GalleryDeleteButton: React.FC = () => {
@@ -27,7 +27,7 @@ export const GalleryDeleteButton: React.FC = () => {
 			// update context if response is successful
 			if (response.data) {
 				// user
-				setUserMetadata((await getUser(gallery.user_id)).data)
+				setUserMetadata((await readUser(gallery.user_id)).data)
 				// gallery
 				setGallery(response.data)
 			}

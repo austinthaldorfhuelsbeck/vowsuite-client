@@ -5,7 +5,7 @@ import { IBaseUser, IUser } from "../interfaces/models"
 
 const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
-export const getUser = async (id: number): Promise<IApiResponse> => {
+export const readUser = async (id: number): Promise<IApiResponse> => {
 	const config: Axios.AxiosRequestConfig = {
 		url: `${apiUrl}/users/${id}`,
 		method: "GET",

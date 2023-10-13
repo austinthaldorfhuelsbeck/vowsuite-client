@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styled from "styled-components"
 
 export const ModalDialog = styled.dialog`
@@ -86,7 +87,7 @@ export const FormStyleContainer = styled.div`
 	}
 `
 
-export const FormCancel = styled.button`
+export const FormCancel = styled(FontAwesomeIcon)`
 	color: rgba(255, 255, 255, 0.5);
 	font-size: 150%;
 	text-align: right;

@@ -49,9 +49,12 @@ export const copy: IStringHash = {
 		"Select a Gallery, or click New Gallery to create your first gallery",
 	videosNotFoundHeader: "Gallery Empty",
 	videosNotFoundSubheader: "Click New Video to upload to the gallery",
+	brandSubheader: "Learn more ",
+	galleryHeaderButton: " Play all",
+	videoCardSubheader: " Play film",
 }
 
 export const baseUrls: IStringHash = {
 	// galleryPage: "https://vowsuite.com/galleries",
-	galleryPage: "https://localhost:4040/galleries",
+	galleryPage: "http://localhost:4040/galleries",
 }

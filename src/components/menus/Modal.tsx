@@ -46,9 +46,7 @@ export const Modal: React.FC<ModalRefs> = ({ button, content }) => {
 			<ModalDialog ref={modalRef} onClick={onBackgroundClick}>
 				<ModalDialogContainer>
 					<>
-						<FormCancel onClick={toggle}>
-							<FontAwesomeIcon icon={faXmark} />
-						</FormCancel>
+						<FormCancel icon={faXmark} onClick={toggle} />
 						{content}
 					</>
 				</ModalDialogContainer>

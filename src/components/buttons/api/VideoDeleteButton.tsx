@@ -9,7 +9,7 @@ import {
 } from "../../../context/ContextProvider"
 import { deleteVideo } from "../../../services/videos.service"
 import { InlineButton } from "../InlineButton"
-import { getUser } from "../../../services/users.service"
+import { readUser } from "../../../services/users.service"
 
 export const VideoDeleteButton: React.FC = () => {
 	// context
@@ -30,7 +30,7 @@ export const VideoDeleteButton: React.FC = () => {
 				// gallery
 				if (gallery) setGallery(response.data)
 				// user
-				const updatedUser = await getUser(response.data.user_id)
+				const updatedUser = await readUser(response.data.user_id)
 				if (updatedUser.data) setUserMetadata(updatedUser.data)
 			}
 		}
