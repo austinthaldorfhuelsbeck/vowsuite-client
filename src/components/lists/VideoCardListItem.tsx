@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { copy } from "../../data/app-constants"
 import { faPlay } from "@fortawesome/free-solid-svg-icons"
 import { Modal } from "../menus/Modal"
+import ReactPlayer from "react-player"
 
 interface VideoCardListItemProps {
 	video: IVideo
@@ -20,18 +21,18 @@ export const VideoCardListItem: React.FC<VideoCardListItemProps> = ({
 	video,
 }) => {
 	// play button state
-	const [isDisplayed, setIsDisplayed] = React.useState<boolean>(false)
+	const [isplayButton, setIsPlayButton] = React.useState<boolean>(false)
 
 	return (
 		<Modal
 			button={
 				<CardImageContainer
 					url={video.img_URL}
-					onMouseOver={() => setIsDisplayed(true)}
-					onMouseLeave={() => setIsDisplayed(false)}
+					onMouseOver={() => setIsPlayButton(true)}
+					onMouseLeave={() => setIsPlayButton(false)}
 				>
 					<>
-						{isDisplayed && (
+						{isplayButton && (
 							<CardPlayIcon>
 								<FontAwesomeIcon icon={faPlay} />
 							</CardPlayIcon>
@@ -44,7 +45,14 @@ export const VideoCardListItem: React.FC<VideoCardListItemProps> = ({
 					</>
 				</CardImageContainer>
 			}
-			content={<></>}
+			content={
+				<ReactPlayer
+					controls
+					width={"80vw"}
+					height={"100%"}
+					url={video.video_URL}
+				/>
+			}
 		/>
 	)
 }

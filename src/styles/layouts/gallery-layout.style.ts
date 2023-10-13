@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { List } from "../components/lists.styles"
 import { Link } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 interface GalleryContainerProps {
 	url: string
@@ -20,6 +21,7 @@ export const GalleryContainer = styled.div<GalleryContainerProps>`
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	transition: all 300ms;
 
 	h1,
 	h4 {
@@ -39,6 +41,7 @@ export const GalleryContainer = styled.div<GalleryContainerProps>`
 	a,
 	h6 {
 		color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex1};
+		transition: all 300ms;
 		&:hover {
 			color: var(--white);
 		}
@@ -59,7 +62,7 @@ export const GalleryContainer = styled.div<GalleryContainerProps>`
 	}
 `
 
-export const BrandContainer = styled.div`
+export const GalleryNavContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	padding: 2rem 2rem 0.5rem;
@@ -94,7 +97,7 @@ export const CompanyLogo = styled.img`
 	border-radius: 100%;
 	width: 7rem;
 	height: 7rem;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 `
 
 export const GalleryHeader = styled.h1`
@@ -102,12 +105,11 @@ export const GalleryHeader = styled.h1`
 	font-size: 700%;
 	color: var(--white);
 `
-export const PlayAllButton = styled.button`
+export const PlayButton = styled.button`
 	max-width: 20rem;
 	margin-left: 7rem;
 	padding: 1.5rem;
 	font-size: 200%;
-	font-family: sans-serif;
 	text-transform: uppercase;
 	color: var(--white);
 	letter-spacing: 0.1rem;
@@ -123,8 +125,20 @@ export const PlayAllButton = styled.button`
 `
 export const CardsList = styled(List)`
 	margin: auto 0 3rem 4rem;
-	display: flex;
-	flex-direction: row;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1rem;
+	grid-auto-rows: auto;
+
+	@media (max-width: 1545px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@media (max-width: 1150px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	@media (max-width: 780px) {
+		grid-template-columns: repeat(1, 1fr);
+	}
 `
 
 interface CardContainerProps {
@@ -189,4 +203,36 @@ export const BrandSocialSubheader = styled.h5`
 
 export const BrandSocialContainer = styled.div`
 	display: flex;
+`
+
+export const HeaderLinkWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	align-items: end;
+`
+
+export const HeaderLinkContainer = styled.div`
+	margin-top: 0.5rem;
+`
+
+export const HeaderLink = styled(FontAwesomeIcon)`
+	font-size: 250%;
+	padding: 1rem;
+	margin: 0 0.5rem 0 0.5rem;
+	background: rgb(255, 255, 255, 0.2);
+	border-radius: 0.5rem;
+	cursor: pointer;
+
+	transition: all 300ms;
+	&:hover {
+		background: rgb(255, 255, 255, 0.4);
+	}
+`
+
+export const HeaderStatusMessage = styled.h5`
+	padding: 1rem;
+	background: rgb(255, 255, 255, 0.2);
+	border-radius: 0.5rem;
+	transition: all 300ms;
 `

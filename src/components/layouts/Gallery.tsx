@@ -4,23 +4,19 @@ import { useParams } from "react-router-dom"
 import { ICompany, IGallery, IUser, IVideo } from "../../interfaces/models"
 import { readGallery } from "../../services/galleries.service"
 import {
-	CompanyLogo,
-	BrandContainer,
 	GalleryContainer,
-	BrandInfo,
-	AltHeader,
-	AltSubheader,
 	GalleryHeader,
-	PlayAllButton,
+	PlayButton,
 	CardsList,
 } from "../../styles/layouts/gallery-layout.style"
 import { readUser } from "../../services/users.service"
 import { Modal } from "../menus/Modal"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronDown, faPlayCircle } from "@fortawesome/free-solid-svg-icons"
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons"
 import { copy } from "../../data/app-constants"
 import { VideoCardListItem } from "../lists/VideoCardListItem"
-import { BrandDetails } from "../static/BrandDetails"
+import ReactPlayer from "react-player"
+import { GalleryNavBar } from "../nav/GalleryNavBar"
 
 export const Gallery: React.FC = () => {
 	// get ID from URL and find gallery
@@ -54,26 +50,24 @@ export const Gallery: React.FC = () => {
 				hex2={gallery.hex2}
 				hex3={gallery.hex3}
 			>
-				<BrandContainer>
-					<CompanyLogo src={company.img_URL} />
-					<BrandInfo>
-						<AltHeader>{company.company_name}</AltHeader>
-						<Modal
-							button={
-								<AltSubheader>
-									{copy.brandSubheader}
-									<FontAwesomeIcon icon={faChevronDown} />
-								</AltSubheader>
-							}
-							content={<BrandDetails company={company} />}
-						/>
-					</BrandInfo>
-				</BrandContainer>
+				<GalleryNavBar company={company} gallery={gallery} />
 				<GalleryHeader>{gallery.gallery_name}</GalleryHeader>
-				<PlayAllButton>
-					<FontAwesomeIcon icon={faPlayCircle} />
-					{copy.galleryHeaderButton}
-				</PlayAllButton>
+				<Modal
+					button={
+						<PlayButton>
+							<FontAwesomeIcon icon={faPlayCircle} />
+							{copy.galleryHeaderButton}
+						</PlayButton>
+					}
+					content={
+						<ReactPlayer
+							controls
+							width={"80vw"}
+							height={"100%"}
+							url={gallery.videos[0].video_URL}
+						/>
+					}
+				/>
 				<CardsList>
 					{gallery.videos.map((video: IVideo) => (
 						<VideoCardListItem video={video} />

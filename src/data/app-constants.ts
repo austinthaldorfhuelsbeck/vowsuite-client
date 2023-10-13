@@ -52,7 +52,7 @@ export const copy: IStringHash = {
 	brandSubheader: "Learn more ",
 	brandDetailsSubheader: " Visit website",
 	brandDetailsSocial: "Follow us",
-	galleryHeaderButton: " Play all",
+	galleryHeaderButton: " Play",
 	videoCardSubheader: " Play film",
 	brandDetailsCopyright: "Made with Vowsuite",
 }

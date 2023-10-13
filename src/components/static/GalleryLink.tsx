@@ -18,30 +18,29 @@ export const GalleryLink: React.FC = () => {
 	const [url, setUrl] = React.useState<string | undefined>(undefined)
 	React.useEffect(() => {
 		if (gallery) {
+			// function to copy text
+			const copyText = async (text: string) => {
+				try {
+					await navigator.clipboard.writeText(text)
+					setSuccess(true)
+				} catch (err) {
+					console.error("Failed to copy: ", err)
+				}
+			}
+			// construct url and copy
 			setUrl(`${baseUrls.galleryPage}/${gallery.gallery_id}`)
+			if (url) copyText(url)
 		}
-	}, [gallery])
+	}, [gallery, url])
 	// success banner
 	const [success, setSuccess] = React.useState<boolean>(false)
-
-	// handlers
-	const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault()
-		if (gallery && url)
-			try {
-				await navigator.clipboard.writeText(url)
-				setSuccess(true)
-			} catch (err) {
-				console.error("Failed to copy: ", err)
-			}
-	}
 
 	return gallery ? (
 		<>
 			<CardContainer>
-				<CardButton onClick={handleClick}>
+				{/* <CardButton onClick={handleClick}>
 					{<FontAwesomeIcon icon={faLink} />}
-				</CardButton>
+				</CardButton> */}
 				<CardText>{url}</CardText>
 			</CardContainer>
 			{success && <Alert error={false}>{copy.linkCopySuccess}</Alert>}

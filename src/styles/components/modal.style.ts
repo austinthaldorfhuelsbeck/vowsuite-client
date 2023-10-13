@@ -8,7 +8,8 @@ export const ModalDialog = styled.dialog`
 	border-width: 0;
 	padding: 0;
 	padding-top: 2rem;
-	width: 50rem;
+	min-width: 50rem;
+	max-width: 90vw;
 	border-radius: 0.5rem;
 	cursor: default;
 
