@@ -21,6 +21,7 @@ import {
 	faCloudDownloadAlt,
 	faShareAlt,
 } from "@fortawesome/free-solid-svg-icons"
+import { VideoDownload } from "../static/VideoDownload"
 
 interface GalleryNavBarProps {
 	company: ICompany
@@ -65,13 +66,19 @@ export const GalleryNavBar: React.FC<GalleryNavBarProps> = ({
 			</BrandInfo>
 			<HeaderLinkWrapper>
 				<HeaderLinkContainer>
-					<HeaderLink
-						onMouseOver={() => {
-							if (!status) setStatus("Download media")
-						}}
-						onMouseLeave={() => setStatus(undefined)}
-						icon={faCloudDownloadAlt}
+					<Modal
+						button={
+							<HeaderLink
+								onMouseOver={() => {
+									if (!status) setStatus("Download media")
+								}}
+								onMouseLeave={() => setStatus(undefined)}
+								icon={faCloudDownloadAlt}
+							/>
+						}
+						content={<VideoDownload gallery={gallery} />}
 					/>
+
 					<HeaderLink
 						onMouseOver={() => {
 							if (!status) setStatus("Copy share link")

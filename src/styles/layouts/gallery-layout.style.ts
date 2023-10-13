@@ -59,6 +59,13 @@ export const GalleryContainer = styled.div<GalleryContainerProps>`
 
 	button {
 		background-color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex3};
+		margin-bottom: 1rem;
+
+		&:hover {
+			background-color: ${(GalleryHeaderProps) =>
+				GalleryHeaderProps.hex2};
+			color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex3};
+		}
 	}
 `
 
@@ -70,15 +77,6 @@ export const GalleryNavContainer = styled.div`
 
 export const BrandInfo = styled.div`
 	padding: 1rem 0 0 2rem;
-`
-
-export const AltHeader = styled.h4`
-	color: var(--white);
-	margin: 0;
-`
-
-export const AltSubheader = styled.h6`
-	cursor: pointer;
 `
 
 export const BrandLink = styled(Link)`
@@ -105,6 +103,20 @@ export const GalleryHeader = styled.h1`
 	font-size: 700%;
 	color: var(--white);
 `
+
+export const GallerySubheader = styled.h5`
+	padding-bottom: 2rem;
+`
+
+export const AltHeader = styled.h4`
+	color: var(--white);
+	margin: 0;
+`
+
+export const AltSubheader = styled.h6`
+	cursor: pointer;
+`
+
 export const PlayButton = styled.button`
 	max-width: 20rem;
 	margin-left: 7rem;
@@ -185,7 +197,7 @@ export const CardPlayIcon = styled.div`
 	font-size: 300%;
 `
 
-export const BrandDetailsContainer = styled.div`
+export const GalleryModalContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

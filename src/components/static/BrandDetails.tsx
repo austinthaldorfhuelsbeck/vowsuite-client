@@ -4,7 +4,7 @@ import { ICompany } from "../../interfaces/models"
 import {
 	AltHeader,
 	AltSubheader,
-	BrandDetailsContainer,
+	GalleryModalContainer,
 	BrandDetailsDivider,
 	BrandSocialSubheader,
 	CompanyLogo,
@@ -21,7 +21,7 @@ interface BrandDetailsProps {
 
 export const BrandDetails: React.FC<BrandDetailsProps> = ({ company }) => {
 	return (
-		<BrandDetailsContainer>
+		<GalleryModalContainer>
 			<CompanyLogo src={company.img_URL} />
 			<AltHeader>{company.company_name}</AltHeader>
 			<BrandDetailsDivider />
@@ -48,6 +48,6 @@ export const BrandDetails: React.FC<BrandDetailsProps> = ({ company }) => {
 			>
 				<AltSubheader>{copy.brandDetailsCopyright}</AltSubheader>
 			</Link>
-		</BrandDetailsContainer>
+		</GalleryModalContainer>
 	)
 }
