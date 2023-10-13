@@ -69,15 +69,6 @@ export const galleryContextList: ModalResource[] = [
 			</VideoDeleteForm>
 		),
 	},
-	{
-		button: (
-			<ContextListItem>
-				<FontAwesomeIcon icon={faLink} />
-				<ButtonTitle>View Link</ButtonTitle>
-			</ContextListItem>
-		),
-		content: <GalleryLink />,
-	},
 ]
 
 export const profileContextList: ModalResource[] = [

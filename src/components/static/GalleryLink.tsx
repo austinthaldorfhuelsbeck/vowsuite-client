@@ -28,7 +28,7 @@ export const GalleryLink: React.FC = () => {
 				}
 			}
 			// construct url and copy
-			setUrl(`${baseUrls.galleryPage}/${gallery.gallery_id}`)
+			setUrl()
 			if (url) copyText(url)
 		}
 	}, [gallery, url])
