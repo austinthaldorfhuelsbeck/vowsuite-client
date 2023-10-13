@@ -87,7 +87,7 @@ export const FormStyleContainer = styled.div`
 	}
 `
 
-export const FormCancel = styled(FontAwesomeIcon)`
+export const ModalCancel = styled(FontAwesomeIcon)`
 	color: rgba(255, 255, 255, 0.5);
 	font-size: 150%;
 	text-align: right;

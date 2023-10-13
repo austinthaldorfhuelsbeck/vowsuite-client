@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { List } from "../components/lists.styles"
+import { Link } from "react-router-dom"
 
 interface GalleryContainerProps {
 	url: string
@@ -26,17 +27,35 @@ export const GalleryContainer = styled.div<GalleryContainerProps>`
 		font-weight: 200;
 	}
 
+	h5,
 	h6 {
 		text-transform: uppercase;
 		margin: 0.5rem 0 0 0;
 		font-size: 100%;
-		color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex1};
 		letter-spacing: 0.2rem;
 		font-weight: 100;
 	}
 
+	a,
+	h6 {
+		color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex1};
+		&:hover {
+			color: var(--white);
+		}
+	}
+
+	hr,
+	a {
+		border-color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex2};
+	}
+
+	hr {
+		opacity: 30%;
+		margin: 2rem;
+	}
+
 	button {
-		background-color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex2};
+		background-color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex3};
 	}
 `
 
@@ -46,7 +65,7 @@ export const BrandContainer = styled.div`
 	padding: 2rem 2rem 0.5rem;
 `
 
-export const BrandDetails = styled.div`
+export const BrandInfo = styled.div`
 	padding: 1rem 0 0 2rem;
 `
 
@@ -59,10 +78,23 @@ export const AltSubheader = styled.h6`
 	cursor: pointer;
 `
 
+export const BrandLink = styled(Link)`
+	width: 4rem;
+	height: 4rem;
+	cursor: pointer;
+	font-size: 170%;
+	text-align: center;
+	padding: 0.5rem 1rem;
+	border: solid;
+	border-radius: 100%;
+	margin: 2rem 0.5rem 0 0.5rem;
+`
+
 export const CompanyLogo = styled.img`
 	border-radius: 100%;
 	width: 7rem;
 	height: 7rem;
+	margin-bottom: 1rem;
 `
 
 export const GalleryHeader = styled.h1`
@@ -137,4 +169,24 @@ export const CardPlayIcon = styled.div`
 	border-radius: 0.5rem;
 	color: rgba(0, 0, 0, 0.85);
 	font-size: 300%;
+`
+
+export const BrandDetailsContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 120%;
+`
+
+export const BrandDetailsDivider = styled.hr`
+	width: 100%;
+`
+
+export const BrandSocialSubheader = styled.h5`
+	color: var(--white);
+`
+
+export const BrandSocialContainer = styled.div`
+	display: flex;
 `

@@ -7,7 +7,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import {
 	ModalDialog,
 	ModalDialogContainer,
-	FormCancel,
+	ModalCancel,
 } from "../../styles/components/modal.style"
 import { BlankSpan } from "../../styles/components/util.style"
 
@@ -46,7 +46,7 @@ export const Modal: React.FC<ModalRefs> = ({ button, content }) => {
 			<ModalDialog ref={modalRef} onClick={onBackgroundClick}>
 				<ModalDialogContainer>
 					<>
-						<FormCancel icon={faXmark} onClick={toggle} />
+						<ModalCancel icon={faXmark} onClick={toggle} />
 						{content}
 					</>
 				</ModalDialogContainer>

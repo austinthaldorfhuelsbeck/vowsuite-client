@@ -7,7 +7,7 @@ import {
 	CompanyLogo,
 	BrandContainer,
 	GalleryContainer,
-	BrandDetails,
+	BrandInfo,
 	AltHeader,
 	AltSubheader,
 	GalleryHeader,
@@ -20,6 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChevronDown, faPlayCircle } from "@fortawesome/free-solid-svg-icons"
 import { copy } from "../../data/app-constants"
 import { VideoCardListItem } from "../lists/VideoCardListItem"
+import { BrandDetails } from "../static/BrandDetails"
 
 export const Gallery: React.FC = () => {
 	// get ID from URL and find gallery
@@ -55,7 +56,7 @@ export const Gallery: React.FC = () => {
 			>
 				<BrandContainer>
 					<CompanyLogo src={company.img_URL} />
-					<BrandDetails>
+					<BrandInfo>
 						<AltHeader>{company.company_name}</AltHeader>
 						<Modal
 							button={
@@ -64,9 +65,9 @@ export const Gallery: React.FC = () => {
 									<FontAwesomeIcon icon={faChevronDown} />
 								</AltSubheader>
 							}
-							content={<></>}
+							content={<BrandDetails company={company} />}
 						/>
-					</BrandDetails>
+					</BrandInfo>
 				</BrandContainer>
 				<GalleryHeader>{gallery.gallery_name}</GalleryHeader>
 				<PlayAllButton>

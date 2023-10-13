@@ -50,11 +50,15 @@ export const copy: IStringHash = {
 	videosNotFoundHeader: "Gallery Empty",
 	videosNotFoundSubheader: "Click New Video to upload to the gallery",
 	brandSubheader: "Learn more ",
+	brandDetailsSubheader: " Visit website",
+	brandDetailsSocial: "Follow us",
 	galleryHeaderButton: " Play all",
 	videoCardSubheader: " Play film",
+	brandDetailsCopyright: "Made with Vowsuite",
 }
 
 export const baseUrls: IStringHash = {
+	homePage: "https://vowsuite.com",
 	// galleryPage: "https://vowsuite.com/galleries",
 	galleryPage: "http://localhost:4040/galleries",
 }
