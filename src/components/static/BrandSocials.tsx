@@ -1,10 +1,5 @@
-// Dependencies
-import * as React from "react"
-import { ICompany } from "../../interfaces/models"
-import {
-	BrandLink,
-	BrandSocialContainer,
-} from "../../styles/layouts/gallery-layout.style"
+import React, { PropsWithChildren } from "react"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
 	faFacebookF,
@@ -14,11 +9,17 @@ import {
 	faVimeo,
 } from "@fortawesome/free-brands-svg-icons"
 
-interface BrandSocialsProps {
+import { ICompany } from "../../interfaces/models"
+import {
+	BrandLink,
+	BrandSocialContainer,
+} from "../../styles/layouts/gallery-layout.style"
+
+type ComponentProps = {
 	company: ICompany
 }
 
-export const BrandSocials: React.FC<BrandSocialsProps> = ({ company }) => {
+function BrandSocials({ company }: PropsWithChildren<ComponentProps>) {
 	return (
 		<BrandSocialContainer>
 			{company.facebook_URL && (
@@ -69,3 +70,5 @@ export const BrandSocials: React.FC<BrandSocialsProps> = ({ company }) => {
 		</BrandSocialContainer>
 	)
 }
+
+export { BrandSocials }

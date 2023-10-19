@@ -32,7 +32,9 @@ export const TransparentButton = styled.button`
 	color: var(--white);
 	cursor: pointer;
 	user-select: none;
-	transition: background 0.3s ease-out, color 0.3s ease-out;
+	transition:
+		background 0.3s ease-out,
+		color 0.3s ease-out;
 	min-width: 10rem;
 	width: 100%;
 	height: 5rem;

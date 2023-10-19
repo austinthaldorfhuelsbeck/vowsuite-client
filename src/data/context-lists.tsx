@@ -4,7 +4,7 @@ import { ContextListItem } from "../styles/components/lists.styles"
 import { ButtonTitle } from "../styles/components/buttons.style"
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { VideoForm } from "../components/forms/VideoForm"
-import { VideoDeleteForm } from "../components/forms/ConfirmDeleteForm"
+import { ConfirmDeleteForm } from "../components/forms/ConfirmDeleteForm"
 import { VideoDeleteButton } from "../components/buttons/api/VideoDeleteButton"
 import { GalleryForm } from "../components/forms/GalleryForm"
 import { GalleryDeleteButton } from "../components/buttons/api/GalleryDeleteButton"
@@ -38,9 +38,9 @@ export const videoContextList: ModalResource[] = [
 			</ContextListItem>
 		),
 		content: (
-			<VideoDeleteForm>
+			<ConfirmDeleteForm>
 				<VideoDeleteButton />
-			</VideoDeleteForm>
+			</ConfirmDeleteForm>
 		),
 	},
 ]
@@ -63,9 +63,9 @@ export const galleryContextList: ModalResource[] = [
 			</ContextListItem>
 		),
 		content: (
-			<VideoDeleteForm>
+			<ConfirmDeleteForm>
 				<GalleryDeleteButton />
-			</VideoDeleteForm>
+			</ConfirmDeleteForm>
 		),
 	},
 ]

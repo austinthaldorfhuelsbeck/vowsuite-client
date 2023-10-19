@@ -1,16 +1,23 @@
-// Dependencies
-import * as React from "react"
+import React, {
+	Dispatch,
+	PropsWithChildren,
+	ReactNode,
+	SetStateAction,
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+} from "react"
+
 import { useAuth0 } from "@auth0/auth0-react"
+
 import { getUserByEmail } from "../services/users.service"
-// Data
 import { IGallery, IUser, IVideo } from "../interfaces/models"
-// Components
-import { PageLoader } from "../components/common/PageLoader"
 
 // DEFINE INTERFACES
 interface IUserContext {
 	userMetadata: IUser | undefined
-	setUserMetadata: React.Dispatch<React.SetStateAction<IUser | undefined>>
+	setUserMetadata: Dispatch<SetStateAction<IUser | undefined>>
 }
 const IUserContextState = {
 	userMetadata: undefined,
@@ -18,7 +25,7 @@ const IUserContextState = {
 }
 interface IGalleryContext {
 	gallery: IGallery | undefined
-	setGallery: React.Dispatch<React.SetStateAction<IGallery | undefined>>
+	setGallery: Dispatch<SetStateAction<IGallery | undefined>>
 }
 const IGalleryContextState = {
 	gallery: undefined,
@@ -26,7 +33,7 @@ const IGalleryContextState = {
 }
 interface IVideoContext {
 	video: IVideo | undefined
-	setVideo: React.Dispatch<React.SetStateAction<IVideo | undefined>>
+	setVideo: Dispatch<SetStateAction<IVideo | undefined>>
 }
 const IVideoContextState = {
 	video: undefined,
@@ -35,28 +42,27 @@ const IVideoContextState = {
 
 // DEFINE CONTEXTS
 // User
-const UserContext = React.createContext<IUserContext>(IUserContextState)
+const UserContext = createContext<IUserContext>(IUserContextState)
 export const useUserContext = () => {
-	const user = React.useContext(UserContext)
+	const user = useContext(UserContext)
 	if (user === undefined) {
 		throw new Error("useUserContext must be used with a UserContext")
 	}
 	return user
 }
 // Gallery
-const GalleryContext =
-	React.createContext<IGalleryContext>(IGalleryContextState)
+const GalleryContext = createContext<IGalleryContext>(IGalleryContextState)
 export const useGalleryContext = () => {
-	const gallery = React.useContext(GalleryContext)
+	const gallery = useContext(GalleryContext)
 	if (gallery === undefined) {
 		throw new Error("useGalleryContext must be used with a GalleryContext")
 	}
 	return gallery
 }
 // Video
-const VideoContext = React.createContext<IVideoContext>(IVideoContextState)
+const VideoContext = createContext<IVideoContext>(IVideoContextState)
 export const useVideoContext = () => {
-	const video = React.useContext(VideoContext)
+	const video = useContext(VideoContext)
 	if (video === undefined) {
 		throw new Error("useVideoContext must be used with a VideoContext")
 	}
@@ -65,21 +71,19 @@ export const useVideoContext = () => {
 
 // LOAD USER AND BUILD PROVIDER
 
-interface ProviderProps {
-	children: React.ReactNode
+type ComponentProps = {
+	children: ReactNode
 }
-export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
+function ContextProvider({ children }: PropsWithChildren<ComponentProps>) {
 	const { user } = useAuth0()
-	const [userMetadata, setUserMetadata] = React.useState<IUser | undefined>(
+	const [userMetadata, setUserMetadata] = useState<IUser | undefined>(
 		undefined,
 	)
-	const [gallery, setGallery] = React.useState<IGallery | undefined>(
-		undefined,
-	)
-	const [video, setVideo] = React.useState<IVideo | undefined>(undefined)
+	const [gallery, setGallery] = useState<IGallery | undefined>(undefined)
+	const [video, setVideo] = useState<IVideo | undefined>(undefined)
 
 	// load initial user metadata
-	React.useEffect(() => {
+	useEffect(() => {
 		const getUserResponse = async (email: string) => {
 			const userResponse = await getUserByEmail(email)
 			setUserMetadata(userResponse.data)
@@ -100,3 +104,5 @@ export const ContextProvider: React.FC<ProviderProps> = ({ children }) => {
 		</UserContext.Provider>
 	)
 }
+
+export { ContextProvider }

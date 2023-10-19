@@ -1,42 +1,28 @@
-// Dependencies
-import * as React from "react"
-import {
-	useGalleryContext,
-	useUserContext,
-} from "../../context/ContextProvider"
+import React, { useState } from "react"
+
 import { FormProvider, useForm } from "react-hook-form"
-// Data
-import { IBaseGallery, IGallery } from "../../interfaces/models"
-import { initialGalleryData } from "../../data/initial-data"
-import { copy } from "../../data/app-constants"
-// Components
-import { ControlInputGroup, InputGroup } from "./InputGroups"
-// Styles
-import {
-	FormActionsContainer,
-	Form,
-	FormStyleContainer,
-} from "../../styles/components/modal.style"
-import {
-	font_validation,
-	gallery_name_validation,
-	hex1_validation,
-	hex2_validation,
-	hex3_validation,
-	img_URL_validation,
-} from "./utils/inputValidation"
-import { InlineButton } from "../buttons/InlineButton"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { createGallery, updateGallery } from "../../services/galleries.service"
-import { Alert } from "../../styles/components/content.style"
+
 import {
 	faArrowAltCircleRight,
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
-import { readUser } from "../../services/users.service"
 
-export const GalleryForm: React.FC = () => {
+import { copy } from "../../data/app-constants"
+import { InlineButton } from "../buttons/InlineButton"
+import { readUser } from "../../services/users.service"
+import { initialGalleryData } from "../../data/initial-data"
+import { Alert } from "../../styles/components/content.style"
+import { IApiResponse, IAppError } from "../../interfaces/api"
+import { IBaseGallery } from "../../interfaces/models"
+import { createGallery, updateGallery } from "../../services/galleries.service"
+import {
+	useGalleryContext,
+	useUserContext,
+} from "../../context/ContextProvider"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+
+function GalleryForm() {
 	// load context
 	const { userMetadata, setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
@@ -57,40 +43,36 @@ export const GalleryForm: React.FC = () => {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<IAppError | undefined>(undefined)
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: IBaseGallery) => {
 		methods.reset(data)
 		setSuccess(false)
 		setError(undefined)
 	}
-	const handleSubmit = methods.handleSubmit(
-		async (formData: IBaseGallery) => {
-			// call API
-			const response: IApiResponse = gallery
-				? await updateGallery(formData, gallery.gallery_id)
-				: await createGallery(formData)
-			if (response.data) {
-				// update user context
-				if (userMetadata) {
-					setUserMetadata(
-						(await readUser(response.data.user_id)).data,
-					)
-				}
-				// update gallery context
-				setGallery(response.data)
-				// update success banner
-				setSuccess(true)
-				setTimeout(setSuccess, 3000, false)
+
+	const onSubmit = async (formData: IBaseGallery) => {
+		// call API
+		const response: IApiResponse = gallery
+			? await updateGallery(formData, gallery.gallery_id)
+			: await createGallery(formData)
+		if (response.data) {
+			// update context
+			if (userMetadata) {
+				setUserMetadata((await readUser(response.data.user_id)).data)
 			}
-			if (response.error) {
-				// update error banner
-				setError(response.error)
-				setTimeout(setError, 3000, undefined)
-			}
-		},
-	)
+			setGallery(response.data)
+			// update success banner
+			setSuccess(true)
+			setTimeout(setSuccess, 3000, false)
+		}
+		if (response.error) {
+			// update error banner
+			setError(response.error)
+			setTimeout(setError, 3000, undefined)
+		}
+	}
 
 	return (
 		<FormProvider {...methods}>
@@ -99,14 +81,14 @@ export const GalleryForm: React.FC = () => {
 				noValidate
 				autoComplete="off"
 			>
-				<InputGroup {...gallery_name_validation} />
-				<InputGroup {...img_URL_validation} />
+				{/* <TextInputGroup {...gallery_name_validation} />
+				<FileInputGroup {...img_URL_validation} />
 				<ControlInputGroup {...font_validation} />
 				<FormStyleContainer>
-					<InputGroup {...hex1_validation} />
-					<InputGroup {...hex2_validation} />
-					<InputGroup {...hex3_validation} />
-				</FormStyleContainer>
+					<TextInputGroup {...hex1_validation} />
+					<TextInputGroup {...hex2_validation} />
+					<TextInputGroup {...hex3_validation} />
+				</FormStyleContainer> */}
 				{(success || error) && (
 					<Alert error={error !== undefined}>
 						{error ? error.message : copy.formSuccess}
@@ -128,10 +110,12 @@ export const GalleryForm: React.FC = () => {
 					<InlineButton
 						icon={faArrowAltCircleRight}
 						title="Submit"
-						onClick={handleSubmit}
+						onClick={methods.handleSubmit(onSubmit)}
 					/>
 				</FormActionsContainer>
 			</Form>
 		</FormProvider>
 	)
 }
+
+export { GalleryForm }

@@ -1,19 +1,17 @@
-// Dependencies
-import * as React from "react"
-// Components
+import React, { PropsWithChildren } from "react"
+
 import { NavBar } from "../nav/NavBar"
 import { PageFooter } from "../static/PageFooter"
-// Styles
 import {
 	PageContainer,
 	PageContent,
 } from "../../styles/layouts/page-layout.style"
 
-interface Props {
+type ComponentProps = {
 	children: JSX.Element
 }
 
-export const PageLayout: React.FC<Props> = ({ children }) => {
+function PageLayout({ children }: PropsWithChildren<ComponentProps>) {
 	return (
 		<PageContainer>
 			<NavBar />
@@ -22,3 +20,5 @@ export const PageLayout: React.FC<Props> = ({ children }) => {
 		</PageContainer>
 	)
 }
+
+export { PageLayout }

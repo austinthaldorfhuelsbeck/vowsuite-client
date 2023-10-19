@@ -1,5 +1,12 @@
-// Dependencies
-import * as React from "react"
+import React, { PropsWithChildren, useState } from "react"
+
+import ReactPlayer from "react-player"
+
+import { faPlay } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+import { Modal } from "../menus/Modal"
+import { copy } from "../../data/app-constants"
 import { IVideo } from "../../interfaces/models"
 import {
 	AltHeader,
@@ -7,21 +14,14 @@ import {
 	CardImageContainer,
 	CardPlayIcon,
 } from "../../styles/layouts/gallery-layout.style"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { copy } from "../../data/app-constants"
-import { faPlay } from "@fortawesome/free-solid-svg-icons"
-import { Modal } from "../menus/Modal"
-import ReactPlayer from "react-player"
 
-interface VideoCardListItemProps {
+type ComponentProps = {
 	video: IVideo
 }
 
-export const VideoCardListItem: React.FC<VideoCardListItemProps> = ({
-	video,
-}) => {
+function VideoCardListItem({ video }: PropsWithChildren<ComponentProps>) {
 	// play button state
-	const [isplayButton, setIsPlayButton] = React.useState<boolean>(false)
+	const [isPlayButton, setIsPlayButton] = useState<boolean>(false)
 
 	return (
 		<Modal
@@ -32,7 +32,7 @@ export const VideoCardListItem: React.FC<VideoCardListItemProps> = ({
 					onMouseLeave={() => setIsPlayButton(false)}
 				>
 					<>
-						{isplayButton && (
+						{isPlayButton && (
 							<CardPlayIcon>
 								<FontAwesomeIcon icon={faPlay} />
 							</CardPlayIcon>
@@ -56,3 +56,5 @@ export const VideoCardListItem: React.FC<VideoCardListItemProps> = ({
 		/>
 	)
 }
+
+export { VideoCardListItem }

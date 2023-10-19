@@ -1,9 +1,8 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
 import { Link } from "react-router-dom"
-// Data
+
 import { copy, heroResource } from "../../data/app-constants"
-// Styles
 import {
 	HeroBannerContainer,
 	HeroBannerDescription,
@@ -11,7 +10,7 @@ import {
 	HeroButton,
 } from "../../styles/components/landing-page.style"
 
-export const HeroBanner: React.FC = () => {
+function HeroBanner() {
 	return (
 		<HeroBannerContainer>
 			<HeroBannerHeadline>{copy.heroTitle}</HeroBannerHeadline>
@@ -22,3 +21,5 @@ export const HeroBanner: React.FC = () => {
 		</HeroBannerContainer>
 	)
 }
+
+export { HeroBanner }

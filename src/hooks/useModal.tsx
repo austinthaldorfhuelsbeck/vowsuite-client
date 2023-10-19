@@ -1,15 +1,34 @@
-// Dependencies
-import * as React from "react"
+import { useEffect, useRef, useState, MouseEvent } from "react"
 
-export const useModal = () => {
-	const [isOpen, setisOpen] = React.useState(false)
+function useModal() {
+	// ref for clicking outside
+	const ref = useRef<HTMLDialogElement>(null)
+	// state
+	const [isOpen, setIsOpen] = useState(false)
 
+	// handlers
 	const toggle = () => {
-		setisOpen(!isOpen)
+		setIsOpen(!isOpen)
+	}
+	const onClick = (e: MouseEvent<HTMLDialogElement>) => {
+		e.preventDefault()
+		// close if click in background
+		if (e.target === ref.current) toggle()
 	}
 
-	return {
-		isOpen,
-		toggle,
-	}
+	// open and close when isOpen changes
+	useEffect(() => {
+		const modalRef = ref
+		if (modalRef.current) {
+			if (isOpen) {
+				modalRef.current.showModal()
+			} else {
+				modalRef.current.close()
+			}
+		}
+	}, [isOpen])
+
+	return { ref, toggle, onClick }
 }
+
+export { useModal }

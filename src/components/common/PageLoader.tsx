@@ -1,14 +1,14 @@
-// Dependencies
-import * as React from "react"
-// Data
+import React from "react"
+
 import { imagePaths } from "../../data/app-constants"
-// Styles
 import { Loader } from "../../styles/layouts/page-layout.style"
 
-export const PageLoader: React.FC = () => {
+function PageLoader() {
 	return (
 		<Loader>
 			<img src={imagePaths.loadingIcon} alt="Loading..." />
 		</Loader>
 	)
 }
+
+export { PageLoader }

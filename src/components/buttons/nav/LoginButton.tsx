@@ -1,10 +1,10 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
 import { useAuth0 } from "@auth0/auth0-react"
-// Components
+
 import { NavButton } from "../../../styles/components/nav-bar.style"
 
-export const LoginButton: React.FC = () => {
+function LoginButton() {
 	const { loginWithRedirect } = useAuth0()
 
 	// go to the studio on login
@@ -21,3 +21,5 @@ export const LoginButton: React.FC = () => {
 
 	return <NavButton onClick={onLogin}>Log In</NavButton>
 }
+
+export { LoginButton }

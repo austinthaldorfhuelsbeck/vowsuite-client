@@ -58,7 +58,9 @@ export const NavButton = styled.button`
 	text-align: center;
 	cursor: pointer;
 	user-select: none;
-	transition: background 0.3s ease-out, color 0.3s ease-out;
+	transition:
+		background 0.3s ease-out,
+		color 0.3s ease-out;
 `
 
 export const NavProfileImg = styled.img`

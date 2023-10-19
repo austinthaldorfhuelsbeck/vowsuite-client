@@ -1,40 +1,41 @@
-// Dependencies
-import * as React from "react"
-import { ICompany, IGallery } from "../../interfaces/models"
-import {
-	AltHeader,
-	AltSubheader,
-	GalleryNavContainer,
-	BrandInfo,
-	CompanyLogo,
-	HeaderLink,
-	HeaderLinkContainer,
-	HeaderLinkWrapper,
-	HeaderStatusMessage,
-} from "../../styles/layouts/gallery-layout.style"
-import { Modal } from "../menus/Modal"
-import { baseUrls, copy } from "../../data/app-constants"
+import React, { PropsWithChildren, useState, MouseEvent } from "react"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { BrandDetails } from "../static/BrandDetails"
 import {
 	faChevronDown,
 	faCloudDownloadAlt,
 	faShareAlt,
 } from "@fortawesome/free-solid-svg-icons"
-import { VideoDownload } from "../static/VideoDownload"
 
-interface GalleryNavBarProps {
+import { Modal } from "../menus/Modal"
+import { BrandDetails } from "../static/BrandDetails"
+import { VideoDownload } from "../static/VideoDownload"
+import { baseUrls, copy } from "../../data/app-constants"
+import { ICompany, IGallery } from "../../interfaces/models"
+import {
+	AltHeader,
+	AltSubheader,
+	BrandInfo,
+	CompanyLogo,
+	GalleryNavContainer,
+	HeaderLink,
+	HeaderLinkContainer,
+	HeaderLinkWrapper,
+	HeaderStatusMessage,
+} from "../../styles/layouts/gallery-layout.style"
+
+interface ComponentProps {
 	company: ICompany
 	gallery: IGallery
 }
 
-export const GalleryNavBar: React.FC<GalleryNavBarProps> = ({
+function GalleryNavBar({
 	company,
 	gallery,
-}) => {
+}: PropsWithChildren<ComponentProps>) {
 	// status message state and handlers
-	const [status, setStatus] = React.useState<string | undefined>(undefined)
-	const onCopy = (e: React.MouseEvent<SVGSVGElement>) => {
+	const [status, setStatus] = useState<string | undefined>(undefined)
+	const onCopy = (e: MouseEvent<SVGSVGElement>) => {
 		e.preventDefault()
 		// function to copy text
 		const copyText = async (text: string) => {
@@ -93,3 +94,5 @@ export const GalleryNavBar: React.FC<GalleryNavBarProps> = ({
 		</GalleryNavContainer>
 	)
 }
+
+export { GalleryNavBar }

@@ -1,31 +1,31 @@
-// Dependencies
-import * as React from "react"
-import { IGallery } from "../../interfaces/models"
-import { useGalleryContext } from "../../context/ContextProvider"
+import React, { PropsWithChildren, useState, MouseEvent } from "react"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEllipsis, faFolder, faLink } from "@fortawesome/free-solid-svg-icons"
-// Styles
+
+import { IGallery } from "../../interfaces/models"
+import { ContextMenu } from "../menus/ContextMenu"
+import { baseUrls } from "../../data/app-constants"
+import { useGalleryContext } from "../../context/ContextProvider"
+import { ButtonTitle } from "../../styles/components/buttons.style"
+import { galleryContextList, renderMenu } from "../../data/context-lists"
+import { HeaderStatusMessage } from "../../styles/layouts/gallery-layout.style"
 import {
 	ContextListItem,
 	SelectorListItem,
 } from "../../styles/components/lists.styles"
-import { ButtonTitle } from "../../styles/components/buttons.style"
-import { ContextMenu } from "../menus/ContextMenu"
-import { galleryContextList, renderMenu } from "../../data/context-lists"
-import { HeaderStatusMessage } from "../../styles/layouts/gallery-layout.style"
-import { baseUrls } from "../../data/app-constants"
 
-interface GalleryListItemProps {
+type ComponentProps = {
 	currentGallery: IGallery
 }
 
-export const GalleryListItem: React.FC<GalleryListItemProps> = ({
+function GalleryListItem({
 	currentGallery,
-}) => {
+}: PropsWithChildren<ComponentProps>) {
 	const { gallery, setGallery } = useGalleryContext()
-	// copy status state and handler
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const onCopy = (e: React.MouseEvent<HTMLLIElement>) => {
+	const [success, setSuccess] = useState<boolean>(false)
+
+	const onCopy = (e: MouseEvent<HTMLLIElement>) => {
 		e.preventDefault()
 		// function to copy text
 		const copyText = async (text: string) => {
@@ -69,3 +69,5 @@ export const GalleryListItem: React.FC<GalleryListItemProps> = ({
 		</SelectorListItem>
 	)
 }
+
+export { GalleryListItem }

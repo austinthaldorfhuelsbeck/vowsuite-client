@@ -1,18 +1,17 @@
-// Dependencies
-import * as React from "react"
-import { useGalleryContext } from "../../context/ContextProvider"
-import { IVideo } from "../../interfaces/models"
-// Components
-import { VideoListItem } from "./VideoListItem"
-import { VideosNotFound } from "../static/VideosNotFound"
-// Styles
-import { List } from "../../styles/components/lists.styles"
+import React from "react"
 
-export const VideoList: React.FC = () => {
+import { VideoListItem } from "./VideoListItem"
+import { IVideo } from "../../interfaces/models"
+import { VideosNotFound } from "../static/VideosNotFound"
+import { List } from "../../styles/components/lists.styles"
+import { useGalleryContext } from "../../context/ContextProvider"
+
+function VideoList() {
 	const { gallery } = useGalleryContext()
 
 	if (!gallery?.videos || gallery?.videos.length === 0)
 		return <VideosNotFound />
+
 	return (
 		<List>
 			{gallery.videos.map((video: IVideo) => (
@@ -21,3 +20,5 @@ export const VideoList: React.FC = () => {
 		</List>
 	)
 }
+
+export { VideoList }

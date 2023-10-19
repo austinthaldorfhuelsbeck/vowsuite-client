@@ -1,23 +1,22 @@
-// Dependencies
-import * as React from "react"
-import { useGalleryContext } from "../../context/ContextProvider"
+import React, { MouseEvent } from "react"
+
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons"
-// Components
-import { GalleryList } from "../lists/GalleryList"
+
 import { Modal } from "../menus/Modal"
-// Styles
+import { GalleryList } from "../lists/GalleryList"
+import { GalleryForm } from "../forms/GalleryForm"
+import { InlineButton } from "../buttons/InlineButton"
+import { useGalleryContext } from "../../context/ContextProvider"
 import {
 	GalleryContainer,
 	GalleryContainerHeader,
 } from "../../styles/layouts/dashboard-layout.style"
-import { GalleryForm } from "../forms/GalleryForm"
-import { InlineButton } from "../buttons/InlineButton"
 
-export const Sidebar: React.FC = () => {
+function Sidebar() {
 	// load context
 	const { setGallery } = useGalleryContext()
 	// handler
-	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 		setGallery(undefined)
 	}
@@ -39,3 +38,5 @@ export const Sidebar: React.FC = () => {
 		</GalleryContainer>
 	)
 }
+
+export { Sidebar }

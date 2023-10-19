@@ -1,22 +1,30 @@
-// Dependencies
-import * as React from "react"
+import React, { PropsWithChildren } from "react"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
-// Styles
+
 import {
 	ButtonTitle,
 	TransparentButton,
 } from "../../styles/components/buttons.style"
 
-interface Props {
+type ComponentProps = {
 	icon: IconDefinition | undefined
 	title: string
 	onClick: ((e: any) => any) | undefined
 }
 
-export const InlineButton: React.FC<Props> = ({ icon, title, onClick }) => (
-	<TransparentButton onClick={onClick}>
-		{icon && <FontAwesomeIcon icon={icon} />}
-		<ButtonTitle>{title}</ButtonTitle>
-	</TransparentButton>
-)
+function InlineButton({
+	icon,
+	title,
+	onClick,
+}: PropsWithChildren<ComponentProps>) {
+	return (
+		<TransparentButton onClick={onClick}>
+			{icon && <FontAwesomeIcon icon={icon} />}
+			<ButtonTitle>{title}</ButtonTitle>
+		</TransparentButton>
+	)
+}
+
+export { InlineButton }

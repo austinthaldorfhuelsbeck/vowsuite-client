@@ -3,7 +3,9 @@ import styled from "styled-components"
 
 export const ModalDialog = styled.dialog`
 	position: relative;
-	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	box-shadow:
+		0 3px 6px rgba(0, 0, 0, 0.16),
+		0 3px 6px rgba(0, 0, 0, 0.23);
 	background-color: rgba(58, 58, 58);
 	border-width: 0;
 	padding: 0;
@@ -32,6 +34,18 @@ export const ModalDialogContainer = styled.div`
 	padding: 2.5rem;
 `
 
+export const ModalCancel = styled(FontAwesomeIcon)`
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 175%;
+	text-align: right;
+	background: none;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	left: 90%;
+	top: 3%;
+`
+
 export const Form = styled.form`
 	position: relative;
 	color: var(--aluminium);
@@ -44,24 +58,7 @@ export const FormContainer = styled.div`
 
 	label {
 		font-family: monospace;
-	}
-
-	input,
-	select {
-		padding: 1rem;
-		font: inherit;
-		background: transparent !important;
-		color: var(--aluminium);
-		border-top: none;
-		border-left: none;
-		border-right: none;
-		outline: none;
-		max-width: 100%;
-		vertical-align: bottom;
-	}
-
-	input {
-		width: 100%;
+		min-width: 10rem;
 	}
 
 	p {
@@ -72,32 +69,11 @@ export const FormContainer = styled.div`
 	}
 `
 
-export const FormStyleContainer = styled.div`
+export const FormRowContainer = styled.div`
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
-	padding-top: 1rem;
-
-	label {
-		font-family: monospace;
-	}
-
-	input {
-		padding: 0;
-		margin-left: 1rem;
-	}
-`
-
-export const ModalCancel = styled(FontAwesomeIcon)`
-	color: rgba(255, 255, 255, 0.5);
-	font-size: 150%;
-	text-align: right;
-	background: none;
-	border: none;
-	cursor: pointer;
-	position: absolute;
-	left: 90%;
-	top: 3%;
+	justify-content: flex-start;
+	align-items: center;
 `
 
 export const FormActionsContainer = styled.div`
@@ -105,4 +81,49 @@ export const FormActionsContainer = styled.div`
 	justify-content: space-between;
 	padding: 3rem 0rem 0rem 0rem;
 	margin-bottom: -1rem;
+`
+
+export const FormSubheader = styled.h1``
+
+export const FormImage = styled.img`
+	width: 20rem;
+	margin: 1rem;
+`
+
+export const TextInput = styled.input`
+	padding: 1rem;
+	margin: 1rem;
+	font: inherit;
+	background: transparent !important;
+	color: var(--aluminium);
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+	min-width: 35rem;
+	max-width: 50rem;
+	vertical-align: bottom;
+`
+
+export const SelectInput = styled.select`
+	padding: 1rem;
+	margin: 1rem;
+	font: inherit;
+	background: transparent !important;
+	color: var(--aluminium);
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+	min-width: 35rem;
+	max-width: 50rem;
+	vertical-align: bottom;
+`
+
+export const ColorInput = styled.input`
+	border: none;
+	padding: 0;
+	margin: 1rem;
+	height: 8rem;
+	width: 8rem;
 `

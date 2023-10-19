@@ -43,7 +43,9 @@ export const HeroButton = styled.button`
 	cursor: pointer;
 	user-select: none;
 
-	transition: background 0.3s ease-out, color 0.3s ease-out;
+	transition:
+		background 0.3s ease-out,
+		color 0.3s ease-out;
 
 	/* responsive */
 

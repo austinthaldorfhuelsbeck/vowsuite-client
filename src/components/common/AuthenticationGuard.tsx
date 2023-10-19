@@ -1,16 +1,16 @@
 // Dependencies
-import * as React from "react"
+import React, { ComponentType, PropsWithChildren } from "react"
 import { withAuthenticationRequired } from "@auth0/auth0-react"
 // Components
 import { PageLoader } from "./PageLoader"
 // Styles
 import { PageContent } from "../../styles/layouts/page-layout.style"
 
-interface Props {
-	component: React.ComponentType
+interface ComponentProps {
+	component: ComponentType
 }
 
-export const AuthenticationGuard: React.FC<Props> = ({ component }) => {
+function AuthenticationGuard({ component }: PropsWithChildren<ComponentProps>) {
 	// only return if authenticated
 	const Component = withAuthenticationRequired(component, {
 		onRedirecting: () => (
@@ -22,3 +22,5 @@ export const AuthenticationGuard: React.FC<Props> = ({ component }) => {
 
 	return <Component />
 }
+
+export { AuthenticationGuard }

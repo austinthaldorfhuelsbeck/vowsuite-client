@@ -1,11 +1,12 @@
 import { RouteObject } from "react-router-dom"
+
 import { LandingPage } from "./pages/LandingPage"
-import { AuthenticationGuard } from "./components/common/AuthenticationGuard"
-import { Studio } from "./components/layouts/Studio"
 import { CallbackPage } from "./pages/CallbackPage"
 import { NotFoundPage } from "./pages/NotFoundPage"
+import { Studio } from "./components/layouts/Studio"
 import { Gallery } from "./components/layouts/Gallery"
 import { PageLayout } from "./components/layouts/PageLayout"
+import { AuthenticationGuard } from "./components/common/AuthenticationGuard"
 
 const routes: RouteObject[] = [
 	{

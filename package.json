@@ -17,7 +17,6 @@
 		"axios": "^1.5.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-hook-form": "^7.38.0",
 		"react-player": "^2.13.0",
 		"react-router-dom": "^6.16.0",
 		"react-scripts": "5.0.1",
@@ -51,6 +50,7 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+		"@trivago/prettier-plugin-sort-imports": "^4.2.0",
 		"@types/styled-components": "^5.1.28",
 		"cross-env": "^7.0.3"
 	}

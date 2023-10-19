@@ -1,28 +1,26 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
+
+import { Modal } from "../menus/Modal"
+import { VideoList } from "../lists/VideoList"
+import { VideoForm } from "../forms/VideoForm"
+import { InlineButton } from "../buttons/InlineButton"
+import { GalleryNotFound } from "../static/GalleryNotFound"
+import { NavBarContainer } from "../../styles/components/nav-bar.style"
 import {
 	useGalleryContext,
 	useVideoContext,
 } from "../../context/ContextProvider"
-
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
-// Components
-import { GalleryNotFound } from "../static/GalleryNotFound"
-import { InlineButton } from "../buttons/InlineButton"
-import { VideoList } from "../lists/VideoList"
-// Styles
 import {
 	ContentBlockContainer,
 	ContentBlockHeader,
 } from "../../styles/components/content.style"
-import { NavBarContainer } from "../../styles/components/nav-bar.style"
-import { Modal } from "../menus/Modal"
-import { VideoForm } from "../forms/VideoForm"
 
-export const GalleryEditor: React.FC = () => {
+function GalleryEditor() {
 	const { gallery } = useGalleryContext()
 	const { setVideo } = useVideoContext()
-	const handleClick = (e: React.MouseEvent) => {
+	const handleClick = (e: MouseEvent) => {
 		e.preventDefault()
 		setVideo(undefined)
 	}
@@ -33,6 +31,7 @@ export const GalleryEditor: React.FC = () => {
 				<GalleryNotFound />
 			</ContentBlockContainer>
 		)
+
 	return (
 		<ContentBlockContainer>
 			<NavBarContainer>
@@ -52,3 +51,5 @@ export const GalleryEditor: React.FC = () => {
 		</ContentBlockContainer>
 	)
 }
+
+export { GalleryEditor }

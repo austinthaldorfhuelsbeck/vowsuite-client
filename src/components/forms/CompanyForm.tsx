@@ -1,128 +1,132 @@
-// Dependencies
-import * as React from "react"
-import { useUserContext } from "../../context/ContextProvider"
-import { FormProvider, useForm } from "react-hook-form"
-// Data
-import { ICompany } from "../../interfaces/models"
-import { initialCompanyData } from "../../data/initial-data"
-import { copy } from "../../data/app-constants"
+import React from "react"
+
+import {
+	Form,
+	FormRowContainer,
+	FormContainer,
+	FormImage,
+	FormSubheader,
+} from "src/styles/components/modal.style"
+import { MessageBanner } from "./components/MessageBanner"
+import { useCompanyForm } from "src/hooks/useCompanyForm"
+import { FormActions } from "./components/FormActions"
 import {
 	company_name_validation,
+	facebook_URL_validation,
+	hex1_validation,
+	hex2_validation,
+	hex3_validation,
 	img_URL_validation,
+	instagram_URL_validation,
+	tiktok_URL_validation,
+	vimeo_URL_validation,
 	website_URL_validation,
 	youtube_URL_validation,
-	instagram_URL_validation,
-	facebook_URL_validation,
-	vimeo_URL_validation,
-	tiktok_URL_validation,
 } from "./utils/inputValidation"
-// Components
-import { InputGroup } from "./InputGroups"
-// Styles
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
-import { InlineButton } from "../buttons/InlineButton"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { Alert } from "../../styles/components/content.style"
-import { createCompany, updateCompany } from "../../services/companies.service"
-import {
-	faArrowAltCircleRight,
-	faCancel,
-	faRefresh,
-} from "@fortawesome/free-solid-svg-icons"
+import { ColorGroup, InputGroup } from "./components/InputGroups"
 
-export const CompanyForm: React.FC = () => {
-	// load context
-	const { userMetadata, setUserMetadata } = useUserContext()
-	// determine initial form data from context
-	let initialFormData: ICompany = initialCompanyData
-	if (userMetadata?.company && userMetadata?.user_id) {
-		// load company data if the user has a company
-		initialFormData = {
-			...userMetadata.company,
-			user_id: userMetadata.user_id,
-		}
-	} else if (userMetadata?.user_id) {
-		// load initial company data if the user exists
-		initialFormData = {
-			...initialCompanyData,
-			user_id: userMetadata.user_id,
-		}
-	}
-
-	// state
-	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<IAppError | undefined>(undefined)
-	// handlers
-	const handleClear = (data: ICompany) => {
-		methods.reset(data)
-		setSuccess(false)
-		setError(undefined)
-	}
-	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
-		// call API
-		const response: IApiResponse = userMetadata?.company
-			? await updateCompany({
-					...formData,
-					company_id: userMetadata.company.company_id,
-			  })
-			: await createCompany(formData)
-		// returns a company
-		if (response.data) {
-			// update context
-			if (userMetadata) {
-				setUserMetadata({ ...userMetadata, company: response.data })
-			}
-			// update success banner
-			setSuccess(true)
-			setTimeout(setSuccess, 3000, false)
-		}
-		if (response.error) {
-			setError(response.error)
-			setTimeout(setError, 3000, undefined)
-		}
-	})
+function CompanyForm() {
+	const { formData, onChange, onClear, onReset, onSubmit, success, error } =
+		useCompanyForm()
+	const {
+		company_name,
+		img_URL,
+		website_URL,
+		youtube_URL,
+		instagram_URL,
+		facebook_URL,
+		vimeo_URL,
+		tiktok_URL,
+	} = formData
+	const hex1: string = "#D1B2A2"
+	const hex2: string = "#FFEDE4"
+	const hex3: string = "#E8BAA3"
 
 	return (
-		<FormProvider {...methods}>
-			<Form
-				onSubmit={(e: any) => e.preventDefault()}
-				noValidate
-				autoComplete="off"
-			>
-				<InputGroup {...company_name_validation} />
-				<InputGroup {...img_URL_validation} />
-				<InputGroup {...website_URL_validation} />
-				<InputGroup {...youtube_URL_validation} />
-				<InputGroup {...instagram_URL_validation} />
-				<InputGroup {...facebook_URL_validation} />
-				<InputGroup {...vimeo_URL_validation} />
-				<InputGroup {...tiktok_URL_validation} />
-				{(success || error) && (
-					<Alert error={error !== undefined}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-				<FormActionsContainer>
-					{userMetadata?.company && (
-						<InlineButton
-							icon={faRefresh}
-							title="Reset"
-							onClick={() => handleClear(initialFormData)}
-						/>
-					)}
-					<InlineButton
-						icon={faCancel}
-						title="Clear"
-						onClick={() => handleClear(initialCompanyData)}
+		<Form>
+			<FormContainer>
+				<FormSubheader>Company Details</FormSubheader>
+
+				<InputGroup
+					{...company_name_validation}
+					value={company_name}
+					onChange={onChange}
+				/>
+				<InputGroup
+					{...img_URL_validation}
+					value={img_URL}
+					onChange={onChange}
+				/>
+				<FormImage src={img_URL} alt="Company profile" />
+
+				<FormSubheader>Links</FormSubheader>
+				<FormRowContainer>
+					<InputGroup
+						{...website_URL_validation}
+						value={website_URL}
+						onChange={onChange}
 					/>
-					<InlineButton
-						icon={faArrowAltCircleRight}
-						title="Submit"
-						onClick={handleSubmit}
+					<InputGroup
+						{...youtube_URL_validation}
+						value={youtube_URL}
+						onChange={onChange}
 					/>
-				</FormActionsContainer>
-			</Form>
-		</FormProvider>
+				</FormRowContainer>
+				<FormRowContainer>
+					<InputGroup
+						{...instagram_URL_validation}
+						value={instagram_URL}
+						onChange={onChange}
+					/>
+					<InputGroup
+						{...facebook_URL_validation}
+						value={facebook_URL}
+						onChange={onChange}
+					/>
+				</FormRowContainer>
+
+				<FormRowContainer>
+					<InputGroup
+						{...vimeo_URL_validation}
+						value={vimeo_URL}
+						onChange={onChange}
+					/>
+					<InputGroup
+						{...tiktok_URL_validation}
+						value={tiktok_URL}
+						onChange={onChange}
+					/>
+				</FormRowContainer>
+
+				<FormRowContainer>
+					<ColorGroup
+						{...hex1_validation}
+						value={hex1}
+						onChange={onChange}
+					/>
+					<ColorGroup
+						{...hex2_validation}
+						value={hex2}
+						onChange={onChange}
+					/>
+					<ColorGroup
+						{...hex3_validation}
+						value={hex3}
+						onChange={onChange}
+					/>
+				</FormRowContainer>
+
+				<MessageBanner success={success} error={error} />
+
+				<FormActions
+					formData={formData}
+					onClear={onClear}
+					onReset={onReset}
+					onSubmit={onSubmit}
+				/>
+			</FormContainer>
+		</Form>
 	)
 }
+
+export { CompanyForm }
