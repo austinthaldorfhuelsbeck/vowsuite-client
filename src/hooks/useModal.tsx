@@ -1,11 +1,10 @@
-// Dependencies
-import * as React from "react"
+import { useState } from "react"
 
 export const useModal = () => {
-	const [isOpen, setisOpen] = React.useState(false)
+	const [isOpen, setIsOpen] = useState(false)
 
 	const toggle = () => {
-		setisOpen(!isOpen)
+		setIsOpen(!isOpen)
 	}
 
 	return {

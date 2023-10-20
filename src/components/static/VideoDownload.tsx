@@ -1,18 +1,19 @@
-// Dependencies
-import * as React from "react"
+import React, { PropsWithChildren } from "react"
+
+import { faCloudDownloadAlt } from "@fortawesome/free-solid-svg-icons"
+
+import { InlineButton } from "../buttons/InlineButton"
 import { IGallery, IVideo } from "../../interfaces/models"
 import {
 	GalleryModalContainer,
 	GallerySubheader,
 } from "../../styles/layouts/gallery-layout.style"
-import { InlineButton } from "../buttons/InlineButton"
-import { faCloudDownloadAlt } from "@fortawesome/free-solid-svg-icons"
 
-interface VideoDownloadProps {
+interface ComponentProps {
 	gallery: IGallery
 }
 
-export const VideoDownload: React.FC<VideoDownloadProps> = ({ gallery }) => {
+function VideoDownload({ gallery }: PropsWithChildren<ComponentProps>) {
 	const downloadVideo = (video: IVideo) => {
 		// anchor link
 		const element: HTMLAnchorElement = document.createElement("a")
@@ -43,3 +44,5 @@ export const VideoDownload: React.FC<VideoDownloadProps> = ({ gallery }) => {
 		</GalleryModalContainer>
 	)
 }
+
+export { VideoDownload }

@@ -1,20 +1,29 @@
-// Dependencies
-import * as React from "react"
+import React, { useState } from "react"
+
+import { FormProvider, useForm } from "react-hook-form"
+
+import {
+	faArrowAltCircleRight,
+	faCancel,
+	faRefresh,
+} from "@fortawesome/free-solid-svg-icons"
+
+import { copy } from "../../data/app-constants"
+import { InlineButton } from "../buttons/InlineButton"
+import { readUser } from "../../services/users.service"
+import { initialGalleryData } from "../../data/initial-data"
+import { ControlInputGroup, InputGroup } from "./InputGroups"
+import { Alert } from "../../styles/components/content.style"
+import { IApiResponse, IAppError } from "../../interfaces/api"
+import { IBaseGallery } from "../../interfaces/models"
+import { createGallery, updateGallery } from "../../services/galleries.service"
 import {
 	useGalleryContext,
 	useUserContext,
 } from "../../context/ContextProvider"
-import { FormProvider, useForm } from "react-hook-form"
-// Data
-import { IBaseGallery, IGallery } from "../../interfaces/models"
-import { initialGalleryData } from "../../data/initial-data"
-import { copy } from "../../data/app-constants"
-// Components
-import { ControlInputGroup, InputGroup } from "./InputGroups"
-// Styles
 import {
-	FormActionsContainer,
 	Form,
+	FormActionsContainer,
 	FormStyleContainer,
 } from "../../styles/components/modal.style"
 import {
@@ -25,18 +34,8 @@ import {
 	hex3_validation,
 	img_URL_validation,
 } from "./utils/inputValidation"
-import { InlineButton } from "../buttons/InlineButton"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { createGallery, updateGallery } from "../../services/galleries.service"
-import { Alert } from "../../styles/components/content.style"
-import {
-	faArrowAltCircleRight,
-	faCancel,
-	faRefresh,
-} from "@fortawesome/free-solid-svg-icons"
-import { readUser } from "../../services/users.service"
 
-export const GalleryForm: React.FC = () => {
+function GalleryForm() {
 	// load context
 	const { userMetadata, setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
@@ -57,8 +56,8 @@ export const GalleryForm: React.FC = () => {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<IAppError | undefined>(undefined)
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: IBaseGallery) => {
 		methods.reset(data)
@@ -135,3 +134,5 @@ export const GalleryForm: React.FC = () => {
 		</FormProvider>
 	)
 }
+
+export { GalleryForm }

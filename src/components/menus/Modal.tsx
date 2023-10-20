@@ -1,35 +1,34 @@
-// Dependencies
-import * as React from "react"
-import { useModal } from "../../hooks/useModal"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React, { useRef, MouseEvent, useEffect, PropsWithChildren } from "react"
+
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
-// Styles
+
+import { useModal } from "../../hooks/useModal"
+import { BlankSpan } from "../../styles/components/util.style"
 import {
+	ModalCancel,
 	ModalDialog,
 	ModalDialogContainer,
-	ModalCancel,
 } from "../../styles/components/modal.style"
-import { BlankSpan } from "../../styles/components/util.style"
 
-interface ModalRefs {
+interface ComponentProps {
 	button: JSX.Element
 	content: JSX.Element
 }
 
-export const Modal: React.FC<ModalRefs> = ({ button, content }) => {
+function Modal({ button, content }: PropsWithChildren<ComponentProps>) {
 	// ref object
-	const modalRef = React.useRef<HTMLDialogElement>(null)
+	const modalRef = useRef<HTMLDialogElement>(null)
 	// modal opener hook
 	const { isOpen, toggle } = useModal()
 
 	// event listeners
-	const onBackgroundClick = (e: React.MouseEvent<HTMLDialogElement>) => {
+	const onBackgroundClick = (e: MouseEvent<HTMLDialogElement>) => {
 		e.preventDefault()
 		if (e.target === modalRef.current) toggle()
 	}
 
 	// open and close when isOpen changes
-	React.useEffect(() => {
+	useEffect(() => {
 		const ref = modalRef
 		if (ref.current) {
 			if (isOpen) {
@@ -54,3 +53,5 @@ export const Modal: React.FC<ModalRefs> = ({ button, content }) => {
 		</>
 	)
 }
+
+export { Modal }

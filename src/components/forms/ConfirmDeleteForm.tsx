@@ -1,19 +1,17 @@
-// Dependencies
-import * as React from "react"
+import React, { PropsWithChildren } from "react"
+
+import { copy } from "../../data/app-constants"
 import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import {
 	ContentBlockHeader,
 	ContentBlockSubheader,
 } from "../../styles/components/content.style"
-import { copy } from "../../data/app-constants"
 
-interface VideoDeleteFormProps {
+interface ComponentProps {
 	children: JSX.Element
 }
 
-export const VideoDeleteForm: React.FC<VideoDeleteFormProps> = ({
-	children,
-}) => {
+function VideoDeleteForm({ children }: PropsWithChildren<ComponentProps>) {
 	return (
 		<Form>
 			<ContentBlockHeader>{copy.confirmDeleteHeader}</ContentBlockHeader>
@@ -24,3 +22,5 @@ export const VideoDeleteForm: React.FC<VideoDeleteFormProps> = ({
 		</Form>
 	)
 }
+
+export { VideoDeleteForm }

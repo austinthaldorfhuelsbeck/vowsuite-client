@@ -1,23 +1,24 @@
-// Dependencies
-import * as React from "react"
+import React, { MouseEvent } from "react"
+
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
+
+import { InlineButton } from "../InlineButton"
 import { IApiResponse } from "../../../interfaces/api"
+import { readUser } from "../../../services/users.service"
+import { deleteVideo } from "../../../services/videos.service"
 import {
 	useGalleryContext,
 	useUserContext,
 	useVideoContext,
 } from "../../../context/ContextProvider"
-import { deleteVideo } from "../../../services/videos.service"
-import { InlineButton } from "../InlineButton"
-import { readUser } from "../../../services/users.service"
 
-export const VideoDeleteButton: React.FC = () => {
+function VideoDeleteButton() {
 	// context
 	const { setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	const { video, setVideo } = useVideoContext()
 
-	const handleDelete = (e: React.MouseEvent<HTMLLIElement>) => {
+	const handleDelete = (e: MouseEvent<HTMLLIElement>) => {
 		e.preventDefault()
 		// function to delete a video
 		const getVideoResponse = async (id: number) => {
@@ -46,3 +47,5 @@ export const VideoDeleteButton: React.FC = () => {
 		/>
 	)
 }
+
+export { VideoDeleteButton }

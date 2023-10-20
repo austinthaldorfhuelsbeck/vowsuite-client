@@ -1,25 +1,27 @@
-// Dependencies
-import * as React from "react"
+import React, { PropsWithChildren } from "react"
+
+import { Link } from "react-router-dom"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons"
+
+import { BrandSocials } from "./BrandSocials"
 import { ICompany } from "../../interfaces/models"
+import { baseUrls, copy } from "../../data/app-constants"
 import {
 	AltHeader,
 	AltSubheader,
-	GalleryModalContainer,
 	BrandDetailsDivider,
 	BrandSocialSubheader,
 	CompanyLogo,
+	GalleryModalContainer,
 } from "../../styles/layouts/gallery-layout.style"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons"
-import { baseUrls, copy } from "../../data/app-constants"
-import { BrandSocials } from "./BrandSocials"
-import { Link } from "react-router-dom"
 
-interface BrandDetailsProps {
+interface ComponentProps {
 	company: ICompany
 }
 
-export const BrandDetails: React.FC<BrandDetailsProps> = ({ company }) => {
+function BrandDetails({ company }: PropsWithChildren<ComponentProps>) {
 	return (
 		<GalleryModalContainer>
 			<CompanyLogo src={company.img_URL} />
@@ -51,3 +53,5 @@ export const BrandDetails: React.FC<BrandDetailsProps> = ({ company }) => {
 		</GalleryModalContainer>
 	)
 }
+
+export { BrandDetails }

@@ -1,17 +1,14 @@
-// Dependencies
-import * as React from "react"
-import { ContextProvider } from "../../context/ContextProvider"
-// Components
-import { CompanyTabButton } from "../buttons/CompanyTabButton"
+import React from "react"
+
 import { Sidebar } from "./Sidebar"
 import { GalleryEditor } from "./GalleryEditor"
-// Styles
+import { CompanyTabButton } from "../buttons/CompanyTabButton"
 import {
-	StudioContainer,
 	DashboardContainer,
+	StudioContainer,
 } from "../../styles/layouts/dashboard-layout.style"
 
-export const Studio: React.FC = () => {
+function Studio() {
 	return (
 		<StudioContainer>
 			<CompanyTabButton />
@@ -22,3 +19,5 @@ export const Studio: React.FC = () => {
 		</StudioContainer>
 	)
 }
+
+export { Studio }

@@ -1,15 +1,14 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGear, faPlus } from "@fortawesome/free-solid-svg-icons"
-// Components
+
 import { Modal } from "../menus/Modal"
 import { CompanyForm } from "../forms/CompanyForm"
-// Styles
-import { TabButton, ButtonTitle } from "../../styles/components/buttons.style"
 import { useUserContext } from "../../context/ContextProvider"
+import { ButtonTitle, TabButton } from "../../styles/components/buttons.style"
 
-export const CompanyTabButton: React.FC = () => {
+function CompanyTabButton() {
 	const { userMetadata } = useUserContext()
 	// button shows company name or "new company"
 	return (
@@ -33,3 +32,5 @@ export const CompanyTabButton: React.FC = () => {
 		/>
 	)
 }
+
+export { CompanyTabButton }

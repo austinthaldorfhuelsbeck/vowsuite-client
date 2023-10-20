@@ -1,14 +1,13 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
 import { useRoutes } from "react-router-dom"
-// Components
+
 import routes from "./routes"
 import { PageLoader } from "./components/common/PageLoader"
-// Styles
-import { PageContainer } from "./styles/layouts/page-layout.style"
 import { ContextProvider } from "./context/ContextProvider"
+import { PageContainer } from "./styles/layouts/page-layout.style"
 
-export const App: React.FC = () => {
+function App() {
 	// load routes
 	const content = useRoutes(routes)
 
@@ -22,3 +21,5 @@ export const App: React.FC = () => {
 		</PageContainer>
 	)
 }
+
+export { App }

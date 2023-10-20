@@ -1,28 +1,30 @@
-// Dependencies
-import * as React from "react"
-import { useUserContext } from "../../context/ContextProvider"
-import { IBaseUser } from "../../interfaces/models"
-import { initialUserData } from "../../data/initial-data"
+import React, { useState } from "react"
+
 import { FormProvider, useForm } from "react-hook-form"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { createUser, updateUser } from "../../services/users.service"
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
-import { InputGroup } from "./InputGroups"
-import {
-	img_URL_validation,
-	user_email_validation,
-	user_name_validation,
-} from "./utils/inputValidation"
-import { Alert } from "../../styles/components/content.style"
-import { copy } from "../../data/app-constants"
-import { InlineButton } from "../buttons/InlineButton"
+
 import {
 	faArrowCircleRight,
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
 
-export const UserProfileForm: React.FC = () => {
+import { InputGroup } from "./InputGroups"
+import { copy } from "../../data/app-constants"
+import { IBaseUser } from "../../interfaces/models"
+import { InlineButton } from "../buttons/InlineButton"
+import { initialUserData } from "../../data/initial-data"
+import { Alert } from "../../styles/components/content.style"
+import { useUserContext } from "../../context/ContextProvider"
+import { IApiResponse, IAppError } from "../../interfaces/api"
+import { createUser, updateUser } from "../../services/users.service"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+import {
+	img_URL_validation,
+	user_email_validation,
+	user_name_validation,
+} from "./utils/inputValidation"
+
+function UserProfileForm() {
 	// load context
 	const { userMetadata, setUserMetadata } = useUserContext()
 	// determine initial form data from context
@@ -39,8 +41,8 @@ export const UserProfileForm: React.FC = () => {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<IAppError | undefined>(undefined)
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: IBaseUser) => {
 		methods.reset(data)
@@ -103,3 +105,5 @@ export const UserProfileForm: React.FC = () => {
 		</FormProvider>
 	)
 }
+
+export { UserProfileForm }

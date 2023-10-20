@@ -1,22 +1,23 @@
-// Dependencies
-import * as React from "react"
+import React, { MouseEvent } from "react"
+
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
-import { IApiResponse } from "../../../interfaces/api"
+
 import { InlineButton } from "../InlineButton"
+import { IGallery } from "../../../interfaces/models"
+import { IApiResponse } from "../../../interfaces/api"
+import { readUser } from "../../../services/users.service"
+import { deleteGallery } from "../../../services/galleries.service"
 import {
 	useGalleryContext,
 	useUserContext,
 } from "../../../context/ContextProvider"
-import { deleteGallery } from "../../../services/galleries.service"
-import { readUser } from "../../../services/users.service"
-import { IGallery } from "../../../interfaces/models"
 
-export const GalleryDeleteButton: React.FC = () => {
+function GalleryDeleteButton() {
 	// context
 	const { setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 
-	const handleDelete = (e: React.MouseEvent<HTMLLIElement>) => {
+	const handleDelete = (e: MouseEvent<HTMLLIElement>) => {
 		e.preventDefault()
 		// function to delete a gallery
 		const getGalleryResponse = async (gallery: IGallery) => {
@@ -44,3 +45,5 @@ export const GalleryDeleteButton: React.FC = () => {
 		/>
 	)
 }
+
+export { GalleryDeleteButton }

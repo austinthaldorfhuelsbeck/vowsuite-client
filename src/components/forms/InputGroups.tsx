@@ -1,10 +1,10 @@
-// Dependencies
-import * as React from "react"
-// Styles
-import { FormContainer } from "../../styles/components/modal.style"
+import React, { PropsWithChildren } from "react"
+
 import { useFormContext } from "react-hook-form"
+
 import { findInputError, isFormInvalid } from "./utils"
 import { Alert } from "../../styles/components/content.style"
+import { FormContainer } from "../../styles/components/modal.style"
 
 // Data
 interface BaseProps {
@@ -20,13 +20,13 @@ interface ControlGroupProps extends BaseProps {
 	options: string[]
 }
 
-export const InputGroup: React.FC<InputGroupProps> = ({
+function InputGroup({
 	label,
 	type,
 	id,
 	placeholder,
 	validation,
-}) => {
+}: PropsWithChildren<InputGroupProps>) {
 	const {
 		register,
 		formState: { errors },
@@ -54,12 +54,12 @@ export const InputGroup: React.FC<InputGroupProps> = ({
 	)
 }
 
-export const ControlInputGroup: React.FC<ControlGroupProps> = ({
+function ControlInputGroup({
 	label,
 	id,
 	options,
 	validation,
-}) => {
+}: PropsWithChildren<ControlGroupProps>) {
 	const {
 		register,
 		formState: { errors },
@@ -86,6 +86,8 @@ export const ControlInputGroup: React.FC<ControlGroupProps> = ({
 	)
 }
 
-const InputError: React.FC<{ message: string }> = ({ message }) => {
+function InputError({ message }: PropsWithChildren<{ message: string }>) {
 	return <Alert error={true}>{message}</Alert>
 }
+
+export { InputGroup, ControlInputGroup }

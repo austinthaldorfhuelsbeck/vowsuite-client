@@ -1,37 +1,37 @@
-// Dependencies
-import * as React from "react"
-import {
-	useGalleryContext,
-	useUserContext,
-	useVideoContext,
-} from "../../context/ContextProvider"
-// Data
-import { IVideo } from "../../interfaces/models"
-import { initialVideoData } from "../../data/initial-data"
-// Styles
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+import React, { useState } from "react"
+
 import { FormProvider, useForm } from "react-hook-form"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { createVideo, updateVideo } from "../../services/videos.service"
-import { copy } from "../../data/app-constants"
-import { InlineButton } from "../buttons/InlineButton"
-import {
-	img_URL_validation,
-	video_URL_validation,
-	video_name_validation,
-} from "./utils/inputValidation"
-import { InputGroup } from "./InputGroups"
-import { Alert } from "../../styles/components/content.style"
+
 import {
 	faArrowAltCircleRight,
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
-import { readUser } from "../../services/users.service"
 
-export const VideoForm: React.FC = () => {
+import { InputGroup } from "./InputGroups"
+import { copy } from "../../data/app-constants"
+import { IVideo } from "../../interfaces/models"
+import { InlineButton } from "../buttons/InlineButton"
+import { readUser } from "../../services/users.service"
+import { initialVideoData } from "../../data/initial-data"
+import { Alert } from "../../styles/components/content.style"
+import { IApiResponse, IAppError } from "../../interfaces/api"
+import { createVideo, updateVideo } from "../../services/videos.service"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+import {
+	useGalleryContext,
+	useUserContext,
+	useVideoContext,
+} from "../../context/ContextProvider"
+import {
+	img_URL_validation,
+	video_name_validation,
+	video_URL_validation,
+} from "./utils/inputValidation"
+
+function VideoForm() {
 	// load context
-	const { userMetadata, setUserMetadata } = useUserContext()
+	const { setUserMetadata } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	const { video, setVideo } = useVideoContext()
 	// determine initial form data from context
@@ -39,8 +39,8 @@ export const VideoForm: React.FC = () => {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<IAppError | undefined>(undefined)
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: IVideo) => {
 		methods.reset(data)
@@ -112,3 +112,5 @@ export const VideoForm: React.FC = () => {
 		</FormProvider>
 	)
 }
+
+export { VideoForm }

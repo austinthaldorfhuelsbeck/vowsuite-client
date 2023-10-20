@@ -1,34 +1,32 @@
-// Dependencies
-import * as React from "react"
+import React, { useEffect, useState } from "react"
+
+import ReactPlayer from "react-player"
 import { useParams } from "react-router-dom"
-import { ICompany, IGallery, IUser, IVideo } from "../../interfaces/models"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons"
+
+import { Modal } from "../menus/Modal"
+import { copy } from "../../data/app-constants"
+import { GalleryNavBar } from "../nav/GalleryNavBar"
+import { readUser } from "../../services/users.service"
 import { readGallery } from "../../services/galleries.service"
+import { VideoCardListItem } from "../lists/VideoCardListItem"
+import { ICompany, IGallery, IUser, IVideo } from "../../interfaces/models"
 import {
+	CardsList,
 	GalleryContainer,
 	GalleryHeader,
 	PlayButton,
-	CardsList,
 } from "../../styles/layouts/gallery-layout.style"
-import { readUser } from "../../services/users.service"
-import { Modal } from "../menus/Modal"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons"
-import { copy } from "../../data/app-constants"
-import { VideoCardListItem } from "../lists/VideoCardListItem"
-import ReactPlayer from "react-player"
-import { GalleryNavBar } from "../nav/GalleryNavBar"
 
-export const Gallery: React.FC = () => {
+function Gallery() {
 	// get ID from URL and find gallery
 	// then find company
 	const { gallery_id } = useParams()
-	const [gallery, setGallery] = React.useState<IGallery | undefined>(
-		undefined,
-	)
-	const [company, setCompany] = React.useState<ICompany | undefined>(
-		undefined,
-	)
-	React.useEffect(() => {
+	const [gallery, setGallery] = useState<IGallery | undefined>(undefined)
+	const [company, setCompany] = useState<ICompany | undefined>(undefined)
+	useEffect(() => {
 		// function to get a gallery and set state
 		const getGalleryResponse = async (id: string) => {
 			const galleryResponse: IGallery = (await readGallery(id)).data
@@ -77,3 +75,5 @@ export const Gallery: React.FC = () => {
 		)
 	return <></>
 }
+
+export { Gallery }

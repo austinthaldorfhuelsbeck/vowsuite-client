@@ -1,13 +1,11 @@
-// Dependencies
-import * as React from "react"
-import { useUserContext } from "../../context/ContextProvider"
-// Components
-import { GalleryListItem } from "./GalleryListItem"
-// Styles
-import { List } from "../../styles/components/lists.styles"
-import { IGallery } from "../../interfaces/models"
+import React from "react"
 
-export const GalleryList: React.FC = () => {
+import { IGallery } from "../../interfaces/models"
+import { GalleryListItem } from "./GalleryListItem"
+import { List } from "../../styles/components/lists.styles"
+import { useUserContext } from "../../context/ContextProvider"
+
+function GalleryList() {
 	const { userMetadata } = useUserContext()
 
 	const renderGalleries = (galleries: IGallery[]) =>
@@ -31,3 +29,5 @@ export const GalleryList: React.FC = () => {
 		</List>
 	)
 }
+
+export { GalleryList }

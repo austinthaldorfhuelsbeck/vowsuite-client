@@ -1,30 +1,29 @@
-// Dependencies
-import * as React from "react"
+import React, { PropsWithChildren, MouseEvent } from "react"
+
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import { IVideo } from "../../interfaces/models"
+import { ContextMenu } from "../menus/ContextMenu"
 import { formatDate } from "../../services/util.service"
 import { useVideoContext } from "../../context/ContextProvider"
-// Components
-import { ContextMenu } from "../menus/ContextMenu"
-// Styles
+import { ContentContainer } from "../../styles/components/util.style"
+import { renderMenu, videoContextList } from "../../data/context-lists"
 import {
 	ContentBlockHeader,
 	ContentBlockImg,
 	ContentBlockListItem,
 	ContentBlockSubheader,
 } from "../../styles/components/content.style"
-import { ContentContainer } from "../../styles/components/util.style"
-import { renderMenu, videoContextList } from "../../data/context-lists"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
 
-interface VideoListItemProps {
+interface ComponentProps {
 	video: IVideo
 }
 
-export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
+function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
 	// select the video and save to context on click
 	const { setVideo } = useVideoContext()
-	const handleClick = (e: React.MouseEvent<HTMLLIElement>, video: IVideo) => {
+	const handleClick = (e: MouseEvent<HTMLLIElement>, video: IVideo) => {
 		e.preventDefault()
 		setVideo(video)
 	}
@@ -45,3 +44,5 @@ export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
 		</ContentBlockListItem>
 	)
 }
+
+export { VideoListItem }

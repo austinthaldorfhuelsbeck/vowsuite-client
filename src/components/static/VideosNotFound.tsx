@@ -1,14 +1,15 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
+import { faVideoSlash } from "@fortawesome/free-solid-svg-icons"
+
+import { copy } from "../../data/app-constants"
+import { BigIcon } from "../../styles/components/util.style"
 import {
 	ContentBlockHeader,
 	ContentBlockSubheader,
 } from "../../styles/components/content.style"
-import { faVideoSlash } from "@fortawesome/free-solid-svg-icons"
-import { BigIcon } from "../../styles/components/util.style"
-import { copy } from "../../data/app-constants"
 
-export const VideosNotFound: React.FC = () => {
+function VideosNotFound() {
 	return (
 		<>
 			<ContentBlockHeader>{copy.videosNotFoundHeader}</ContentBlockHeader>
@@ -19,3 +20,5 @@ export const VideosNotFound: React.FC = () => {
 		</>
 	)
 }
+
+export { VideosNotFound }

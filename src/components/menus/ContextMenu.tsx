@@ -1,30 +1,32 @@
-// Dependencies
-import * as React from "react"
-// Styles
-import { BlankSpan } from "../../styles/components/util.style"
-import { ContextMenuContainer } from "../../styles/components/context-menu.style"
-import { ContextMenuButton } from "../../styles/components/buttons.style"
+import React, {
+	PropsWithChildren,
+	useRef,
+	useState,
+	useEffect,
+	MouseEvent,
+} from "react"
 
-interface ContextMenuProps {
+import { BlankSpan } from "../../styles/components/util.style"
+import { ContextMenuButton } from "../../styles/components/buttons.style"
+import { ContextMenuContainer } from "../../styles/components/context-menu.style"
+
+interface ComponentProps {
 	button: JSX.Element
 	content: JSX.Element
 }
 
-export const ContextMenu: React.FC<ContextMenuProps> = ({
-	button,
-	content,
-}) => {
+function ContextMenu({ button, content }: PropsWithChildren<ComponentProps>) {
 	// ref for clicking outside
-	const ref = React.useRef<HTMLDivElement>(null)
+	const ref = useRef<HTMLDivElement>(null)
 
 	// menu display state
-	const [isMenu, setIsMenu] = React.useState<boolean>(false)
+	const [isMenu, setIsMenu] = useState<boolean>(false)
 	const flipMenu = (currentState: boolean) => setIsMenu(!currentState)
-	const [x, setX] = React.useState<number>(0)
-	const [y, setY] = React.useState<number>(0)
+	const [x, setX] = useState<number>(0)
+	const [y, setY] = useState<number>(0)
 
 	// event handlers
-	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 		setX(e.clientX - 150)
 		setY(e.clientY + 20)
@@ -32,7 +34,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
 	}
 
 	// event listeners
-	React.useEffect(() => {
+	useEffect(() => {
 		const handleClickOutside = (e: any) => {
 			// hide when click is outside context menu
 			if (ref.current && !ref.current.contains(e.target)) {
@@ -60,3 +62,5 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
 		</BlankSpan>
 	)
 }
+
+export { ContextMenu }

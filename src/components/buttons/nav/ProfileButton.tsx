@@ -1,17 +1,17 @@
-// Dependencies
-import * as React from "react"
+import React from "react"
+
 import { useAuth0 } from "@auth0/auth0-react"
-// Components
-import { NavProfileImg } from "../../../styles/components/nav-bar.style"
-import { ContextMenu } from "../../menus/ContextMenu"
-import { imagePaths } from "../../../data/app-constants"
-import { profileContextList, renderMenu } from "../../../data/context-lists"
-import { ContextListItem } from "../../../styles/components/lists.styles"
-import { ButtonTitle } from "../../../styles/components/buttons.style"
 import { faSignOut } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-export const ProfileButton: React.FC = () => {
+import { ContextMenu } from "../../menus/ContextMenu"
+import { imagePaths } from "../../../data/app-constants"
+import { ButtonTitle } from "../../../styles/components/buttons.style"
+import { NavProfileImg } from "../../../styles/components/nav-bar.style"
+import { ContextListItem } from "../../../styles/components/lists.styles"
+import { profileContextList, renderMenu } from "../../../data/context-lists"
+
+function ProfileButton() {
 	const { user, logout } = useAuth0()
 
 	const onLogout = () => {
@@ -40,3 +40,5 @@ export const ProfileButton: React.FC = () => {
 		/>
 	)
 }
+
+export { ProfileButton }

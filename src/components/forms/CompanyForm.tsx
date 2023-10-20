@@ -1,36 +1,35 @@
-// Dependencies
-import * as React from "react"
-import { useUserContext } from "../../context/ContextProvider"
+import React, { useState } from "react"
+
 import { FormProvider, useForm } from "react-hook-form"
-// Data
-import { ICompany } from "../../interfaces/models"
-import { initialCompanyData } from "../../data/initial-data"
-import { copy } from "../../data/app-constants"
-import {
-	company_name_validation,
-	img_URL_validation,
-	website_URL_validation,
-	youtube_URL_validation,
-	instagram_URL_validation,
-	facebook_URL_validation,
-	vimeo_URL_validation,
-	tiktok_URL_validation,
-} from "./utils/inputValidation"
-// Components
-import { InputGroup } from "./InputGroups"
-// Styles
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
-import { InlineButton } from "../buttons/InlineButton"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { Alert } from "../../styles/components/content.style"
-import { createCompany, updateCompany } from "../../services/companies.service"
+
 import {
 	faArrowAltCircleRight,
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
 
-export const CompanyForm: React.FC = () => {
+import { InputGroup } from "./InputGroups"
+import { copy } from "../../data/app-constants"
+import { ICompany } from "../../interfaces/models"
+import { InlineButton } from "../buttons/InlineButton"
+import { initialCompanyData } from "../../data/initial-data"
+import { Alert } from "../../styles/components/content.style"
+import { useUserContext } from "../../context/ContextProvider"
+import { IApiResponse, IAppError } from "../../interfaces/api"
+import { createCompany, updateCompany } from "../../services/companies.service"
+import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+import {
+	company_name_validation,
+	facebook_URL_validation,
+	img_URL_validation,
+	instagram_URL_validation,
+	tiktok_URL_validation,
+	vimeo_URL_validation,
+	website_URL_validation,
+	youtube_URL_validation,
+} from "./utils/inputValidation"
+
+function CompanyForm() {
 	// load context
 	const { userMetadata, setUserMetadata } = useUserContext()
 	// determine initial form data from context
@@ -51,8 +50,8 @@ export const CompanyForm: React.FC = () => {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = React.useState<boolean>(false)
-	const [error, setError] = React.useState<IAppError | undefined>(undefined)
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: ICompany) => {
 		methods.reset(data)
@@ -126,3 +125,5 @@ export const CompanyForm: React.FC = () => {
 		</FormProvider>
 	)
 }
+
+export { CompanyForm }

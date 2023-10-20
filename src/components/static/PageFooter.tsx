@@ -1,10 +1,7 @@
-// Dependencies
-import * as React from "react"
-// Data
+import React from "react"
+
 import { copy, footerResourceList } from "../../data/app-constants"
-// Components
 import { PageFooterLink } from "../../styles/layouts/page-layout.style"
-// Styles
 import {
 	FooterGrid,
 	FooterLinkContainer,
@@ -12,7 +9,7 @@ import {
 	LandingPageFooter,
 } from "../../styles/components/footer.style"
 
-export const PageFooter: React.FC = () => {
+function PageFooter() {
 	return (
 		<LandingPageFooter>
 			<FooterGrid>
@@ -33,3 +30,5 @@ export const PageFooter: React.FC = () => {
 		</LandingPageFooter>
 	)
 }
+
+export { PageFooter }
