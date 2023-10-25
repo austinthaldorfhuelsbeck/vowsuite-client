@@ -15,7 +15,7 @@ import { InlineButton } from "../buttons/InlineButton"
 import { readUser } from "../../services/users.service"
 import { initialVideoData } from "../../data/initial-data"
 import { Alert } from "../../styles/components/content.style"
-import { IApiResponse } from "../../interfaces/api"
+import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createVideo, updateVideo } from "../../services/videos.service"
 import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import {
@@ -28,8 +28,6 @@ import {
 	video_name_validation,
 	video_URL_validation,
 } from "./utils/inputValidation"
-import { readGallery } from "../../services/galleries.service"
-import { useMessage } from "../../hooks/useMessage"
 
 function VideoForm() {
 	// load context
@@ -41,48 +39,38 @@ function VideoForm() {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-	const { success, error, updateWithSuccess, updateWithError, clear } =
-		useMessage()
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: IVideo) => {
 		methods.reset(data)
-		clear()
+		setSuccess(false)
+		setError(undefined)
 	}
 	const handleSubmit = methods.handleSubmit(async (formData: IVideo) => {
-		// update or create
 		const request: IVideo = gallery
 			? { ...formData, gallery_id: gallery.gallery_id }
 			: formData
 		// call API
-		const responseVideo: IApiResponse = video
+		const response: IApiResponse = video
 			? await updateVideo(request, video.video_id)
 			: await createVideo(request)
-		// cleanup
-		if (responseVideo.data) {
+		// response is the full parent gallery
+		if (response.data) {
+			// update user context
+			setUserMetadata((await readUser(response.data.user_id)).data)
+			// update gallery context
+			setGallery(response.data)
 			// update video context
-			setVideo(responseVideo.data)
-			const responseGallery: IApiResponse = await readGallery(
-				formData.gallery_id.toString(),
-			)
-			if (responseGallery.data) {
-				// update gallery context
-				setGallery(responseGallery.data)
-				// update user context
-				const responseUser: IApiResponse = await readUser(
-					responseGallery.data.user_id,
-				)
-				if (responseUser.data) setUserMetadata(responseUser.data)
-			}
+			setVideo(request)
 			// update success banner
-			// then it disappears and clears the form
-			updateWithSuccess()
-			setVideo(undefined)
-			setTimeout(handleClear, 3000, initialVideoData)
+			setSuccess(true)
+			setTimeout(setSuccess, 3000, false)
 		}
-		if (responseVideo.error) {
+		if (response.error) {
 			// update error banner
-			updateWithError(responseVideo.error)
-			setTimeout(clear, 3000)
+			setError(response.error)
+			setTimeout(setError, 3000, undefined)
 		}
 	})
 

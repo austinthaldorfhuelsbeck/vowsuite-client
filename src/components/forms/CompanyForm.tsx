@@ -15,7 +15,7 @@ import { InlineButton } from "../buttons/InlineButton"
 import { initialCompanyData } from "../../data/initial-data"
 import { Alert } from "../../styles/components/content.style"
 import { useUserContext } from "../../context/ContextProvider"
-import { IApiResponse } from "../../interfaces/api"
+import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createCompany, updateCompany } from "../../services/companies.service"
 import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import {
@@ -28,13 +28,10 @@ import {
 	website_URL_validation,
 	youtube_URL_validation,
 } from "./utils/inputValidation"
-import { useMessage } from "../../hooks/useMessage"
 
 function CompanyForm() {
 	// load context
 	const { userMetadata, setUserMetadata } = useUserContext()
-	const { success, error, updateWithSuccess, updateWithError, clear } =
-		useMessage()
 	// determine initial form data from context
 	let initialFormData: ICompany = initialCompanyData
 	if (userMetadata?.company && userMetadata?.user_id) {
@@ -53,10 +50,13 @@ function CompanyForm() {
 
 	// state
 	const methods = useForm({ defaultValues: initialFormData })
-
+	const [success, setSuccess] = useState<boolean>(false)
+	const [error, setError] = useState<IAppError | undefined>(undefined)
 	// handlers
 	const handleClear = (data: ICompany) => {
 		methods.reset(data)
+		setSuccess(false)
+		setError(undefined)
 	}
 	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
 		// call API
@@ -73,12 +73,12 @@ function CompanyForm() {
 				setUserMetadata({ ...userMetadata, company: response.data })
 			}
 			// update success banner
-			updateWithSuccess()
-			setTimeout(clear, 3000)
+			setSuccess(true)
+			setTimeout(setSuccess, 3000, false)
 		}
 		if (response.error) {
-			updateWithError(response.error)
-			setTimeout(clear, 3000)
+			setError(response.error)
+			setTimeout(setError, 3000, undefined)
 		}
 	})
 
