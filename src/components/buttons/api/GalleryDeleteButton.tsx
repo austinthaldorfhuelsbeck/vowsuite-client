@@ -28,7 +28,7 @@ function GalleryDeleteButton() {
 			// update context if response is successful
 			if (response.data) {
 				// user
-				setUserMetadata((await readUser(gallery.user_id)).data)
+				setUserMetadata((await readUser(response.data.user_id)).data)
 				// gallery
 				setGallery(response.data)
 			}

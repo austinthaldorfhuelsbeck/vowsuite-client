@@ -15,6 +15,8 @@ import {
 	ContentBlockListItem,
 	ContentBlockSubheader,
 } from "../../styles/components/content.style"
+import { Modal } from "../menus/Modal"
+import ReactPlayer from "react-player"
 
 interface ComponentProps {
 	video: IVideo
@@ -30,7 +32,22 @@ function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
 
 	return (
 		<ContentBlockListItem onClick={(e: any) => handleClick(e, video)}>
-			<ContentBlockImg src={video.img_URL} alt={video.video_name} />
+			<Modal
+				button={
+					<ContentBlockImg
+						src={video.img_URL}
+						alt={video.video_name}
+					/>
+				}
+				content={
+					<ReactPlayer
+						controls
+						width={"80vw"}
+						height={"100%"}
+						url={video.video_URL}
+					/>
+				}
+			/>
 			<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
 			<ContentContainer>
 				<ContentBlockSubheader>

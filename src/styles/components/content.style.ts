@@ -45,6 +45,7 @@ export const ContentBlockImg = styled.img`
 	width: 27rem;
 	height: 18rem;
 	object-fit: cover;
+	cursor: pointer;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 	margin-left: auto;
