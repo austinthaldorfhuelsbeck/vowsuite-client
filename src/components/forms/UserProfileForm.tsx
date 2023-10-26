@@ -17,12 +17,13 @@ import { Alert } from "../../styles/components/content.style"
 import { useUserContext } from "../../context/ContextProvider"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createUser, updateUser } from "../../services/users.service"
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+
 import {
 	img_URL_validation,
 	user_email_validation,
 	user_name_validation,
 } from "./utils/inputValidation"
+import { Form, FormRow } from "../../styles/components/forms.style"
 
 function UserProfileForm() {
 	// load context
@@ -82,7 +83,7 @@ function UserProfileForm() {
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
-				<FormActionsContainer>
+				<FormRow>
 					{userMetadata && (
 						<InlineButton
 							icon={faRefresh}
@@ -100,7 +101,7 @@ function UserProfileForm() {
 						title="Submit"
 						onClick={handleSubmit}
 					/>
-				</FormActionsContainer>
+				</FormRow>
 			</Form>
 		</FormProvider>
 	)

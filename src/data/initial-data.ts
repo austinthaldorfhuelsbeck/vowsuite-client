@@ -1,10 +1,4 @@
-import {
-	ICompany,
-	IBaseGallery,
-	IVideo,
-	IUser,
-	IBaseUser,
-} from "../interfaces/models"
+import { ICompany, IBaseGallery, IVideo, IBaseUser } from "../interfaces/models"
 import { defaultGalleryStyle, imagePaths } from "./app-constants"
 
 // gallery form data

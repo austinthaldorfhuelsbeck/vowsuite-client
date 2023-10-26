@@ -12,7 +12,7 @@ import { copy } from "../../data/app-constants"
 import { InlineButton } from "../buttons/InlineButton"
 import { readUser } from "../../services/users.service"
 import { initialGalleryData } from "../../data/initial-data"
-import { ControlInputGroup, InputGroup } from "./InputGroups"
+import { ControlGroup, InputGroup } from "./InputGroups"
 import { Alert } from "../../styles/components/content.style"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { IBaseGallery } from "../../interfaces/models"
@@ -22,18 +22,13 @@ import {
 	useUserContext,
 } from "../../context/ContextProvider"
 import {
-	Form,
-	FormActionsContainer,
-	FormStyleContainer,
-} from "../../styles/components/modal.style"
-import {
 	font_validation,
 	gallery_name_validation,
 	hex1_validation,
 	hex2_validation,
 	hex3_validation,
-	img_URL_validation,
 } from "./utils/inputValidation"
+import { Form, FormRow } from "../../styles/components/forms.style"
 
 function GalleryForm() {
 	// load context
@@ -98,21 +93,22 @@ function GalleryForm() {
 				noValidate
 				autoComplete="off"
 			>
-				<InputGroup {...gallery_name_validation} />
-				<input type="file" name="image" />
-				{/* <InputGroup {...img_URL_validation} /> */}
-				<ControlInputGroup {...font_validation} />
-				<FormStyleContainer>
+				<FormRow>
+					<InputGroup {...gallery_name_validation} />
+					<input type="file" name="image" />
+					{/* <InputGroup {...img_URL_validation} /> */}
+					<ControlGroup {...font_validation} />
+
 					<InputGroup {...hex1_validation} />
 					<InputGroup {...hex2_validation} />
 					<InputGroup {...hex3_validation} />
-				</FormStyleContainer>
-				{(success || error) && (
-					<Alert error={error !== undefined}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-				<FormActionsContainer>
+					{(success || error) && (
+						<Alert error={error !== undefined}>
+							{error ? error.message : copy.formSuccess}
+						</Alert>
+					)}
+				</FormRow>
+				<FormRow>
 					{gallery && (
 						<InlineButton
 							icon={faRefresh}
@@ -130,7 +126,7 @@ function GalleryForm() {
 						title="Submit"
 						onClick={handleSubmit}
 					/>
-				</FormActionsContainer>
+				</FormRow>
 			</Form>
 		</FormProvider>
 	)

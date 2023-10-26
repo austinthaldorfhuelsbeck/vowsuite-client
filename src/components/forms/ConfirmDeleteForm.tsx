@@ -1,11 +1,12 @@
 import React, { PropsWithChildren } from "react"
 
 import { copy } from "../../data/app-constants"
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+
 import {
 	ContentBlockHeader,
 	ContentBlockSubheader,
 } from "../../styles/components/content.style"
+import { Form, FormRow } from "../../styles/components/forms.style"
 
 interface ComponentProps {
 	children: JSX.Element
@@ -18,7 +19,7 @@ function VideoDeleteForm({ children }: PropsWithChildren<ComponentProps>) {
 			<ContentBlockSubheader>
 				{copy.confirmDeleteMessage}
 			</ContentBlockSubheader>
-			<FormActionsContainer>{children}</FormActionsContainer>
+			<FormRow>{children}</FormRow>
 		</Form>
 	)
 }

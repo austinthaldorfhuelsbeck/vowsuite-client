@@ -59,9 +59,9 @@ export interface IVideo {
 
 export interface ICompany {
 	company_id: number
+	img_URL: string
 	user_id: number
 	company_name: string
-	img_URL: string
 	website_URL: string
 	youtube_URL: string
 	instagram_URL: string

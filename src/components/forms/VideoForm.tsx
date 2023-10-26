@@ -17,7 +17,7 @@ import { initialVideoData } from "../../data/initial-data"
 import { Alert } from "../../styles/components/content.style"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createVideo, updateVideo } from "../../services/videos.service"
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
+
 import {
 	useGalleryContext,
 	useUserContext,
@@ -28,6 +28,7 @@ import {
 	video_name_validation,
 	video_URL_validation,
 } from "./utils/inputValidation"
+import { Form, FormRow } from "../../styles/components/forms.style"
 
 function VideoForm() {
 	// load context
@@ -89,7 +90,7 @@ function VideoForm() {
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
-				<FormActionsContainer>
+				<FormRow>
 					{video && (
 						<InlineButton
 							icon={faRefresh}
@@ -107,7 +108,7 @@ function VideoForm() {
 						title="Submit"
 						onClick={handleSubmit}
 					/>
-				</FormActionsContainer>
+				</FormRow>
 			</Form>
 		</FormProvider>
 	)

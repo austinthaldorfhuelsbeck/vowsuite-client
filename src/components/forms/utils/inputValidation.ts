@@ -70,9 +70,9 @@ export const video_name_validation = {
 
 export const img_URL_validation = {
 	label: "Image URL",
-	type: "text",
+	type: "file",
 	id: "img_URL",
-	placeholder: "Cover image URL",
+	placeholder: undefined,
 	validation: {
 		required: {
 			value: false,

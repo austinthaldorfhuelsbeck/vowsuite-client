@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form"
 
 import { findInputError, isFormInvalid } from "./utils"
 import { Alert } from "../../styles/components/content.style"
-import { FormContainer } from "../../styles/components/modal.style"
+import { FormColumn } from "../../styles/components/forms.style"
 
 // Data
 interface BaseProps {
@@ -12,11 +12,11 @@ interface BaseProps {
 	id: string
 	validation: any
 }
-interface InputGroupProps extends BaseProps {
+interface InputProps extends BaseProps {
 	type: string
 	placeholder: string | undefined
 }
-interface ControlGroupProps extends BaseProps {
+interface ControlProps extends BaseProps {
 	options: string[]
 }
 
@@ -25,41 +25,24 @@ function InputGroup({
 	type,
 	id,
 	placeholder,
-	validation,
-}: PropsWithChildren<InputGroupProps>) {
-	const {
-		register,
-		formState: { errors },
-	} = useFormContext()
-
-	const inputErrors: any = findInputError(errors, id)
-	const isInvalid = isFormInvalid(inputErrors)
+}: PropsWithChildren<InputProps>) {
+	// TODO: DRY
 
 	return (
-		<FormContainer>
+		<FormColumn>
 			<label htmlFor={id}>{label}</label>
-			{isInvalid && (
-				<InputError
-					message={inputErrors.error.message}
-					key={inputErrors.error.message}
-				/>
-			)}
-			<input
-				id={id}
-				type={type}
-				placeholder={placeholder}
-				{...register(id, validation)}
-			/>
-		</FormContainer>
+
+			<input name={id} type={type} placeholder={placeholder} />
+		</FormColumn>
 	)
 }
 
-function ControlInputGroup({
+function ControlGroup({
 	label,
 	id,
 	options,
 	validation,
-}: PropsWithChildren<ControlGroupProps>) {
+}: PropsWithChildren<ControlProps>) {
 	const {
 		register,
 		formState: { errors },
@@ -69,7 +52,7 @@ function ControlInputGroup({
 	const isInvalid = isFormInvalid(inputErrors)
 
 	return (
-		<FormContainer>
+		<FormColumn>
 			<label htmlFor={id}>{label}</label>
 			{isInvalid && (
 				<InputError
@@ -82,7 +65,7 @@ function ControlInputGroup({
 					<option key={index}>{option}</option>
 				))}
 			</select>
-		</FormContainer>
+		</FormColumn>
 	)
 }
 
@@ -90,4 +73,4 @@ function InputError({ message }: PropsWithChildren<{ message: string }>) {
 	return <Alert error={true}>{message}</Alert>
 }
 
-export { InputGroup, ControlInputGroup }
+export { InputGroup, ControlGroup }

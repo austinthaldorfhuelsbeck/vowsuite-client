@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { SyntheticEvent, useEffect } from "react"
 
 import { FormProvider, useForm } from "react-hook-form"
 
@@ -11,13 +11,9 @@ import {
 import { InputGroup } from "./InputGroups"
 import { copy } from "../../data/app-constants"
 import { ICompany } from "../../interfaces/models"
-import { InlineButton } from "../buttons/InlineButton"
 import { initialCompanyData } from "../../data/initial-data"
 import { Alert } from "../../styles/components/content.style"
 import { useUserContext } from "../../context/ContextProvider"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { createCompany, updateCompany } from "../../services/companies.service"
-import { Form, FormActionsContainer } from "../../styles/components/modal.style"
 import {
 	company_name_validation,
 	facebook_URL_validation,
@@ -28,35 +24,24 @@ import {
 	website_URL_validation,
 	youtube_URL_validation,
 } from "./utils/inputValidation"
+import { useStatus } from "../../hooks/useStatus"
+import { TransparentButton } from "../../styles/components/buttons.style"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Form, FormRow } from "../../styles/components/forms.style"
 
 function CompanyForm() {
-	// load context
-	const { userMetadata, setUserMetadata } = useUserContext()
-	// determine initial form data from context
-	let initialFormData: ICompany = initialCompanyData
-	if (userMetadata?.company && userMetadata?.user_id) {
-		// load company data if the user has a company
-		initialFormData = {
-			...userMetadata.company,
-			user_id: userMetadata.user_id,
-		}
-	} else if (userMetadata?.user_id) {
-		// load initial company data if the user exists
-		initialFormData = {
-			...initialCompanyData,
-			user_id: userMetadata.user_id,
-		}
-	}
-
+	// context
+	const { userMetadata } = useUserContext()
+	const { success, error, handleClear } = useStatus()
 	// state
-	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = useState<boolean>(false)
-	const [error, setError] = useState<IAppError | undefined>(undefined)
+	const methods = useForm({ defaultValues: initialCompanyData })
 	// handlers
-	const handleClear = (data: ICompany) => {
+	function handleReset(data: ICompany) {
 		methods.reset(data)
-		setSuccess(false)
-		setError(undefined)
+		handleClear()
+	}
+	async function handleSubmit(e: SyntheticEvent) {
+		e.preventDefault()
 	}
 	// const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
 	// 	// call API
@@ -81,21 +66,31 @@ function CompanyForm() {
 	// 		setTimeout(setError, 3000, undefined)
 	// 	}
 	// })
-	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
-		// TODO: write more
-	})
+
+	// determine initial form data from context
+	useEffect(() => {
+		// load initial company data with user_id if it exists
+		if (userMetadata?.user_id) {
+			// load company data if the user has a company
+			methods.reset(
+				userMetadata.company
+					? {
+							...userMetadata.company,
+							user_id: userMetadata.user_id,
+					  }
+					: {
+							...initialCompanyData,
+							user_id: userMetadata.user_id,
+					  },
+			)
+		}
+	}, [methods, userMetadata])
 
 	return (
 		<>
 			<FormProvider {...methods}>
-				<Form
-					onSubmit={(e: any) => e.preventDefault()}
-					noValidate
-					autoComplete="off"
-				>
+				<Form onSubmit={handleSubmit} noValidate autoComplete="off">
 					<InputGroup {...company_name_validation} />
-					<input type="file" name="image" />
-					{/* <InputGroup {...img_URL_validation} /> */}
 					<InputGroup {...website_URL_validation} />
 					<InputGroup {...youtube_URL_validation} />
 					<InputGroup {...instagram_URL_validation} />
@@ -107,25 +102,31 @@ function CompanyForm() {
 							{error ? error.message : copy.formSuccess}
 						</Alert>
 					)}
-					<FormActionsContainer>
+					<FormRow>
 						{userMetadata?.company && (
-							<InlineButton
-								icon={faRefresh}
-								title="Reset"
-								onClick={() => handleClear(initialFormData)}
-							/>
+							<TransparentButton
+								onClick={() =>
+									handleReset({
+										...userMetadata.company,
+										user_id: userMetadata.user_id,
+									})
+								}
+							>
+								<FontAwesomeIcon icon={faRefresh} />
+								{" Reset"}
+							</TransparentButton>
 						)}
-						<InlineButton
-							icon={faCancel}
-							title="Clear"
-							onClick={() => handleClear(initialCompanyData)}
-						/>
-						<InlineButton
-							icon={faArrowAltCircleRight}
-							title="Submit"
-							onClick={handleSubmit}
-						/>
-					</FormActionsContainer>
+						<TransparentButton
+							onClick={() => handleReset(initialCompanyData)}
+						>
+							<FontAwesomeIcon icon={faCancel} />
+							{" Clear"}
+						</TransparentButton>
+						<TransparentButton type="submit">
+							<FontAwesomeIcon icon={faArrowAltCircleRight} />
+							{" Submit"}
+						</TransparentButton>
+					</FormRow>
 				</Form>
 			</FormProvider>
 		</>
