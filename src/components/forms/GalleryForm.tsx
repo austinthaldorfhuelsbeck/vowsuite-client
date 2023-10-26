@@ -99,7 +99,8 @@ function GalleryForm() {
 				autoComplete="off"
 			>
 				<InputGroup {...gallery_name_validation} />
-				<InputGroup {...img_URL_validation} />
+				<input type="file" name="image" />
+				{/* <InputGroup {...img_URL_validation} /> */}
 				<ControlInputGroup {...font_validation} />
 				<FormStyleContainer>
 					<InputGroup {...hex1_validation} />

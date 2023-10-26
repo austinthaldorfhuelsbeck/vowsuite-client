@@ -23,8 +23,10 @@ function Modal({ button, content }: PropsWithChildren<ComponentProps>) {
 
 	// event listeners
 	const onBackgroundClick = (e: MouseEvent<HTMLDialogElement>) => {
-		e.preventDefault()
-		if (e.target === modalRef.current) toggle()
+		if (e.target === modalRef.current) {
+			e.preventDefault()
+			toggle()
+		}
 	}
 
 	// open and close when isOpen changes

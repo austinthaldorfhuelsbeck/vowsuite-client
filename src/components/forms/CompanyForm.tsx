@@ -58,71 +58,77 @@ function CompanyForm() {
 		setSuccess(false)
 		setError(undefined)
 	}
+	// const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
+	// 	// call API
+	// 	const response: IApiResponse = userMetadata?.company
+	// 		? await updateCompany({
+	// 				...formData,
+	// 				company_id: userMetadata.company.company_id,
+	// 		  })
+	// 		: await createCompany(formData)
+	// 	// returns a company
+	// 	if (response.data) {
+	// 		// update context
+	// 		if (userMetadata) {
+	// 			setUserMetadata({ ...userMetadata, company: response.data })
+	// 		}
+	// 		// update success banner
+	// 		setSuccess(true)
+	// 		setTimeout(setSuccess, 3000, false)
+	// 	}
+	// 	if (response.error) {
+	// 		setError(response.error)
+	// 		setTimeout(setError, 3000, undefined)
+	// 	}
+	// })
 	const handleSubmit = methods.handleSubmit(async (formData: ICompany) => {
-		// call API
-		const response: IApiResponse = userMetadata?.company
-			? await updateCompany({
-					...formData,
-					company_id: userMetadata.company.company_id,
-			  })
-			: await createCompany(formData)
-		// returns a company
-		if (response.data) {
-			// update context
-			if (userMetadata) {
-				setUserMetadata({ ...userMetadata, company: response.data })
-			}
-			// update success banner
-			setSuccess(true)
-			setTimeout(setSuccess, 3000, false)
-		}
-		if (response.error) {
-			setError(response.error)
-			setTimeout(setError, 3000, undefined)
-		}
+		// TODO: write more
 	})
 
 	return (
-		<FormProvider {...methods}>
-			<Form
-				onSubmit={(e: any) => e.preventDefault()}
-				noValidate
-				autoComplete="off"
-			>
-				<InputGroup {...company_name_validation} />
-				<InputGroup {...img_URL_validation} />
-				<InputGroup {...website_URL_validation} />
-				<InputGroup {...youtube_URL_validation} />
-				<InputGroup {...instagram_URL_validation} />
-				<InputGroup {...facebook_URL_validation} />
-				<InputGroup {...vimeo_URL_validation} />
-				<InputGroup {...tiktok_URL_validation} />
-				{(success || error) && (
-					<Alert error={error !== undefined}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-				<FormActionsContainer>
-					{userMetadata?.company && (
-						<InlineButton
-							icon={faRefresh}
-							title="Reset"
-							onClick={() => handleClear(initialFormData)}
-						/>
+		<>
+			<FormProvider {...methods}>
+				<Form
+					onSubmit={(e: any) => e.preventDefault()}
+					noValidate
+					autoComplete="off"
+				>
+					<InputGroup {...company_name_validation} />
+					<input type="file" name="image" />
+					{/* <InputGroup {...img_URL_validation} /> */}
+					<InputGroup {...website_URL_validation} />
+					<InputGroup {...youtube_URL_validation} />
+					<InputGroup {...instagram_URL_validation} />
+					<InputGroup {...facebook_URL_validation} />
+					<InputGroup {...vimeo_URL_validation} />
+					<InputGroup {...tiktok_URL_validation} />
+					{(success || error) && (
+						<Alert error={error !== undefined}>
+							{error ? error.message : copy.formSuccess}
+						</Alert>
 					)}
-					<InlineButton
-						icon={faCancel}
-						title="Clear"
-						onClick={() => handleClear(initialCompanyData)}
-					/>
-					<InlineButton
-						icon={faArrowAltCircleRight}
-						title="Submit"
-						onClick={handleSubmit}
-					/>
-				</FormActionsContainer>
-			</Form>
-		</FormProvider>
+					<FormActionsContainer>
+						{userMetadata?.company && (
+							<InlineButton
+								icon={faRefresh}
+								title="Reset"
+								onClick={() => handleClear(initialFormData)}
+							/>
+						)}
+						<InlineButton
+							icon={faCancel}
+							title="Clear"
+							onClick={() => handleClear(initialCompanyData)}
+						/>
+						<InlineButton
+							icon={faArrowAltCircleRight}
+							title="Submit"
+							onClick={handleSubmit}
+						/>
+					</FormActionsContainer>
+				</Form>
+			</FormProvider>
+		</>
 	)
 }
 
