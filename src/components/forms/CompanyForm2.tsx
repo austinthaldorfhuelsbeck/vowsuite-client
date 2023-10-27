@@ -69,23 +69,22 @@ function CompanyForm2({ initialData }: PropsWithChildren<ComponentProps>) {
 				<ContentBlockHeader>Company Details</ContentBlockHeader>
 			</FormRow>
 			<FormRow>
-				<FormColumn>
-					<label htmlFor="company_name">Company Name</label>
-					<input
-						name="company_name"
-						type="text"
-						placeholder="Your company's name"
-						value={formData.company_name}
-						onChange={onChange}
-					/>
-				</FormColumn>
-				<FormColumn>
-					<ImageUpload
-						formData={formData}
-						setFormData={setFormData}
-						defaultImage={initialData.img_URL}
-					/>
-				</FormColumn>
+                <label htmlFor="company_name">Company Name</label>
+                <input
+                    name="company_name"
+                    type="text"
+                    placeholder="Your company's name"
+                    value={formData.company_name}
+                    onChange={onChange}
+                />
+			</FormRow>
+
+            <FormRow>	
+                <ImageUpload
+                    formData={formData}
+                    setFormData={setFormData}
+                    defaultImage={initialData.img_URL}
+                />
 			</FormRow>
 
 			<FormRow>

@@ -1,13 +1,16 @@
 import React, {
-	ChangeEvent,
 	Dispatch,
 	PropsWithChildren,
 	SetStateAction,
+	useCallback,
 	useState,
 } from "react"
 
 import { ICompany } from "../../../interfaces/models"
-import { PreviewImg } from "../../../styles/components/forms.style"
+import { DragUploadButton, PreviewImg } from "../../../styles/components/forms.style"
+import { useDropzone } from "react-dropzone"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner, faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 
 interface ComponentProps {
 	formData: ICompany
@@ -20,55 +23,69 @@ function ImageUpload({
 	setFormData,
 	defaultImage,
 }: PropsWithChildren<ComponentProps>) {
+    // constants
+    const apiKey: string = process.env.REACT_APP_CLOUDINARY_API_KEY || ""
+    const apiUrl: string = process.env.REACT_APP_CLOUDINARY_API_URL || ""
 	// state
-	const [file, setFile] = useState<File | undefined>()
-	const [preview, setPreview] = useState<any>()
+	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
-	// handlers
-	function onChange(e: ChangeEvent<HTMLInputElement>) {
-		// load file to state
-		const target = e.target as HTMLInputElement & {
-			files: FileList
-		}
-		setFile(target.files[0])
+	// callbacks
+	const onDrop = useCallback((files: File[]) => {
+        // uploads a file to cloudinary
+        async function uploadFile(file: File) {
+            const fileData = new FormData()
+            fileData.append("file", file)
+            fileData.append("upload_preset", "test-vowsuite-uploads-unsigned")
+            fileData.append("api_key", apiKey)
+    
+            const result = await fetch(
+                apiUrl,
+                {
+                    method: "POST",
+                    body: fileData,
+                },
+            ).then((r) => r.json())
+    
+            setFormData({ ...formData, img_URL: result.url })
+            setIsLoading(false)
+        }
 
-		// set preview
-		const newFile = new FileReader()
-		newFile.onload = function () {
-			setPreview(newFile.result)
-		}
-		newFile.readAsDataURL(target.files[0])
+        // set preview
+        const newFile = new FileReader()
+        newFile.onload = function() {
+            setPreview(newFile.result)
+        }
+        newFile.readAsDataURL(files[0])
+        // upload
+        if (files[0]) {
+            setIsLoading(true)
+            uploadFile(files[0])
+        }
+	}, [apiKey, apiUrl, formData, setFormData])
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({
+		onDrop,
+	})
 
-		// upload
-		if (file) uploadFile(file)
-	}
-	async function uploadFile(file: File) {
-		const fileData = new FormData()
-		fileData.append("file", file)
-		fileData.append("upload_preset", "test-vowsuite-uploads-unsigned")
-		fileData.append("api_key", "123449859689355")
-
-		const result = await fetch(
-			"https://api.cloudinary.com/v1_1/dxuiy4k4i/image/upload",
-			{
-				method: "POST",
-				body: fileData,
-			},
-		).then((r) => r.json())
-
-		setFormData({ ...formData, img_URL: result.url })
-	}
 
 	return (
 		<>
 			<label htmlFor="img">Company Logo</label>
-			<input
-				name="img"
-				type="file"
-				accept="image/*"
-				onChange={onChange}
-			/>
-			<PreviewImg src={preview || defaultImage} />
+			<div {...getRootProps()}>
+				<input {...getInputProps()} />
+                <DragUploadButton>
+                    {isDragActive ? (
+                        <FontAwesomeIcon icon={faSquarePlus} />
+                    ) : (
+                        <FontAwesomeIcon icon={faUpload} />
+                    )}
+                </DragUploadButton>
+                {isLoading ? (
+                        <FontAwesomeIcon icon={faSpinner} />
+                    ) : (
+                        <PreviewImg src={(preview || defaultImage).toString()} />
+                    )}
+			</div>
 		</>
 	)
 }
