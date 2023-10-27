@@ -1,74 +1,39 @@
-import React, {
-	ChangeEvent,
-	PropsWithChildren,
-	SyntheticEvent,
-	useState,
-} from "react"
-
-import { TransparentButton } from "../../styles/components/buttons.style"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
 	faArrowAltCircleRight,
 	faCancel,
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
-import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
-import { Alert, ContentBlockHeader } from "../../styles/components/content.style"
-import { ICompany } from "../../interfaces/models"
-import { ImageUpload } from "./utils/ImageUpload"
-import { IApiResponse } from "../../interfaces/api"
-import { useUserContext } from "../../context/ContextProvider"
-import { createCompany, updateCompany } from "../../services/companies.service"
-import { initialCompanyData } from "../../data/initial-data"
-import { copy } from "../../data/app-constants"
-import { useStatus } from "../../hooks/useStatus"
+
 import { InputGroup } from "./InputGroups"
-import { company_name_validation, facebook_URL_validation, instagram_URL_validation, tiktok_URL_validation, vimeo_URL_validation, website_URL_validation, youtube_URL_validation } from "./utils/inputValidation"
+import { copy } from "../../data/app-constants"
+import { ImageUpload } from "./utils/ImageUpload"
+import { useStatus } from "../../hooks/useStatus"
+import { useCompanyForm } from "../../hooks/useCompanyForm"
+import { initialCompanyData } from "../../data/initial-data"
+import { useUserContext } from "../../context/ContextProvider"
+import { TransparentButton } from "../../styles/components/buttons.style"
+import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
+import {
+	Alert,
+	ContentBlockHeader,
+} from "../../styles/components/content.style"
+import {
+	company_name_validation,
+	facebook_URL_validation,
+	instagram_URL_validation,
+	tiktok_URL_validation,
+	vimeo_URL_validation,
+	website_URL_validation,
+	youtube_URL_validation,
+} from "./utils/inputValidation"
 
-interface ComponentProps {
-	initialData: ICompany
-}
-
-function CompanyForm({ initialData }: PropsWithChildren<ComponentProps>) {
+function CompanyForm() {
 	// context
-	const { user, setUser } = useUserContext()
+	const { user } = useUserContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
-
-	// state
-	const [formData, setFormData] = useState<ICompany>(initialData)
-
-	// handlers
-	function onChange(e: ChangeEvent<HTMLInputElement>) {
-		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value })
-	}
-	function onClear(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		setFormData({ ...initialCompanyData, user_id: initialData.user_id })
-	}
-	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		setFormData(initialData)
-	}
-	async function onSubmit(e: SyntheticEvent) {
-		e.preventDefault()
-		// call API
-		const response: IApiResponse = user?.company
-			? await updateCompany(formData)
-			: await createCompany(formData)
-		if (response.data) {
-			// update context
-			if (user) {
-				setUser({ ...user, company: response.data })
-			}
-			// useStatus
-			handleSuccess()
-		}
-		if (response.error) {
-			// useStatus
-			handleError(response.error)
-		}
-	}
+	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
+		useCompanyForm(handleSuccess, handleError)
 
 	return (
 		<Form onSubmit={onSubmit}>
@@ -80,17 +45,19 @@ function CompanyForm({ initialData }: PropsWithChildren<ComponentProps>) {
 				<InputGroup
 					{...company_name_validation}
 					value={formData.company_name}
-                    onChange={onChange}
+					onChange={onChange}
 				/>
 			</FormRow>
 
-            <FormRow>	
-                <ImageUpload
-                    formData={formData}
-                    setFormData={setFormData}
-                    defaultImage={initialData.img_URL}
+			<FormRow>
+				<ImageUpload
+					formData={formData}
+					setFormData={setFormData}
+					defaultImage={
+						user?.company?.img_URL || initialCompanyData.img_URL
+					}
 					label="Company Logo"
-                />
+				/>
 			</FormRow>
 
 			<FormRow>
@@ -135,10 +102,10 @@ function CompanyForm({ initialData }: PropsWithChildren<ComponentProps>) {
 
 			<FormRow>
 				{(success || error) && (
-							<Alert error={error !== undefined}>
-								{error ? error.message : copy.formSuccess}
-							</Alert>
-						)}
+					<Alert error={error !== undefined}>
+						{error ? error.message : copy.formSuccess}
+					</Alert>
+				)}
 			</FormRow>
 
 			<FormRow>
