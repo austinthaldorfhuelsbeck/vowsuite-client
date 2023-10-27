@@ -1,7 +1,12 @@
 import React, { PropsWithChildren, useState, MouseEvent } from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faEllipsis, faFolder, faLink } from "@fortawesome/free-solid-svg-icons"
+import {
+	faEllipsis,
+	faExternalLinkSquareAlt,
+	faFolder,
+	faLink,
+} from "@fortawesome/free-solid-svg-icons"
 
 import { IGallery } from "../../interfaces/models"
 import { ContextMenu } from "../menus/ContextMenu"
@@ -14,6 +19,7 @@ import {
 	ContextListItem,
 	SelectorListItem,
 } from "../../styles/components/lists.styles"
+import { Link } from "react-router-dom"
 
 interface ComponentProps {
 	currentGallery: IGallery
@@ -22,7 +28,12 @@ interface ComponentProps {
 function GalleryListItem({
 	currentGallery,
 }: PropsWithChildren<ComponentProps>) {
+	// context
 	const { gallery, setGallery } = useGalleryContext()
+
+	// constants
+	const galleryUrl: string = `${baseUrls.galleryPage}/${gallery?.gallery_id}`
+
 	// copy status state and handler
 	const [success, setSuccess] = useState<boolean>(false)
 	const onCopy = (e: MouseEvent<HTMLLIElement>) => {
@@ -37,7 +48,7 @@ function GalleryListItem({
 				console.error("Failed to copy: ", err)
 			}
 		}
-		if (gallery) copyText(`${baseUrls.galleryPage}/${gallery.gallery_id}`)
+		if (gallery) copyText(galleryUrl)
 	}
 
 	return (
@@ -53,6 +64,18 @@ function GalleryListItem({
 				button={<FontAwesomeIcon icon={faEllipsis} />}
 				content={
 					<>
+						<ContextListItem>
+							<Link
+								to={galleryUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<FontAwesomeIcon
+									icon={faExternalLinkSquareAlt}
+								/>
+								<ButtonTitle>Open Gallery</ButtonTitle>
+							</Link>
+						</ContextListItem>
 						{renderMenu(galleryContextList)}
 						<ContextListItem onClick={onCopy}>
 							<FontAwesomeIcon icon={faLink} />
