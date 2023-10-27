@@ -2,6 +2,8 @@ import React, { ChangeEvent, PropsWithChildren } from "react"
 
 import { Alert } from "../../styles/components/content.style"
 import { ErrorProps } from "./utils/inputValidation"
+import { FormColumn, FormInput } from "../../styles/components/forms.style"
+import { IOption } from "../../data/temp-data"
 
 // Data
 interface BaseProps {
@@ -12,15 +14,19 @@ interface BaseProps {
 }
 interface InputProps extends BaseProps {
 	type: string
-	placeholder: string | undefined
+	placeholder?: string
+	value: string
+}
+interface ControlProps extends BaseProps {
+	options: IOption[]
 	value: string
 }
 
 function InputError({ validation, value }: PropsWithChildren<ErrorProps>) {
-	if (validation.required.value && value.length === 0) {
+	if (validation.required.value && value?.length === 0) {
 		return <Alert error>{validation.required.message}</Alert>
 	}
-	if (value.length > validation.maxLength?.value) {
+	if (value && value.length > validation.maxLength?.value) {
 		return <Alert error>{validation.maxLength.message}</Alert>
 	}
 	return <></>
@@ -38,46 +44,46 @@ function InputGroup({
 	return (
 		<>
 			<label htmlFor={id}>{label}</label>
-			<input
-				name={id}
-				type={type}
-				placeholder={placeholder}
-				value={value}
-				onChange={onChange}
-			/>
+			<FormColumn>
+				<FormInput
+					name={id}
+					type={type}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+					text={type === "text"}
+					color={type === "color"}
+				/>
+				{(type === "color") && <h4>{value}</h4>}
+			</FormColumn>
 			<InputError validation={validation} value={value}/>
 		</>
 	)
 }
 
-// function ControlGroup({
-// 	label,
-// 	id,
-// 	options,
-// }: PropsWithChildren<ControlProps>) {
-// 	const {
-// 		formState: { errors },
-// 	} = useFormContext()
+function ControlGroup({
+	label,
+	id,
+	options,
+	value,
+	onChange,
+	validation,
+}: PropsWithChildren<ControlProps>) {
+	return (
+		<>
+			<label htmlFor={id}>{label}</label>
+			<select
+				name={id}
+				value={value}
+			>
+				<option>--Select a font--</option>
+				{options.map((option: IOption) => (
+					<option key={option.id}>{option.name}</option>
+				))}
+			</select>
+			<InputError validation={validation} value={value}/>
+		</>
+	)
+}
 
-// 	const inputErrors: any = findInputError(errors, id)
-// 	const isInvalid = isFormInvalid(inputErrors)
-
-// 	return (
-// 		<FormColumn>
-// 			<label htmlFor={id}>{label}</label>
-// 			{isInvalid && (
-// 				<InputError
-// 					message={inputErrors.error.message}
-// 					key={inputErrors.error.message}
-// 				/>
-// 			)}
-// 			<select id={id} {...register(id, validation)}>
-// 				{options.map((option, index) => (
-// 					<option key={index}>{option}</option>
-// 				))}
-// 			</select>
-// 		</FormColumn>
-// 	)
-// }
-
-export { InputGroup }
+export { InputGroup, ControlGroup }

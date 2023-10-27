@@ -9,7 +9,7 @@ import { faPlayCircle } from "@fortawesome/free-solid-svg-icons"
 import { Modal } from "../menus/Modal"
 import { copy } from "../../data/app-constants"
 import { GalleryNavBar } from "../nav/GalleryNavBar"
-import { readUser } from "../../services/users.service"
+import { getUser } from "../../services/users.service"
 import { readGallery } from "../../services/galleries.service"
 import { VideoCardListItem } from "../lists/VideoCardListItem"
 import { ICompany, IGallery, IUser, IVideo } from "../../interfaces/models"
@@ -30,9 +30,8 @@ function Gallery() {
 		// function to get a gallery and set state
 		const getGalleryResponse = async (id: string) => {
 			const galleryResponse: IGallery = (await readGallery(id)).data
-			const userResponse: IUser = (
-				await readUser(galleryResponse.user_id)
-			).data
+			const userResponse: IUser = (await getUser(galleryResponse.user_id))
+				.data
 			setGallery(galleryResponse)
 			setCompany(userResponse.company)
 		}
@@ -50,22 +49,24 @@ function Gallery() {
 			>
 				<GalleryNavBar company={company} gallery={gallery} />
 				<GalleryHeader>{gallery.gallery_name}</GalleryHeader>
-				<Modal
-					button={
-						<PlayButton>
-							<FontAwesomeIcon icon={faPlayCircle} />
-							{copy.galleryHeaderButton}
-						</PlayButton>
-					}
-					content={
-						<ReactPlayer
-							controls
-							width={"80vw"}
-							height={"100%"}
-							url={gallery.videos[0].video_URL}
-						/>
-					}
-				/>
+				{gallery.videos[0] && (
+					<Modal
+						button={
+							<PlayButton>
+								<FontAwesomeIcon icon={faPlayCircle} />
+								{copy.galleryHeaderButton}
+							</PlayButton>
+						}
+						content={
+							<ReactPlayer
+								controls
+								width={"80vw"}
+								height={"100%"}
+								url={gallery.videos[0].video_URL}
+							/>
+						}
+					/>
+				)}
 				<CardsList>
 					{gallery.videos.map((video: IVideo) => (
 						<VideoCardListItem video={video} />

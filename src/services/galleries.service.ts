@@ -37,10 +37,7 @@ export const readGallery = async (id: string): Promise<IApiResponse> => {
 	}
 }
 
-export const updateGallery = async (
-	gallery: IBaseGallery,
-	id: number,
-): Promise<IApiResponse> => {
+export const updateGallery = async (gallery: IBaseGallery): Promise<IApiResponse> => {
 	// transform gallery data to the format
 	// the API is expecting
 	const updatedGallery = {
@@ -54,7 +51,7 @@ export const updateGallery = async (
 		updated_at: new Date(),
 	}
 
-	config.url = `${apiUrl}/galleries/${id}`
+	config.url = `${apiUrl}/galleries/${gallery.gallery_id}`
 	config.method = "PUT"
 	config.data = updatedGallery
 

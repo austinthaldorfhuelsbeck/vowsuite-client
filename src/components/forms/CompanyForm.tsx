@@ -57,6 +57,7 @@ function CompanyForm() {
 						user?.company?.img_URL || initialCompanyData.img_URL
 					}
 					label="Company Logo"
+					isCircle
 				/>
 			</FormRow>
 

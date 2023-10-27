@@ -5,7 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { InlineButton } from "../InlineButton"
 import { IGallery } from "../../../interfaces/models"
 import { IApiResponse } from "../../../interfaces/api"
-import { readUser } from "../../../services/users.service"
+import { getUser } from "../../../services/users.service"
 import { deleteGallery } from "../../../services/galleries.service"
 import {
 	useGalleryContext,
@@ -28,7 +28,7 @@ function GalleryDeleteButton() {
 			// update context if response is successful
 			if (response.data) {
 				// user
-				setUser((await readUser(response.data.user_id)).data)
+				setUser((await getUser(response.data.user_id)).data)
 				// gallery
 				setGallery(response.data)
 			}

@@ -1,126 +1,88 @@
-import React, { useState } from "react"
+import React from "react"
 
-import { FormProvider, useForm } from "react-hook-form"
-
-import {
-	faArrowAltCircleRight,
-	faCancel,
-	faRefresh,
-} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowAltCircleRight, faCancel, faRefresh } from "@fortawesome/free-solid-svg-icons"
 
 import { copy } from "../../data/app-constants"
-import { InlineButton } from "../buttons/InlineButton"
-import { readUser } from "../../services/users.service"
+import { useStatus } from "../../hooks/useStatus"
+import { ImageUpload } from "./utils/ImageUpload"
+import { ControlGroup, InputGroup } from "./InputGroups"
+import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { initialGalleryData } from "../../data/initial-data"
-import { Alert } from "../../styles/components/content.style"
-import { IApiResponse, IAppError } from "../../interfaces/api"
-import { IBaseGallery } from "../../interfaces/models"
-import { createGallery, updateGallery } from "../../services/galleries.service"
-import {
-	useGalleryContext,
-	useUserContext,
-} from "../../context/ContextProvider"
 import { Form, FormRow } from "../../styles/components/forms.style"
+import { TransparentButton } from "../../styles/components/buttons.style"
+import { Alert, ContentBlockHeader } from "../../styles/components/content.style"
+import { useGalleryContext, useUserContext } from "../../context/ContextProvider"
+import { font_validation, gallery_name_validation, hex1_validation, hex2_validation, hex3_validation } from "./utils/inputValidation"
 
 function GalleryForm() {
 	// load context
-	const { user, setUser } = useUserContext()
-	const { gallery, setGallery } = useGalleryContext()
-	// determine initial form data from context
-	let initialFormData: IBaseGallery = initialGalleryData
-	if (user) {
-		if (gallery) {
-			// load selected gallery and userID
-			initialFormData = { ...gallery, user_id: user.user_id }
-		} else {
-			// load userID to initial data
-			initialFormData = {
-				...initialGalleryData,
-				user_id: user.user_id,
-			}
-		}
-	}
-
-	// state
-	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = useState<boolean>(false)
-	const [error, setError] = useState<IAppError | undefined>(undefined)
-	// handlers
-	const handleClear = (data: IBaseGallery) => {
-		methods.reset(data)
-		setSuccess(false)
-		setError(undefined)
-	}
-	const handleSubmit = methods.handleSubmit(
-		async (formData: IBaseGallery) => {
-			// call API
-			const response: IApiResponse = gallery
-				? await updateGallery(formData, gallery.gallery_id)
-				: await createGallery(formData)
-			if (response.data) {
-				// update user context
-				if (user) {
-					setUser(
-						(await readUser(response.data.user_id)).data,
-					)
-				}
-				// update gallery context
-				setGallery(response.data)
-				// update success banner
-				setSuccess(true)
-				setTimeout(setSuccess, 3000, false)
-			}
-			if (response.error) {
-				// update error banner
-				setError(response.error)
-				setTimeout(setError, 3000, undefined)
-			}
-		},
-	)
+	const { user } = useUserContext()
+	const { gallery } = useGalleryContext()
+	const { success, error, handleSuccess, handleError } = useStatus()
+	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
+		useGalleryForm(handleSuccess, handleError)
 
 	return (
-		<FormProvider {...methods}>
-			<Form
-				onSubmit={(e: any) => e.preventDefault()}
-				noValidate
-				autoComplete="off"
-			>
-				<FormRow>
-					{/* <InputGroup {...gallery_name_validation} /> */}
-					<input type="file" name="image" />
-					{/* <InputGroup {...img_URL_validation} /> */}
-					{/* <ControlGroup {...font_validation} /> */}
+		<Form onSubmit={onSubmit} noValidate autoComplete="off">
+			<FormRow>
+				<ContentBlockHeader>Gallery Details</ContentBlockHeader>
+			</FormRow>
 
-					{/* <InputGroup {...hex1_validation} /> */}
-					{/* <InputGroup {...hex2_validation} /> */}
-					{/* <InputGroup {...hex3_validation} /> */}
-					{(success || error) && (
-						<Alert error={error !== undefined}>
-							{error ? error.message : copy.formSuccess}
-						</Alert>
-					)}
-				</FormRow>
-				<FormRow>
-					{gallery && (
-						<InlineButton
-							icon={faRefresh}
-							title="Reset"
-							onClick={() => handleClear(initialFormData)}
-						/>
-					)}
-					<InlineButton
-						icon={faCancel}
-						title="Clear"
-						onClick={() => handleClear(initialGalleryData)}
-					/>
-					<InlineButton
-						icon={faArrowAltCircleRight}
-						title="Submit"
-						onClick={handleSubmit}
-					/>
-				</FormRow>
-			</Form>
-		</FormProvider>
+			<FormRow>
+				<InputGroup
+					{...gallery_name_validation}
+					value={formData.gallery_name}
+					onChange={onChange}
+				/>
+			</FormRow>
+
+			<FormRow>
+				<ImageUpload
+					formData={formData}
+					setFormData={setFormData}
+					defaultImage={
+						gallery?.img_URL || initialGalleryData.img_URL
+					}
+					label="Thumbnail Image"
+				/>
+			</FormRow>
+
+			<FormRow>
+				<InputGroup {...hex1_validation} value={formData.hex1} onChange={onChange} />
+				<InputGroup {...hex2_validation} value={formData.hex2} onChange={onChange} />
+				<InputGroup {...hex3_validation} value={formData.hex3} onChange={onChange} />
+			</FormRow>
+
+			<FormRow>
+				<ControlGroup {...font_validation} value={formData.font} onChange={onChange} />
+			</FormRow>
+
+			<FormRow>
+				{(success || error) && (
+					<Alert error={error !== undefined}>
+						{error ? error.message : copy.formSuccess}
+					</Alert>
+				)}
+			</FormRow>
+
+			<FormRow>
+				{user?.company && (
+					<TransparentButton onClick={onReset}>
+						<FontAwesomeIcon icon={faRefresh} />
+						{" Reset"}
+					</TransparentButton>
+				)}
+				<TransparentButton onClick={onClear}>
+					<FontAwesomeIcon icon={faCancel} />
+					{" Clear"}
+				</TransparentButton>
+				<TransparentButton type="submit">
+					<FontAwesomeIcon icon={faArrowAltCircleRight} />
+					{" Submit"}
+				</TransparentButton>
+			</FormRow>
+		</Form>
 	)
 }
 

@@ -21,13 +21,6 @@ export const imagePaths: IStringHash = {
 	defaultUser: "https://i.stack.imgur.com/HQwHI.jpg",
 }
 
-export const galleryFonts: string[] = [
-	"Georgia",
-	"Playflair Display",
-	"Roboto Mono",
-	"Futura",
-]
-
 export const defaultGalleryStyle: IStringHash = {
 	font: "Georgia",
 	hex1: "#D1B2A2",

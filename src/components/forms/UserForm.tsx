@@ -33,7 +33,7 @@ function UserForm() {
 		useUserForm(handleSuccess, handleError)
 
 	return (
-		<Form onSubmit={onSubmit}>
+		<Form onSubmit={onSubmit} noValidate autoComplete="off">
 			<FormRow>
 				<ContentBlockHeader>User Details</ContentBlockHeader>
 			</FormRow>
@@ -60,6 +60,7 @@ function UserForm() {
 					setFormData={setFormData}
 					defaultImage={user?.img_URL || initialUserData.img_URL}
 					label="Profile Image"
+					isCircle
 				/>
 			</FormRow>
 

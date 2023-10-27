@@ -24,16 +24,22 @@ export const Form = styled.form`
 		color: var(--aluminium);
 	}
 
-	input {
-		width: 100%;
-		min-width: 35rem;
-	}
-
 	p {
 		font-size: 75%;
 		margin-left: auto;
 		margin-bottom: 0;
 	}
+`
+
+interface FormInputProps {
+	text?: boolean;
+	color?: boolean;
+}
+
+export const FormInput = styled.input<FormInputProps>`
+	min-width: ${(props) => (props.text ? "30rem" : "10rem")};
+	min-height: ${(props) => (props.color ? "10rem" : "none")};
+	border: ${(props) => (props.color ? "none" : "solid")};
 `
 
 export const FormRow = styled.div`
@@ -49,11 +55,15 @@ export const FormColumn = styled.div`
 	margin: 1rem;
 `
 
-export const PreviewImg = styled.img`
-	border-radius: 100%;
-	width: 10rem;
-	height: 10rem;
-    
+interface PreviewImgProps {
+	circle?: boolean;
+}
+
+export const PreviewImg = styled.img<PreviewImgProps>`
+	border-radius: ${(props) => (props.circle ? "100%" : "0%")};
+	object-fit: cover;
+	width: ${(props) => (props.circle ? "10rem" : "25rem")};
+	height: ${(props) => (props.circle ? "10rem" : "15rem")};
 `
 
 export const DragUploadButton = styled(TransparentButton)`
@@ -63,7 +73,8 @@ export const DragUploadButton = styled(TransparentButton)`
     background: none;
     color: var(--aluminium);
     padding: 3rem 0;
-    margin-right: 3rem;
+    margin: auto 3rem auto 0;
+
     &:hover {
         background-color: var(--dark-aluminium);
 		color: var(--white);

@@ -12,7 +12,7 @@ import { InputGroup } from "./InputGroups"
 import { copy } from "../../data/app-constants"
 import { IVideo } from "../../interfaces/models"
 import { InlineButton } from "../buttons/InlineButton"
-import { readUser } from "../../services/users.service"
+import { getUser } from "../../services/users.service"
 import { initialVideoData } from "../../data/initial-data"
 import { Alert } from "../../styles/components/content.style"
 import { IApiResponse, IAppError } from "../../interfaces/api"
@@ -54,7 +54,7 @@ function VideoForm() {
 		// response is the full parent gallery
 		if (response.data) {
 			// update user context
-			setUser((await readUser(response.data.user_id)).data)
+			setUser((await getUser(response.data.user_id)).data)
 			// update gallery context
 			setGallery(response.data)
 			// update video context

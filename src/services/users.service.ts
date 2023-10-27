@@ -1,11 +1,11 @@
 import * as Axios from "axios"
 import { IApiResponse } from "../interfaces/api"
 import { callExternalApi } from "./external-api.service"
-import { IBaseUser, IUser } from "../interfaces/models"
+import { IBaseUser } from "../interfaces/models"
 
 const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
-export const readUser = async (id: number): Promise<IApiResponse> => {
+export const getUser = async (id: number): Promise<IApiResponse> => {
 	const config: Axios.AxiosRequestConfig = {
 		url: `${apiUrl}/users/${id}`,
 		method: "GET",

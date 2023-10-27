@@ -17,6 +17,7 @@ interface ComponentProps {
 	setFormData: Dispatch<SetStateAction<any>>
 	defaultImage: string
     label: string
+    isCircle?: boolean
 }
 
 function ImageUpload({
@@ -24,6 +25,7 @@ function ImageUpload({
 	setFormData,
 	defaultImage,
     label,
+    isCircle,
 }: PropsWithChildren<ComponentProps>) {
     // constants
     const apiKey: string = process.env.REACT_APP_CLOUDINARY_API_KEY || ""
@@ -87,7 +89,10 @@ function ImageUpload({
                 {isLoading ? (
                         <FontAwesomeIcon icon={faSpinner} />
                     ) : (
-                        <PreviewImg src={(preview || defaultImage).toString()} />
+                        <PreviewImg
+                            circle={isCircle}
+                            src={(preview || defaultImage).toString()}
+                        />
                     )}
 			</div>
 		</>
