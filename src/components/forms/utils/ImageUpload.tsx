@@ -4,24 +4,26 @@ import React, {
 	SetStateAction,
 	useCallback,
 	useState,
+    MouseEvent,
 } from "react"
 
-import { ICompany } from "../../../interfaces/models"
 import { DragUploadButton, PreviewImg } from "../../../styles/components/forms.style"
 import { useDropzone } from "react-dropzone"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner, faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 
 interface ComponentProps {
-	formData: ICompany
-	setFormData: Dispatch<SetStateAction<ICompany>>
+	formData: any
+	setFormData: Dispatch<SetStateAction<any>>
 	defaultImage: string
+    label: string
 }
 
 function ImageUpload({
 	formData,
 	setFormData,
 	defaultImage,
+    label,
 }: PropsWithChildren<ComponentProps>) {
     // constants
     const apiKey: string = process.env.REACT_APP_CLOUDINARY_API_KEY || ""
@@ -70,10 +72,12 @@ function ImageUpload({
 
 	return (
 		<>
-			<label htmlFor="img">Company Logo</label>
+			<label htmlFor="img">{label}</label>
 			<div {...getRootProps()}>
 				<input {...getInputProps()} />
-                <DragUploadButton>
+                <DragUploadButton
+                    onClick={(e: MouseEvent<HTMLButtonElement>) => e.preventDefault()}
+                >
                     {isDragActive ? (
                         <FontAwesomeIcon icon={faSquarePlus} />
                     ) : (

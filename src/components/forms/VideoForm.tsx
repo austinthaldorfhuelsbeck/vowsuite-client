@@ -23,16 +23,11 @@ import {
 	useUserContext,
 	useVideoContext,
 } from "../../context/ContextProvider"
-import {
-	img_URL_validation,
-	video_name_validation,
-	video_URL_validation,
-} from "./utils/inputValidation"
 import { Form, FormRow } from "../../styles/components/forms.style"
 
 function VideoForm() {
 	// load context
-	const { setUserMetadata } = useUserContext()
+	const { setUser } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	const { video, setVideo } = useVideoContext()
 	// determine initial form data from context
@@ -59,7 +54,7 @@ function VideoForm() {
 		// response is the full parent gallery
 		if (response.data) {
 			// update user context
-			setUserMetadata((await readUser(response.data.user_id)).data)
+			setUser((await readUser(response.data.user_id)).data)
 			// update gallery context
 			setGallery(response.data)
 			// update video context
@@ -82,9 +77,9 @@ function VideoForm() {
 				noValidate
 				autoComplete="off"
 			>
-				<InputGroup {...video_name_validation} />
+				{/* <InputGroup {...video_name_validation} />
 				<InputGroup {...video_URL_validation} />
-				<InputGroup {...img_URL_validation} />
+				<InputGroup {...img_URL_validation} /> */}
 				{(success || error) && (
 					<Alert error={error !== undefined}>
 						{error ? error.message : copy.formSuccess}

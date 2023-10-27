@@ -9,7 +9,7 @@ import { VideoDeleteButton } from "../components/buttons/api/VideoDeleteButton"
 import { GalleryForm } from "../components/forms/GalleryForm"
 import { GalleryDeleteButton } from "../components/buttons/api/GalleryDeleteButton"
 import { Modal } from "../components/menus/Modal"
-import { UserProfileForm } from "../components/forms/UserProfileForm"
+import { UserForm } from "../components/forms/UserForm"
 
 export const renderMenu = (resources: ModalResource[]) =>
 	resources.map((resource, index) => (
@@ -78,6 +78,6 @@ export const profileContextList: ModalResource[] = [
 				<ButtonTitle>Edit User Profile</ButtonTitle>
 			</ContextListItem>
 		),
-		content: <UserProfileForm />,
+		content: <UserForm />,
 	},
 ]

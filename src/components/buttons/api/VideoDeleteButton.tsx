@@ -14,7 +14,7 @@ import {
 
 function VideoDeleteButton() {
 	// context
-	const { setUserMetadata } = useUserContext()
+	const { setUser } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	const { video, setVideo } = useVideoContext()
 
@@ -32,7 +32,7 @@ function VideoDeleteButton() {
 				if (gallery) setGallery(response.data)
 				// user
 				const updatedUser = await readUser(response.data.user_id)
-				if (updatedUser.data) setUserMetadata(updatedUser.data)
+				if (updatedUser.data) setUser(updatedUser.data)
 			}
 		}
 		// call the async function on click if confirm

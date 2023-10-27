@@ -10,9 +10,11 @@ import { ButtonTitle } from "../../../styles/components/buttons.style"
 import { NavProfileImg } from "../../../styles/components/nav-bar.style"
 import { ContextListItem } from "../../../styles/components/lists.styles"
 import { profileContextList, renderMenu } from "../../../data/context-lists"
+import { useUserContext } from "../../../context/ContextProvider"
 
 function ProfileButton() {
-	const { user, logout } = useAuth0()
+	const { logout } = useAuth0()
+	const { user } = useUserContext()
 
 	const onLogout = () => {
 		logout({
@@ -26,7 +28,7 @@ function ProfileButton() {
 	return (
 		<ContextMenu
 			button={
-				<NavProfileImg src={user?.picture || imagePaths.defaultUser} />
+				<NavProfileImg src={user?.img_URL || imagePaths.defaultUser} />
 			}
 			content={
 				<>

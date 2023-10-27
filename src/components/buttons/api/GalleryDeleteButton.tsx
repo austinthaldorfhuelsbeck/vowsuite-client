@@ -14,7 +14,7 @@ import {
 
 function GalleryDeleteButton() {
 	// context
-	const { setUserMetadata } = useUserContext()
+	const { setUser } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 
 	const handleDelete = (e: MouseEvent<HTMLLIElement>) => {
@@ -28,7 +28,7 @@ function GalleryDeleteButton() {
 			// update context if response is successful
 			if (response.data) {
 				// user
-				setUserMetadata((await readUser(response.data.user_id)).data)
+				setUser((await readUser(response.data.user_id)).data)
 				// gallery
 				setGallery(response.data)
 			}

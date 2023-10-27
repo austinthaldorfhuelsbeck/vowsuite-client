@@ -12,7 +12,6 @@ import { copy } from "../../data/app-constants"
 import { InlineButton } from "../buttons/InlineButton"
 import { readUser } from "../../services/users.service"
 import { initialGalleryData } from "../../data/initial-data"
-import { ControlGroup, InputGroup } from "./InputGroups"
 import { Alert } from "../../styles/components/content.style"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { IBaseGallery } from "../../interfaces/models"
@@ -21,30 +20,23 @@ import {
 	useGalleryContext,
 	useUserContext,
 } from "../../context/ContextProvider"
-import {
-	font_validation,
-	gallery_name_validation,
-	hex1_validation,
-	hex2_validation,
-	hex3_validation,
-} from "./utils/inputValidation"
 import { Form, FormRow } from "../../styles/components/forms.style"
 
 function GalleryForm() {
 	// load context
-	const { userMetadata, setUserMetadata } = useUserContext()
+	const { user, setUser } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	// determine initial form data from context
 	let initialFormData: IBaseGallery = initialGalleryData
-	if (userMetadata) {
+	if (user) {
 		if (gallery) {
 			// load selected gallery and userID
-			initialFormData = { ...gallery, user_id: userMetadata.user_id }
+			initialFormData = { ...gallery, user_id: user.user_id }
 		} else {
 			// load userID to initial data
 			initialFormData = {
 				...initialGalleryData,
-				user_id: userMetadata.user_id,
+				user_id: user.user_id,
 			}
 		}
 	}
@@ -67,8 +59,8 @@ function GalleryForm() {
 				: await createGallery(formData)
 			if (response.data) {
 				// update user context
-				if (userMetadata) {
-					setUserMetadata(
+				if (user) {
+					setUser(
 						(await readUser(response.data.user_id)).data,
 					)
 				}
@@ -94,14 +86,14 @@ function GalleryForm() {
 				autoComplete="off"
 			>
 				<FormRow>
-					<InputGroup {...gallery_name_validation} />
+					{/* <InputGroup {...gallery_name_validation} /> */}
 					<input type="file" name="image" />
 					{/* <InputGroup {...img_URL_validation} /> */}
-					<ControlGroup {...font_validation} />
+					{/* <ControlGroup {...font_validation} /> */}
 
-					<InputGroup {...hex1_validation} />
-					<InputGroup {...hex2_validation} />
-					<InputGroup {...hex3_validation} />
+					{/* <InputGroup {...hex1_validation} /> */}
+					{/* <InputGroup {...hex2_validation} /> */}
+					{/* <InputGroup {...hex3_validation} /> */}
 					{(success || error) && (
 						<Alert error={error !== undefined}>
 							{error ? error.message : copy.formSuccess}

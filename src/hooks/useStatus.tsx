@@ -11,9 +11,21 @@ export const useStatus = () => {
 		setError(undefined)
 	}
 
+	function handleSuccess() {
+		setSuccess(true)
+		setTimeout(handleClear, 3000)
+	}
+
+	function handleError(error: IAppError) {
+		setError(error)
+		setTimeout(handleClear, 3000)
+	}
+
 	return {
 		success,
 		error,
 		handleClear,
+		handleSuccess,
+		handleError,
 	}
 }

@@ -16,12 +16,12 @@ import { IGallery, IUser, IVideo } from "../interfaces/models"
 
 // DEFINE INTERFACES
 interface IUserContext {
-	userMetadata: IUser | undefined
-	setUserMetadata: Dispatch<SetStateAction<IUser | undefined>>
+	user: IUser | undefined
+	setUser: Dispatch<SetStateAction<IUser | undefined>>
 }
 const IUserContextState = {
-	userMetadata: undefined,
-	setUserMetadata: () => {},
+	user: undefined,
+	setUser: () => {},
 }
 interface IGalleryContext {
 	gallery: IGallery | undefined
@@ -75,10 +75,8 @@ interface ComponentProps {
 	children: ReactNode
 }
 function ContextProvider({ children }: PropsWithChildren<ComponentProps>) {
-	const { user } = useAuth0()
-	const [userMetadata, setUserMetadata] = useState<IUser | undefined>(
-		undefined,
-	)
+	const userMetadata = useAuth0().user
+	const [user, setUser] = useState<IUser | undefined>(undefined)
 	const [gallery, setGallery] = useState<IGallery | undefined>(undefined)
 	const [video, setVideo] = useState<IVideo | undefined>(undefined)
 
@@ -86,16 +84,16 @@ function ContextProvider({ children }: PropsWithChildren<ComponentProps>) {
 	useEffect(() => {
 		const getUserResponse = async (email: string) => {
 			const userResponse = await getUserByEmail(email)
-			setUserMetadata(userResponse.data)
+			setUser(userResponse.data)
 			setGallery(undefined)
 		}
-		if (user?.email) getUserResponse(user.email)
-	}, [user])
+		if (userMetadata?.email) getUserResponse(userMetadata.email)
+	}, [userMetadata])
 
-	if (!userMetadata) return <>{children}</>
+	if (!user) return <>{children}</>
 
 	return (
-		<UserContext.Provider value={{ userMetadata, setUserMetadata }}>
+		<UserContext.Provider value={{ user, setUser }}>
 			<GalleryContext.Provider value={{ gallery, setGallery }}>
 				<VideoContext.Provider value={{ video, setVideo }}>
 					{children}

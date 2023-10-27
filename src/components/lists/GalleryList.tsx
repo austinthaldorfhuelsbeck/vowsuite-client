@@ -6,7 +6,7 @@ import { List } from "../../styles/components/lists.styles"
 import { useUserContext } from "../../context/ContextProvider"
 
 function GalleryList() {
-	const { userMetadata } = useUserContext()
+	const { user } = useUserContext()
 
 	const renderGalleries = (galleries: IGallery[]) =>
 		galleries.map(
@@ -21,11 +21,7 @@ function GalleryList() {
 
 	return (
 		<List>
-			{userMetadata?.galleries?.length ? (
-				renderGalleries(userMetadata.galleries)
-			) : (
-				<></>
-			)}
+			{user?.galleries?.length ? renderGalleries(user.galleries) : <></>}
 		</List>
 	)
 }
