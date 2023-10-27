@@ -49,7 +49,12 @@ function useUserForm(
 			: await createUser(formData)
 		if (response.data) {
 			// update context
-			if (user) setUser(response.data)
+			if (user)
+				setUser({
+					...response.data,
+					company: user.company,
+					galleries: user.galleries,
+				})
 			// useStatus
 			handleSuccess()
 		}
