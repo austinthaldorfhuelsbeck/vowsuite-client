@@ -14,28 +14,27 @@ import {
 } from "../../../styles/components/forms.style"
 import { useDropzone } from "react-dropzone"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-	faSpinner,
-	faSquarePlus,
-	faUpload,
-} from "@fortawesome/free-solid-svg-icons"
+import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 import { IApiResponse } from "../../../interfaces/api"
-import { uploadFile } from "../../../services/upload.service"
+import { uploadFileToCloudinary } from "../../../services/upload.service"
+import { PutObjectCommand, S3, S3Client } from "@aws-sdk/client-s3"
+import AWS from "aws-sdk"
 
+// Config
+const S3_BUCKET = "vowsuite-videos"
+const s3Config = {
+	accessKeyId: "AKIATLUNANIXEX7GR5Z2",
+	secretAccessKey: "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",
+}
+
+// Models
 interface BaseProps {
 	isCircle?: boolean
 	isVideo?: boolean
 }
-
 interface PreviewProps extends BaseProps {
 	src: string
 }
-
-function Preview({ isCircle, isVideo, src }: PropsWithChildren<PreviewProps>) {
-	if (isVideo) return <PreviewVideo src={src} />
-	return <PreviewImg src={src} circle={isCircle} />
-}
-
 interface ComponentProps extends BaseProps {
 	formData: any
 	setFormData: Dispatch<SetStateAction<any>>
@@ -43,6 +42,11 @@ interface ComponentProps extends BaseProps {
 	label: string
 }
 
+// Components
+function Preview({ isCircle, isVideo, src }: PropsWithChildren<PreviewProps>) {
+	if (isVideo) return <PreviewVideo src={src} />
+	return <PreviewImg src={src} circle={isCircle} />
+}
 function FileUpload({
 	formData,
 	setFormData,
@@ -51,57 +55,78 @@ function FileUpload({
 	isCircle,
 	isVideo,
 }: PropsWithChildren<ComponentProps>) {
-	// constants
-	const apiKey: string = process.env.REACT_APP_CLOUDINARY_API_KEY || ""
-
-	// state
+	// State
 	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
-	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [progress, setProgress] = useState<number>(0)
 
-	// callbacks
+	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
-			// uploads a file to cloudinary
-			async function awaitFileResponse(file: File) {
-				const fileData = new FormData()
-				fileData.append("file", file)
-				fileData.append(
-					"upload_preset",
-					"test-vowsuite-uploads-unsigned",
-				)
-				fileData.append("api_key", apiKey)
+			// // uploads a file to cloudinary
+			// async function uploadToCloudinary(file: File) {
+			// 	const response: IApiResponse = await uploadFileToCloudinary(
+			// 		file,
+			// 	)
+			// 	setFormData(
+			// 		isVideo
+			// 			? { ...formData, video_url: response.data.url }
+			// 			: { ...formData, img_URL: response.data.url },
+			// 	)
+			// }
 
-				const response: IApiResponse = await uploadFile(fileData)
-
+			async function uploadToAws(file: File) {
+				const target = {
+					Bucket: S3_BUCKET,
+					Key: file.name,
+					Body: file,
+				}
+				const s3 = new AWS.S3({
+					region: "us-west-2",
+					credentials: s3Config,
+				})
+				const response = await s3
+					.putObject(target)
+					.on("httpUploadProgress", (e) => {
+						setProgress(Math.round((e.loaded / e.total) * 100))
+					})
+					.promise()
+				const url = await s3.getSignedUrl("getObject", {
+					Bucket: S3_BUCKET,
+					Key: file.name,
+				})
 				setFormData(
 					isVideo
-						? { ...formData, video_url: response.data.url }
-						: { ...formData, img_URL: response.data.url },
+						? { ...formData, video_url: url }
+						: { ...formData, img_URL: url },
 				)
-				setIsLoading(false)
+				setPreview(url)
+				return response
 			}
 
-			// set preview
-			const newFile = new FileReader()
-			newFile.onload = function () {
-				setPreview(newFile.result)
-			}
-			newFile.readAsDataURL(files[0])
 			// upload
 			if (files[0]) {
-				setIsLoading(true)
-				awaitFileResponse(files[0])
+				// uploadToCloudinary(files[0])
+				uploadToAws(files[0])
 			}
 		},
-		[apiKey, formData, isVideo, setFormData],
+		[formData, isVideo, setFormData],
 	)
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 	})
 
+	// Return
 	return (
 		<>
 			<label htmlFor="file">{label}</label>
+			<div>Progress is {progress}%</div>
+			{/* <button
+				onClick={() => {
+					if (selectedFile) uploadFile(selectedFile)
+				}}
+			>
+				Upload to S3
+			</button> */}
 			<div {...getRootProps()}>
 				<input {...getInputProps()} />
 				<DragUploadButton
@@ -115,15 +140,11 @@ function FileUpload({
 						<FontAwesomeIcon icon={faUpload} />
 					)}
 				</DragUploadButton>
-				{isLoading ? (
-					<FontAwesomeIcon icon={faSpinner} />
-				) : (
-					<Preview
-						isCircle={isCircle}
-						isVideo={isVideo}
-						src={(preview || defaultUrl).toString()}
-					/>
-				)}
+				<Preview
+					isCircle={isCircle}
+					isVideo={isVideo}
+					src={(preview || defaultUrl).toString()}
+				/>
 			</div>
 		</>
 	)
