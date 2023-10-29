@@ -1,6 +1,5 @@
 import { ICompany, IBaseGallery, IVideo, IBaseUser } from "../interfaces/models"
-import { defaultGalleryStyle, imagePaths } from "./app-constants"
-import { testFontData } from "./temp-data"
+import { defaultFonts, defaultGalleryStyle, imagePaths } from "./app-constants"
 
 // gallery form data
 export const initialGalleryData: IBaseGallery = {
@@ -8,7 +7,7 @@ export const initialGalleryData: IBaseGallery = {
 	user_id: 0,
 	gallery_name: "",
 	img_URL: imagePaths.defaultUser,
-	font: testFontData[0].name,
+	font: defaultFonts[0],
 	hex1: defaultGalleryStyle.hex1,
 	hex2: defaultGalleryStyle.hex2,
 	hex3: defaultGalleryStyle.hex3,

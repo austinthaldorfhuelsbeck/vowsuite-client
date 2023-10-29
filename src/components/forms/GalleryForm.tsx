@@ -5,15 +5,29 @@ import { faArrowAltCircleRight, faCancel, faRefresh } from "@fortawesome/free-so
 
 import { copy } from "../../data/app-constants"
 import { useStatus } from "../../hooks/useStatus"
-import { ImageUpload } from "./utils/ImageUpload"
-import { ControlGroup, InputGroup } from "./InputGroups"
+import { FileUpload } from "./utils/FileUpload"
+import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { initialGalleryData } from "../../data/initial-data"
-import { Form, FormRow } from "../../styles/components/forms.style"
+import {
+	Alert,
+	Form,
+	FormRow,
+	PreviewHeader,
+} from "../../styles/components/forms.style"
 import { TransparentButton } from "../../styles/components/buttons.style"
-import { Alert, ContentBlockHeader } from "../../styles/components/content.style"
-import { useGalleryContext, useUserContext } from "../../context/ContextProvider"
-import { font_validation, gallery_name_validation, hex1_validation, hex2_validation, hex3_validation } from "./utils/inputValidation"
+import { ContentBlockHeader } from "../../styles/components/content.style"
+import {
+	useGalleryContext,
+	useUserContext,
+} from "../../context/ContextProvider"
+import {
+	font_validation,
+	gallery_name_validation,
+	hex1_validation,
+	hex2_validation,
+	hex3_validation,
+} from "./utils/inputValidation"
 
 function GalleryForm() {
 	// load context
@@ -38,29 +52,46 @@ function GalleryForm() {
 			</FormRow>
 
 			<FormRow>
-				<ImageUpload
+				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
-					defaultImage={
-						gallery?.img_URL || initialGalleryData.img_URL
-					}
+					defaultUrl={gallery?.img_URL || initialGalleryData.img_URL}
 					label="Thumbnail Image"
 				/>
 			</FormRow>
 
 			<FormRow>
-				<InputGroup {...hex1_validation} value={formData.hex1} onChange={onChange} />
-				<InputGroup {...hex2_validation} value={formData.hex2} onChange={onChange} />
-				<InputGroup {...hex3_validation} value={formData.hex3} onChange={onChange} />
+				<InputGroup
+					{...hex1_validation}
+					value={formData.hex1}
+					onChange={onChange}
+				/>
+				<InputGroup
+					{...hex2_validation}
+					value={formData.hex2}
+					onChange={onChange}
+				/>
+				<InputGroup
+					{...hex3_validation}
+					value={formData.hex3}
+					onChange={onChange}
+				/>
 			</FormRow>
 
 			<FormRow>
-				<ControlGroup {...font_validation} value={formData.font} onChange={onChange} />
+				<ControlGroup
+					{...font_validation}
+					value={formData.font}
+					onChange={onChange}
+				/>
+				<PreviewHeader font={formData.font}>
+					{formData.gallery_name}
+				</PreviewHeader>
 			</FormRow>
 
 			<FormRow>
 				{(success || error) && (
-					<Alert error={error !== undefined}>
+					<Alert error={error !== undefined} success={success}>
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}

@@ -3,7 +3,7 @@ import { IApiResponse } from "../interfaces/api"
 import { callExternalApi } from "./external-api.service"
 import { IVideo } from "../interfaces/models"
 
-export const createVideo = async (video: IVideo): Promise<IApiResponse> => {
+async function createVideo(video: IVideo): Promise<IApiResponse> {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
@@ -23,14 +23,11 @@ export const createVideo = async (video: IVideo): Promise<IApiResponse> => {
 	}
 }
 
-export const updateVideo = async (
-	video: IVideo,
-	id: number,
-): Promise<IApiResponse> => {
+async function updateVideo(video: IVideo): Promise<IApiResponse> {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
-		url: `${apiUrl}/videos/${id}`,
+		url: `${apiUrl}/videos/${video.video_id}`,
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
@@ -46,7 +43,7 @@ export const updateVideo = async (
 	}
 }
 
-export const deleteVideo = async (id: number): Promise<IApiResponse> => {
+async function deleteVideo(id: number): Promise<IApiResponse> {
 	const apiUrl = process.env.REACT_APP_API_SERVER_URL
 
 	const config: Axios.AxiosRequestConfig = {
@@ -64,3 +61,5 @@ export const deleteVideo = async (id: number): Promise<IApiResponse> => {
 		error,
 	}
 }
+
+export { createVideo, updateVideo, deleteVideo }

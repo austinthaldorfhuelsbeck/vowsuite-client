@@ -1,15 +1,14 @@
 import React, { ChangeEvent, PropsWithChildren } from "react"
 
-import { Alert } from "../../styles/components/content.style"
-import { ErrorProps } from "./utils/inputValidation"
-import { FormColumn, FormInput } from "../../styles/components/forms.style"
-import { IOption } from "../../data/temp-data"
+import { ErrorProps } from "./inputValidation"
+import { Alert, FormInput } from "../../../styles/components/forms.style"
+import { IOption } from "../../../data/temp-data"
 
 // Data
 interface BaseProps {
 	label: string
 	id: string
-	onChange: (e: ChangeEvent<HTMLInputElement>) => void
+	onChange: (e: ChangeEvent<any>) => void
 	validation: any
 }
 interface InputProps extends BaseProps {
@@ -44,19 +43,16 @@ function InputGroup({
 	return (
 		<>
 			<label htmlFor={id}>{label}</label>
-			<FormColumn>
-				<FormInput
-					name={id}
-					type={type}
-					placeholder={placeholder}
-					value={value}
-					onChange={onChange}
-					text={type === "text"}
-					color={type === "color"}
-				/>
-				{(type === "color") && <h4>{value}</h4>}
-			</FormColumn>
-			<InputError validation={validation} value={value}/>
+			<FormInput
+				name={id}
+				type={type}
+				placeholder={placeholder}
+				value={value}
+				onChange={onChange}
+				text={type === "text"}
+				color={type === "color"}
+			/>
+			<InputError validation={validation} value={value} />
 		</>
 	)
 }
@@ -72,16 +68,15 @@ function ControlGroup({
 	return (
 		<>
 			<label htmlFor={id}>{label}</label>
-			<select
-				name={id}
-				value={value}
-			>
+			<select name={id} value={value} onChange={onChange}>
 				<option>--Select a font--</option>
 				{options.map((option: IOption) => (
-					<option key={option.id}>{option.name}</option>
+					<option key={option.id} value={option.name}>
+						{option.name}
+					</option>
 				))}
 			</select>
-			<InputError validation={validation} value={value}/>
+			<InputError validation={validation} value={value} />
 		</>
 	)
 }

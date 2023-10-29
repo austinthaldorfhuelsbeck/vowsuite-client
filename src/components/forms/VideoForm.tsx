@@ -8,13 +8,13 @@ import {
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
 
-import { InputGroup } from "./InputGroups"
+import { InputGroup } from "./utils/InputGroups"
 import { copy } from "../../data/app-constants"
 import { IVideo } from "../../interfaces/models"
 import { InlineButton } from "../buttons/InlineButton"
 import { getUser } from "../../services/users.service"
 import { initialVideoData } from "../../data/initial-data"
-import { Alert } from "../../styles/components/content.style"
+import { ContentBlockHeader } from "../../styles/components/content.style"
 import { IApiResponse, IAppError } from "../../interfaces/api"
 import { createVideo, updateVideo } from "../../services/videos.service"
 
@@ -23,89 +23,84 @@ import {
 	useUserContext,
 	useVideoContext,
 } from "../../context/ContextProvider"
-import { Form, FormRow } from "../../styles/components/forms.style"
+import { Alert, Form, FormRow } from "../../styles/components/forms.style"
+import { useStatus } from "../../hooks/useStatus"
+import { useVideoForm } from "../../hooks/useVideoForm"
+import { TransparentButton } from "../../styles/components/buttons.style"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { video_name_validation } from "./utils/inputValidation"
+import { FileUpload } from "./utils/FileUpload"
 
 function VideoForm() {
 	// load context
-	const { setUser } = useUserContext()
-	const { gallery, setGallery } = useGalleryContext()
-	const { video, setVideo } = useVideoContext()
-	// determine initial form data from context
-	let initialFormData: IVideo = video ? video : initialVideoData
-
-	// state
-	const methods = useForm({ defaultValues: initialFormData })
-	const [success, setSuccess] = useState<boolean>(false)
-	const [error, setError] = useState<IAppError | undefined>(undefined)
-	// handlers
-	const handleClear = (data: IVideo) => {
-		methods.reset(data)
-		setSuccess(false)
-		setError(undefined)
-	}
-	const handleSubmit = methods.handleSubmit(async (formData: IVideo) => {
-		const request: IVideo = gallery
-			? { ...formData, gallery_id: gallery.gallery_id }
-			: formData
-		// call API
-		const response: IApiResponse = video
-			? await updateVideo(request, video.video_id)
-			: await createVideo(request)
-		// response is the full parent gallery
-		if (response.data) {
-			// update user context
-			setUser((await getUser(response.data.user_id)).data)
-			// update gallery context
-			setGallery(response.data)
-			// update video context
-			setVideo(request)
-			// update success banner
-			setSuccess(true)
-			setTimeout(setSuccess, 3000, false)
-		}
-		if (response.error) {
-			// update error banner
-			setError(response.error)
-			setTimeout(setError, 3000, undefined)
-		}
-	})
+	const { video } = useVideoContext()
+	const { success, error, handleSuccess, handleError } = useStatus()
+	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
+		useVideoForm(handleSuccess, handleError)
 
 	return (
-		<FormProvider {...methods}>
-			<Form
-				onSubmit={(e: any) => e.preventDefault()}
-				noValidate
-				autoComplete="off"
-			>
-				{/* <InputGroup {...video_name_validation} />
-				<InputGroup {...video_URL_validation} />
-				<InputGroup {...img_URL_validation} /> */}
+		<Form onSubmit={onSubmit} noValidate autoComplete="off">
+			<FormRow>
+				<ContentBlockHeader>Video Details</ContentBlockHeader>
+			</FormRow>
+
+			<FormRow>
+				<InputGroup
+					{...video_name_validation}
+					value={formData.video_name}
+					onChange={onChange}
+				/>
+			</FormRow>
+
+			<FormRow>
+				<FileUpload
+					formData={formData}
+					setFormData={setFormData}
+					defaultUrl={video?.video_URL || initialVideoData.video_URL}
+					label="Upload Video"
+					isVideo
+				/>
+			</FormRow>
+
+			<FormRow>
+				<Alert>{`Views: ${formData.views}`}</Alert>
+				<Alert>{`Downloads: ${formData.downloads}`}</Alert>
+			</FormRow>
+
+			<FormRow>
+				<FileUpload
+					formData={formData}
+					setFormData={setFormData}
+					defaultUrl={video?.img_URL || initialVideoData.img_URL}
+					label="Thumbnail Image"
+				/>
+			</FormRow>
+
+			<FormRow>
 				{(success || error) && (
-					<Alert error={error !== undefined}>
+					<Alert error={error !== undefined} success={success}>
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
-				<FormRow>
-					{video && (
-						<InlineButton
-							icon={faRefresh}
-							title="Reset"
-							onClick={() => handleClear(initialFormData)}
-						/>
-					)}
-					<InlineButton
-						icon={faCancel}
-						title="Clear"
-						onClick={() => handleClear(initialVideoData)}
-					/>
-					<InlineButton
-						icon={faArrowAltCircleRight}
-						title="Submit"
-						onClick={handleSubmit}
-					/>
-				</FormRow>
-			</Form>
-		</FormProvider>
+			</FormRow>
+
+			<FormRow>
+				{video && (
+					<TransparentButton onClick={onReset}>
+						<FontAwesomeIcon icon={faRefresh} />
+						{" Reset"}
+					</TransparentButton>
+				)}
+				<TransparentButton onClick={onClear}>
+					<FontAwesomeIcon icon={faCancel} />
+					{" Clear"}
+				</TransparentButton>
+				<TransparentButton type="submit">
+					<FontAwesomeIcon icon={faArrowAltCircleRight} />
+					{" Submit"}
+				</TransparentButton>
+			</FormRow>
+		</Form>
 	)
 }
 

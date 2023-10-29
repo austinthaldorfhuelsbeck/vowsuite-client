@@ -28,6 +28,13 @@ export const defaultGalleryStyle: IStringHash = {
 	hex3: "#E8BAA3",
 }
 
+export const defaultFonts: string[] = [
+	"Playfair Display",
+	"Georgia",
+	"Roboto Mono",
+	"Futura",
+]
+
 export const copy: IStringHash = {
 	heroTitle: "Deliver videos with Vowsuite",
 	heroBody: "It's the best for delivering videos.",

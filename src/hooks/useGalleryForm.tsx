@@ -32,7 +32,7 @@ function useGalleryForm(
 	const [formData, setFormData] = useState<IBaseGallery>(initialData)
 
 	// handlers
-	function onChange(e: ChangeEvent<any>) {
+	function onChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}

@@ -8,6 +8,7 @@ export const Form = styled.form`
 	label {
 		font-family: monospace;
 		margin-top: 1rem;
+		margin: 0 1rem;
 	}
 
 	input,
@@ -32,8 +33,8 @@ export const Form = styled.form`
 `
 
 interface FormInputProps {
-	text?: boolean;
-	color?: boolean;
+	text?: boolean
+	color?: boolean
 }
 
 export const FormInput = styled.input<FormInputProps>`
@@ -44,8 +45,8 @@ export const FormInput = styled.input<FormInputProps>`
 
 export const FormRow = styled.div`
 	display: flex;
-	justify-content: space-between;
-    align-items: center;
+	justify-content: flex-start;
+	align-items: center;
 	padding: 3rem 0rem 0rem 0rem;
 `
 
@@ -55,8 +56,28 @@ export const FormColumn = styled.div`
 	margin: 1rem;
 `
 
+interface AlertProps {
+	error?: boolean
+	success?: boolean
+}
+
+export const Alert = styled.div<AlertProps>`
+	font-family: monospace;
+	padding: 0.5rem;
+	margin: 0 0.5rem;
+	margin-top: 1rem;
+	border-radius: 1rem;
+	background-color: ${(AlertProps) => {
+		if (AlertProps.error) return "var(--orange)"
+		if (AlertProps.success) return "var(--emerald)"
+		return "var(--aluminium)"
+	}};
+	color: ${(AlertProps) =>
+		AlertProps.error ? "var(--white)" : "var(--dark-aluminium)"};
+`
+
 interface PreviewImgProps {
-	circle?: boolean;
+	circle?: boolean
 }
 
 export const PreviewImg = styled.img<PreviewImgProps>`
@@ -64,6 +85,17 @@ export const PreviewImg = styled.img<PreviewImgProps>`
 	object-fit: cover;
 	width: ${(props) => (props.circle ? "10rem" : "25rem")};
 	height: ${(props) => (props.circle ? "10rem" : "15rem")};
+`
+
+export const PreviewVideo = styled.video``
+
+interface PreviewHeaderProps {
+	font?: string
+}
+
+export const PreviewHeader = styled.h1<PreviewHeaderProps>`
+	margin-left: auto;
+	font-family: ${(props) => `"${props.font}"`};
 `
 
 export const DragUploadButton = styled(TransparentButton)`

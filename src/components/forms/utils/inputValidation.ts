@@ -1,3 +1,4 @@
+import { defaultFonts } from "../../../data/app-constants"
 import { testFontData } from "../../../data/temp-data"
 
 interface IRequired {

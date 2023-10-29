@@ -5,19 +5,21 @@ import {
 	faRefresh,
 } from "@fortawesome/free-solid-svg-icons"
 
-import { InputGroup } from "./InputGroups"
+import { InputGroup } from "./utils/InputGroups"
 import { copy } from "../../data/app-constants"
-import { ImageUpload } from "./utils/ImageUpload"
+import { FileUpload } from "./utils/FileUpload"
 import { useStatus } from "../../hooks/useStatus"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
 import { initialCompanyData } from "../../data/initial-data"
 import { useUserContext } from "../../context/ContextProvider"
 import { TransparentButton } from "../../styles/components/buttons.style"
-import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	Alert,
-	ContentBlockHeader,
-} from "../../styles/components/content.style"
+	Form,
+	FormColumn,
+	FormRow,
+} from "../../styles/components/forms.style"
+import { ContentBlockHeader } from "../../styles/components/content.style"
 import {
 	company_name_validation,
 	facebook_URL_validation,
@@ -50,10 +52,10 @@ function CompanyForm() {
 			</FormRow>
 
 			<FormRow>
-				<ImageUpload
+				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
-					defaultImage={
+					defaultUrl={
 						user?.company?.img_URL || initialCompanyData.img_URL
 					}
 					label="Company Logo"
@@ -103,7 +105,7 @@ function CompanyForm() {
 
 			<FormRow>
 				{(success || error) && (
-					<Alert error={error !== undefined}>
+					<Alert error={error !== undefined} success={success}>
 						{error ? error.message : copy.formSuccess}
 					</Alert>
 				)}
