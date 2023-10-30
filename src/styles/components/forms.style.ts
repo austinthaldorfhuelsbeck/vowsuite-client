@@ -38,9 +38,19 @@ interface FormInputProps {
 }
 
 export const FormInput = styled.input<FormInputProps>`
+	position: relative;
 	min-width: ${(props) => (props.text ? "30rem" : "10rem")};
 	min-height: ${(props) => (props.color ? "10rem" : "none")};
 	border: ${(props) => (props.color ? "none" : "solid")};
+	left: ${(props) => (props.color ? "-8rem" : "0")};
+`
+
+export const FormInputOverlay = styled.label`
+	position: relative;
+	right: -1rem;
+	top: 3rem;
+	color: var(--dark-aluminium);
+	z-index: 1;
 `
 
 export const FormRow = styled.div`
@@ -98,6 +108,10 @@ interface PreviewHeaderProps {
 export const PreviewHeader = styled.h1<PreviewHeaderProps>`
 	margin-left: auto;
 	font-family: ${(props) => `"${props.font}"`};
+`
+
+export const PreviewSubheader = styled.p`
+	font-size: 50% !important;
 `
 
 export const DragUploadButton = styled(TransparentButton)`
