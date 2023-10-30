@@ -1,9 +1,8 @@
-// Dependencies
-import * as React from "react"
-// Components
-import { HeroBanner } from "../components/landing/HeroBanner"
+import React from "react"
 
-export const LandingPage: React.FC = () => {
+import { HeroBanner } from "../components/static/HeroBanner"
+
+function LandingPage() {
 	// TODO: More layout after banner
 	return (
 		<>
@@ -11,3 +10,5 @@ export const LandingPage: React.FC = () => {
 		</>
 	)
 }
+
+export { LandingPage }

@@ -1,8 +1,8 @@
 export interface IAppError {
-    message: string
+	message: string
 }
 
 export interface IApiResponse {
-    data: any
-    error: IAppError | null
+	data: any
+	error: IAppError | null
 }

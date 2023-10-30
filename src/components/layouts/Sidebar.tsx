@@ -1,24 +1,42 @@
-// Dependencies
-import * as React from "react"
+import React, { MouseEvent } from "react"
+
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons"
-// Components
-import { InlineButton } from "../buttons/InlineButton"
+
+import { Modal } from "../menus/Modal"
 import { GalleryList } from "../lists/GalleryList"
-import { GalleryModal } from "../modals/GalleryModal"
-// Styles
+import { GalleryForm } from "../forms/GalleryForm"
+import { InlineButton } from "../buttons/InlineButton"
+import { useGalleryContext } from "../../context/ContextProvider"
 import {
 	GalleryContainer,
 	GalleryContainerHeader,
 } from "../../styles/layouts/dashboard-layout.style"
 
-export const Sidebar: React.FC = () => {
+function Sidebar() {
+	// load context
+	const { setGallery } = useGalleryContext()
+	// handler
+	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault()
+		setGallery(undefined)
+	}
+
 	return (
 		<GalleryContainer>
 			<GalleryContainerHeader>Galleries</GalleryContainerHeader>
-			<GalleryModal>
-				<InlineButton icon={faFolderPlus} title="New Gallery" />
-			</GalleryModal>
+			<Modal
+				button={
+					<InlineButton
+						icon={faFolderPlus}
+						title="New Gallery"
+						onClick={handleClick}
+					/>
+				}
+				content={<GalleryForm />}
+			/>
 			<GalleryList />
 		</GalleryContainer>
 	)
 }
+
+export { Sidebar }

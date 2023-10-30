@@ -1,15 +1,16 @@
-// Dependencies
 import React from "react"
-// Components
+
 import {
 	ContentContainer,
 	ContentTitle,
 } from "../styles/layouts/content-layout.style"
 
-export const NotFoundPage: React.FC = () => {
+function NotFoundPage() {
 	return (
 		<ContentContainer>
 			<ContentTitle id="page-title">Not Found</ContentTitle>
 		</ContentContainer>
 	)
 }
+
+export { NotFoundPage }

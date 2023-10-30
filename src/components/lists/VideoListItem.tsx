@@ -1,36 +1,65 @@
-// Dependencies
-import * as React from "react"
-import { Link } from "react-router-dom"
+import React, { PropsWithChildren, MouseEvent } from "react"
+
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
 import { IVideo } from "../../interfaces/models"
-// Styles
+import { ContextMenu } from "../menus/ContextMenu"
+import { formatDate } from "../../services/util.service"
+import { useVideoContext } from "../../context/ContextProvider"
+import { ContentContainer } from "../../styles/components/util.style"
+import { renderMenu, videoContextList } from "../../data/context-lists"
 import {
 	ContentBlockHeader,
 	ContentBlockImg,
 	ContentBlockListItem,
-} from "../../styles/components/content-block.style"
+	ContentBlockSubheader,
+} from "../../styles/components/content.style"
+import { Modal } from "../menus/Modal"
+import ReactPlayer from "react-player"
 
-interface VideoListItemProps {
+interface ComponentProps {
 	video: IVideo
 }
 
-export const VideoListItem: React.FC<VideoListItemProps> = ({ video }) => {
-	// format date nicely
-	const updatedDate: string = new Date(video.updated_at).toLocaleDateString(
-		"en-us",
-		{
-			year: "numeric",
-			month: "short",
-			day: "numeric",
-		},
-	)
+function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
+	// select the video and save to context on click
+	const { setVideo } = useVideoContext()
+	const handleClick = (e: MouseEvent<HTMLLIElement>, video: IVideo) => {
+		e.preventDefault()
+		setVideo(video)
+	}
 
 	return (
-		<ContentBlockListItem>
-			<Link to={`/studio/videos/${video.video_id}`}>
-				<ContentBlockImg src={video.img_URL} alt={video.video_name} />
-				<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
-				{`Updated - ${updatedDate}`}
-			</Link>
+		<ContentBlockListItem onClick={(e: any) => handleClick(e, video)}>
+			<Modal
+				button={
+					<ContentBlockImg
+						src={video.img_URL}
+						alt={video.video_name}
+					/>
+				}
+				content={
+					<ReactPlayer
+						controls
+						width={"80vw"}
+						height={"100%"}
+						url={video.video_URL}
+					/>
+				}
+			/>
+			<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
+			<ContentContainer>
+				<ContentBlockSubheader>
+					{`Updated - ${formatDate(video.updated_at)}`}
+				</ContentBlockSubheader>
+				<ContextMenu
+					button={<FontAwesomeIcon icon={faEllipsis} />}
+					content={<>{renderMenu(videoContextList)}</>}
+				/>
+			</ContentContainer>
 		</ContentBlockListItem>
 	)
 }
+
+export { VideoListItem }

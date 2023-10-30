@@ -18,6 +18,7 @@ export const GlobalStyles = createGlobalStyle`
         width: 100%;
         margin: 0;
         padding: 0;
+        ::-webkit-scrollbar {display:none;}
     }
 
     body {
@@ -41,7 +42,7 @@ export const GlobalStyles = createGlobalStyle`
     h6 {
         font-family: var(--font-secondary);
         font-weight: 600;
-        color: rgba(0, 0, 0, 0.86);
+        color: var(--aluminium)
     }
 
     h1,
@@ -84,6 +85,11 @@ export const GlobalStyles = createGlobalStyle`
 
     p {
         margin: 0 0 1.6rem;
+    }
+
+    hr {
+        border-top: 1px solid var(--aluminium);
+        border-bottom: none;
     }
 
     strong {

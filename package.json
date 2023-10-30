@@ -4,6 +4,8 @@
 	"private": true,
 	"dependencies": {
 		"@auth0/auth0-react": "^2.2.1",
+		"@aws-sdk/client-s3": "^3.438.0",
+		"@fortawesome/free-brands-svg-icons": "^6.4.2",
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
 		"@fortawesome/react-fontawesome": "^0.2.0",
 		"@testing-library/jest-dom": "^5.17.0",
@@ -13,9 +15,13 @@
 		"@types/node": "^16.18.53",
 		"@types/react": "^18.2.22",
 		"@types/react-dom": "^18.2.7",
+		"aws-sdk": "^2.1483.0",
 		"axios": "^1.5.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
+		"react-dropzone": "^14.2.3",
+		"react-hook-form": "^7.38.0",
+		"react-player": "^2.13.0",
 		"react-router-dom": "^6.16.0",
 		"react-scripts": "5.0.1",
 		"styled-components": "^6.0.8",
@@ -48,6 +54,7 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+		"@types/styled-components": "^5.1.28",
 		"cross-env": "^7.0.3"
 	}
 }
