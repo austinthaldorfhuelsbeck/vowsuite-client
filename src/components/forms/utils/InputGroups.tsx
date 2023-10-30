@@ -70,7 +70,6 @@ function ControlGroup({
 		<>
 			<ButtonTitle htmlFor={id}>{label}</ButtonTitle>
 			<select name={id} value={value} onChange={onChange}>
-				<option>--Select a font--</option>
 				{options.map((option: IOption) => (
 					<option key={option.id} value={option.name}>
 						{option.name}

@@ -31,20 +31,20 @@ function VideoForm() {
 			<ContentBlockHeader>{copy.videoFormHeader}</ContentBlockHeader>
 
 			<FormRow>
-				<InputGroup
-					{...video_name_validation}
-					value={formData.video_name}
-					onChange={onChange}
-				/>
-			</FormRow>
-
-			<FormRow>
 				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
 					defaultUrl={video?.video_URL || initialVideoData.video_URL}
 					label="Upload Video"
 					isVideo
+				/>
+			</FormRow>
+
+			<FormRow>
+				<InputGroup
+					{...video_name_validation}
+					value={formData.video_name}
+					onChange={onChange}
 				/>
 			</FormRow>
 

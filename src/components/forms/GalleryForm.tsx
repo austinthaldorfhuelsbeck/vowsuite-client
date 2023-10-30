@@ -9,6 +9,8 @@ import { useGalleryContext } from "../../context/ContextProvider"
 import { ContentBlockHeader } from "../../styles/components/content.style"
 import {
 	Form,
+	FormInput,
+	FormInputOverlay,
 	FormRow,
 	PreviewHeader,
 } from "../../styles/components/forms.style"
@@ -73,20 +75,26 @@ function GalleryForm() {
 			</FormRow>
 
 			<FormRow>
-				<InputGroup
+				<FormInputOverlay>{hex1_validation.label}</FormInputOverlay>
+				<FormInput
 					{...hex1_validation}
 					value={formData.hex1}
 					onChange={onChange}
+					color
 				/>
-				<InputGroup
+				<FormInputOverlay>{hex2_validation.label}</FormInputOverlay>
+				<FormInput
 					{...hex2_validation}
 					value={formData.hex2}
 					onChange={onChange}
+					color
 				/>
-				<InputGroup
+				<FormInputOverlay>{hex3_validation.label}</FormInputOverlay>
+				<FormInput
 					{...hex3_validation}
 					value={formData.hex3}
 					onChange={onChange}
+					color
 				/>
 			</FormRow>
 
