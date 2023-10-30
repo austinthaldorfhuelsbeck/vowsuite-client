@@ -66,5 +66,5 @@ export const baseUrls: IStringHash = {
 	homePage: "https://vowsuite.com",
 	// galleryPage: "https://vowsuite.com/galleries",
 	galleryPage:
-		"https://vowsuite-git-20231024refactoring-austinthaldorfhuelsbeck.vercel.app/galleries",
+		"https://vowsuite-17ipteriz-austinthaldorfhuelsbeck.vercel.app/galleries",
 }
