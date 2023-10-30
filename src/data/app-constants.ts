@@ -60,5 +60,5 @@ export const copy: IStringHash = {
 export const baseUrls: IStringHash = {
 	homePage: "https://vowsuite.com",
 	// galleryPage: "https://vowsuite.com/galleries",
-	galleryPage: "http://localhost:4040/galleries",
+	galleryPage: "https://vowsuite-client.vercel.app/galleries",
 }
