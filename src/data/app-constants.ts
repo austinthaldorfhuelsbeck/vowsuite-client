@@ -39,7 +39,6 @@ export const copy: IStringHash = {
 	heroTitle: "Deliver videos with Vowsuite",
 	heroBody: "It's the best for delivering videos.",
 	footerMessage: "Copyright © 2023 Vowsuite, Inc. All Rights Reserved.",
-	confirmDeleteHeader: "Are you sure?",
 	confirmDeleteMessage:
 		"Deleting is permanent. You will not be able to recover this object.",
 	formSuccess: "Form has been submitted successfully!",
@@ -55,6 +54,12 @@ export const copy: IStringHash = {
 	galleryHeaderButton: " Play",
 	videoCardSubheader: " Play film",
 	brandDetailsCopyright: "Made with Vowsuite",
+	companyFormHeader: "Company Details",
+	companyFormSubheader: "Public Links",
+	confirmDeleteHeader: "Are you sure?",
+	galleryFormHeader: "Gallery Details",
+	userFormHeader: "User Details",
+	videoFormHeader: "Video Details",
 }
 
 export const baseUrls: IStringHash = {

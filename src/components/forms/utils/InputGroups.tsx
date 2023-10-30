@@ -3,6 +3,7 @@ import React, { ChangeEvent, PropsWithChildren } from "react"
 import { ErrorProps } from "./inputValidation"
 import { Alert, FormInput } from "../../../styles/components/forms.style"
 import { IOption } from "../../../data/temp-data"
+import { ButtonTitle } from "../../../styles/components/buttons.style"
 
 // Data
 interface BaseProps {
@@ -42,7 +43,7 @@ function InputGroup({
 }: PropsWithChildren<InputProps>) {
 	return (
 		<>
-			<label htmlFor={id}>{label}</label>
+			<ButtonTitle htmlFor={id}>{label}</ButtonTitle>
 			<FormInput
 				name={id}
 				type={type}
@@ -67,9 +68,8 @@ function ControlGroup({
 }: PropsWithChildren<ControlProps>) {
 	return (
 		<>
-			<label htmlFor={id}>{label}</label>
+			<ButtonTitle htmlFor={id}>{label}</ButtonTitle>
 			<select name={id} value={value} onChange={onChange}>
-				<option>--Select a font--</option>
 				{options.map((option: IOption) => (
 					<option key={option.id} value={option.name}>
 						{option.name}

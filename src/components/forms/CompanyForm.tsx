@@ -1,25 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-	faArrowAltCircleRight,
-	faCancel,
-	faRefresh,
-} from "@fortawesome/free-solid-svg-icons"
-
-import { InputGroup } from "./utils/InputGroups"
 import { copy } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
+import { InputGroup } from "./utils/InputGroups"
 import { useStatus } from "../../hooks/useStatus"
+import { BannerActions } from "./utils/BannerActions"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
 import { initialCompanyData } from "../../data/initial-data"
 import { useUserContext } from "../../context/ContextProvider"
-import { TransparentButton } from "../../styles/components/buttons.style"
-import {
-	Alert,
-	Form,
-	FormColumn,
-	FormRow,
-} from "../../styles/components/forms.style"
 import { ContentBlockHeader } from "../../styles/components/content.style"
+import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	company_name_validation,
 	facebook_URL_validation,
@@ -37,11 +25,18 @@ function CompanyForm() {
 	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
 		useCompanyForm(handleSuccess, handleError)
 
+	// build props
+	const bannerActionsProps = {
+		success,
+		error,
+		onReset,
+		onClear,
+		onSubmit,
+	}
+
 	return (
 		<Form onSubmit={onSubmit}>
-			<FormRow>
-				<ContentBlockHeader>Company Details</ContentBlockHeader>
-			</FormRow>
+			<ContentBlockHeader>{copy.companyFormHeader}</ContentBlockHeader>
 
 			<FormRow>
 				<InputGroup
@@ -64,7 +59,9 @@ function CompanyForm() {
 			</FormRow>
 
 			<FormRow>
-				<ContentBlockHeader>Public Links</ContentBlockHeader>
+				<ContentBlockHeader>
+					{copy.companyFormSubheader}
+				</ContentBlockHeader>
 			</FormRow>
 			<FormRow>
 				<FormColumn>
@@ -103,30 +100,7 @@ function CompanyForm() {
 				</FormColumn>
 			</FormRow>
 
-			<FormRow>
-				{(success || error) && (
-					<Alert error={error !== undefined} success={success}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-			</FormRow>
-
-			<FormRow>
-				{user?.company && (
-					<TransparentButton onClick={onReset}>
-						<FontAwesomeIcon icon={faRefresh} />
-						{" Reset"}
-					</TransparentButton>
-				)}
-				<TransparentButton onClick={onClear}>
-					<FontAwesomeIcon icon={faCancel} />
-					{" Clear"}
-				</TransparentButton>
-				<TransparentButton type="submit">
-					<FontAwesomeIcon icon={faArrowAltCircleRight} />
-					{" Submit"}
-				</TransparentButton>
-			</FormRow>
+			<BannerActions {...bannerActionsProps} />
 		</Form>
 	)
 }

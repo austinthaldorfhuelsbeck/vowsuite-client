@@ -1,34 +1,43 @@
 import {
 	Dispatch,
+	MouseEvent,
 	PropsWithChildren,
 	SetStateAction,
 	useCallback,
 	useState,
-	MouseEvent,
 } from "react"
+
+import AWS from "aws-sdk"
+import { useDropzone } from "react-dropzone"
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 
 import {
 	DragUploadButton,
 	FormColumn,
+	FormInput,
+	FormRow,
 	PreviewImg,
+	PreviewSubheader,
 	PreviewVideo,
 	ProgressBar,
 	ProgressBarProgress,
 } from "../../../styles/components/forms.style"
-import { useDropzone } from "react-dropzone"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
-import { IApiResponse } from "../../../interfaces/api"
-import { uploadFileToCloudinary } from "../../../services/upload.service"
-import { PutObjectCommand, S3, S3Client } from "@aws-sdk/client-s3"
-import AWS from "aws-sdk"
+import { ButtonTitle } from "../../../styles/components/buttons.style"
 
 // Config
 const S3_BUCKET = "vowsuite-videos"
-const s3Config = {
-	accessKeyId: "AKIATLUNANIXEX7GR5Z2",
-	secretAccessKey: "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",
-}
+const accessKeyId: string = process.env.REACT_APP_AWS_ACCESS_KEY_ID || ""
+const secretAccessKey: string =
+	process.env.REACT_APP_AWS_SECRET_ACCESS_KEY || ""
+const s3 = new AWS.S3({
+	region: "us-west-2",
+	credentials: {
+		accessKeyId: accessKeyId,
+		secretAccessKey: secretAccessKey,
+	},
+})
 
 // Models
 interface BaseProps {
@@ -47,8 +56,15 @@ interface ComponentProps extends BaseProps {
 
 // Components
 function Preview({ isCircle, isVideo, src }: PropsWithChildren<PreviewProps>) {
-	if (isVideo) return <PreviewVideo src={src} />
-	return <PreviewImg src={src} circle={isCircle} />
+	return (
+		<>
+			{isVideo ? (
+				<PreviewVideo src={src} />
+			) : (
+				<PreviewImg src={src} circle={isCircle} />
+			)}
+		</>
+	)
 }
 function FileUpload({
 	formData,
@@ -62,53 +78,47 @@ function FileUpload({
 	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
 	const [progress, setProgress] = useState<number>(0)
 
+	// Constants
+	const previewUrl: string = (preview || defaultUrl).toString()
+
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
-			// // uploads a file to cloudinary
-			// async function uploadToCloudinary(file: File) {
-			// 	const response: IApiResponse = await uploadFileToCloudinary(
-			// 		file,
-			// 	)
-			// 	setFormData(
-			// 		isVideo
-			// 			? { ...formData, video_url: response.data.url }
-			// 			: { ...formData, img_URL: response.data.url },
-			// 	)
-			// }
-
 			async function uploadToAws(file: File) {
 				const target = {
 					Bucket: S3_BUCKET,
 					Key: file.name,
 					Body: file,
 				}
-				const s3 = new AWS.S3({
-					region: "us-west-2",
-					credentials: s3Config,
-				})
-				const response = await s3
+				await s3
 					.putObject(target)
 					.on("httpUploadProgress", (e) => {
 						setProgress(Math.round((e.loaded / e.total) * 100))
 					})
 					.promise()
-				const url = await s3.getSignedUrl("getObject", {
-					Bucket: S3_BUCKET,
-					Key: file.name,
-				})
-				setFormData(
-					isVideo
-						? { ...formData, video_URL: url }
-						: { ...formData, img_URL: url },
-				)
-				setPreview(url)
-				return response
+				await setUrlFromAws(file)
 			}
 
-			// upload
+			async function setUrlFromAws(file: File) {
+				const target = {
+					Bucket: S3_BUCKET,
+					Key: file.name,
+				}
+				const response: string = await s3.getSignedUrl(
+					"getObject",
+					target,
+				)
+				const publicUrl: string = response.split("?")[0]
+				setFormData(
+					isVideo
+						? { ...formData, video_URL: publicUrl }
+						: { ...formData, img_URL: publicUrl },
+				)
+				setPreview(publicUrl)
+			}
+
+			// call upload function
 			if (files[0]) {
-				// uploadToCloudinary(files[0])
 				uploadToAws(files[0])
 			}
 		},
@@ -118,38 +128,48 @@ function FileUpload({
 		onDrop,
 	})
 
-	// Return
+	// JSX
 	return (
 		<>
-			<label htmlFor="file">{label}</label>
-			{100 > progress && 0 < progress ? (
-				<ProgressBar>
-					<ProgressBarProgress
-						done={progress}
-					>{`${progress}%`}</ProgressBarProgress>
-				</ProgressBar>
-			) : (
-				<div {...getRootProps()}>
-					<input {...getInputProps()} />
-					<DragUploadButton
-						onClick={(e: MouseEvent<HTMLButtonElement>) =>
-							e.preventDefault()
-						}
-					>
-						{isDragActive ? (
-							<FontAwesomeIcon icon={faSquarePlus} />
-						) : (
-							<FontAwesomeIcon icon={faUpload} />
-						)}
-					</DragUploadButton>
-				</div>
-			)}
-
-			<Preview
-				isCircle={isCircle}
-				isVideo={isVideo}
-				src={(preview || defaultUrl).toString()}
-			/>
+			<ButtonTitle htmlFor="file">{label}</ButtonTitle>
+			<FormColumn>
+				<FormRow>
+					{100 > progress && 0 < progress ? (
+						<ProgressBar>
+							<ProgressBarProgress
+								done={progress}
+							>{`${progress}%`}</ProgressBarProgress>
+						</ProgressBar>
+					) : (
+						<div {...getRootProps()}>
+							<FormInput
+								{...getInputProps()}
+								color={false}
+								text={false}
+							/>
+							<DragUploadButton
+								onClick={(e: MouseEvent<HTMLButtonElement>) =>
+									e.preventDefault()
+								}
+							>
+								{isDragActive ? (
+									<FontAwesomeIcon icon={faSquarePlus} />
+								) : (
+									<FontAwesomeIcon icon={faUpload} />
+								)}
+							</DragUploadButton>
+						</div>
+					)}
+					<Preview
+						isCircle={isCircle}
+						isVideo={isVideo}
+						src={previewUrl}
+					/>
+				</FormRow>
+				<PreviewSubheader>
+					{isVideo ? formData.video_URL : formData.img_URL}
+				</PreviewSubheader>
+			</FormColumn>
 		</>
 	)
 }
