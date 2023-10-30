@@ -1,18 +1,25 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react"
 
-import { IVideo } from "../interfaces/models"
+import { IGallery, IUser, IVideo } from "../interfaces/models"
 import { IApiResponse, IAppError } from "../interfaces/api"
 import { initialVideoData } from "../data/initial-data"
-import { useGalleryContext, useVideoContext } from "../context/ContextProvider"
+import {
+	useGalleryContext,
+	useUserContext,
+	useVideoContext,
+} from "../context/ContextProvider"
 import { createVideo, updateVideo } from "../services/videos.service"
+import { readUser } from "../services/users.service"
+import { readGallery } from "../services/galleries.service"
 
 function useVideoForm(
 	handleSuccess: () => void,
 	handleError: (e: IAppError) => void,
 ) {
 	// context
-	const { video } = useVideoContext()
-	const { gallery } = useGalleryContext()
+	const { setUser } = useUserContext()
+	const { gallery, setGallery } = useGalleryContext()
+	const { video, setVideo } = useVideoContext()
 	// determine initial form data from context
 	const blankForm: IVideo = {
 		...initialVideoData,
@@ -44,11 +51,15 @@ function useVideoForm(
 			: await createVideo(formData)
 
 		if (response.data) {
-			console.log(response.data)
 			// update context
-			// setUser((await getUser(response.data.user_id)).data)
-			// setGallery(response.data)
-			// setVideo(request)
+			const updatedGallery: IGallery = (
+				await readGallery(response.data.gallery_id)
+			).data
+			const updatedUser: IUser = (await readUser(updatedGallery.user_id))
+				.data
+			setVideo(response.data)
+			setGallery(updatedGallery)
+			setUser(updatedUser)
 			// update success banner
 			handleSuccess()
 		}

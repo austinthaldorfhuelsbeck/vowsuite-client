@@ -9,8 +9,11 @@ import {
 
 import {
 	DragUploadButton,
+	FormColumn,
 	PreviewImg,
 	PreviewVideo,
+	ProgressBar,
+	ProgressBarProgress,
 } from "../../../styles/components/forms.style"
 import { useDropzone } from "react-dropzone"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -96,7 +99,7 @@ function FileUpload({
 				})
 				setFormData(
 					isVideo
-						? { ...formData, video_url: url }
+						? { ...formData, video_URL: url }
 						: { ...formData, img_URL: url },
 				)
 				setPreview(url)
@@ -119,33 +122,34 @@ function FileUpload({
 	return (
 		<>
 			<label htmlFor="file">{label}</label>
-			<div>Progress is {progress}%</div>
-			{/* <button
-				onClick={() => {
-					if (selectedFile) uploadFile(selectedFile)
-				}}
-			>
-				Upload to S3
-			</button> */}
-			<div {...getRootProps()}>
-				<input {...getInputProps()} />
-				<DragUploadButton
-					onClick={(e: MouseEvent<HTMLButtonElement>) =>
-						e.preventDefault()
-					}
-				>
-					{isDragActive ? (
-						<FontAwesomeIcon icon={faSquarePlus} />
-					) : (
-						<FontAwesomeIcon icon={faUpload} />
-					)}
-				</DragUploadButton>
-				<Preview
-					isCircle={isCircle}
-					isVideo={isVideo}
-					src={(preview || defaultUrl).toString()}
-				/>
-			</div>
+			{100 > progress && 0 < progress ? (
+				<ProgressBar>
+					<ProgressBarProgress
+						done={progress}
+					>{`${progress}%`}</ProgressBarProgress>
+				</ProgressBar>
+			) : (
+				<div {...getRootProps()}>
+					<input {...getInputProps()} />
+					<DragUploadButton
+						onClick={(e: MouseEvent<HTMLButtonElement>) =>
+							e.preventDefault()
+						}
+					>
+						{isDragActive ? (
+							<FontAwesomeIcon icon={faSquarePlus} />
+						) : (
+							<FontAwesomeIcon icon={faUpload} />
+						)}
+					</DragUploadButton>
+				</div>
+			)}
+
+			<Preview
+				isCircle={isCircle}
+				isVideo={isVideo}
+				src={(preview || defaultUrl).toString()}
+			/>
 		</>
 	)
 }

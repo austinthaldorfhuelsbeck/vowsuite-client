@@ -12,7 +12,6 @@ import { InputGroup } from "./utils/InputGroups"
 import { copy } from "../../data/app-constants"
 import { IVideo } from "../../interfaces/models"
 import { InlineButton } from "../buttons/InlineButton"
-import { getUser } from "../../services/users.service"
 import { initialVideoData } from "../../data/initial-data"
 import { ContentBlockHeader } from "../../styles/components/content.style"
 import { IApiResponse, IAppError } from "../../interfaces/api"
@@ -62,10 +61,11 @@ function VideoForm() {
 				/>
 			</FormRow>
 
-			<FormRow>
-				<Alert>{`Views: ${formData.views}`}</Alert>
-				<Alert>{`Downloads: ${formData.downloads}`}</Alert>
-			</FormRow>
+			{video && (
+				<FormRow>
+					<Alert>{`Views: ${video.views} | Downloads: ${video.downloads}`}</Alert>
+				</FormRow>
+			)}
 
 			<FormRow>
 				<FileUpload
@@ -95,7 +95,7 @@ function VideoForm() {
 					<FontAwesomeIcon icon={faCancel} />
 					{" Clear"}
 				</TransparentButton>
-				<TransparentButton type="submit">
+				<TransparentButton onClick={onSubmit}>
 					<FontAwesomeIcon icon={faArrowAltCircleRight} />
 					{" Submit"}
 				</TransparentButton>

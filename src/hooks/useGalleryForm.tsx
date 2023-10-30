@@ -4,7 +4,7 @@ import { useGalleryContext, useUserContext } from "../context/ContextProvider"
 import { IBaseGallery } from "../interfaces/models"
 import { initialGalleryData } from "../data/initial-data"
 import { createGallery, updateGallery } from "../services/galleries.service"
-import { getUser } from "../services/users.service"
+import { readUser } from "../services/users.service"
 
 function useGalleryForm(
 	handleSuccess: () => void,
@@ -52,7 +52,7 @@ function useGalleryForm(
 			: await createGallery(formData)
 		if (response.data) {
 			// update context
-			setUser((await getUser(response.data.user_id)).data)
+			setUser((await readUser(response.data.user_id)).data)
 			setGallery(response.data)
 			// useStatus
 			handleSuccess()

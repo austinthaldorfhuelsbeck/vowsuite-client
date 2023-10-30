@@ -2,7 +2,7 @@ import { IStringHash, ILinkResource } from "../interfaces/common"
 
 export const heroResource: ILinkResource = {
 	path: "/studio",
-	label: "Check something out →",
+	label: "Check out the Studio →",
 }
 
 export const footerResourceList: ILinkResource[] = [

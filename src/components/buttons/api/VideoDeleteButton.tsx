@@ -4,7 +4,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 import { InlineButton } from "../InlineButton"
 import { IApiResponse } from "../../../interfaces/api"
-import { getUser } from "../../../services/users.service"
+import { readUser } from "../../../services/users.service"
 import { deleteVideo } from "../../../services/videos.service"
 import {
 	useGalleryContext,
@@ -31,7 +31,7 @@ function VideoDeleteButton() {
 				// gallery
 				if (gallery) setGallery(response.data)
 				// user
-				const updatedUser = await getUser(response.data.user_id)
+				const updatedUser = await readUser(response.data.user_id)
 				if (updatedUser.data) setUser(updatedUser.data)
 			}
 		}

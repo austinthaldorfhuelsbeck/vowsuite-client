@@ -9,7 +9,7 @@ import { faPlayCircle } from "@fortawesome/free-solid-svg-icons"
 import { Modal } from "../menus/Modal"
 import { copy } from "../../data/app-constants"
 import { GalleryNavBar } from "../nav/GalleryNavBar"
-import { getUser } from "../../services/users.service"
+import { readUser } from "../../services/users.service"
 import { readGallery } from "../../services/galleries.service"
 import { VideoCardListItem } from "../lists/VideoCardListItem"
 import { ICompany, IGallery, IUser, IVideo } from "../../interfaces/models"
@@ -30,8 +30,9 @@ function Gallery() {
 		// function to get a gallery and set state
 		const getGalleryResponse = async (id: string) => {
 			const galleryResponse: IGallery = (await readGallery(id)).data
-			const userResponse: IUser = (await getUser(galleryResponse.user_id))
-				.data
+			const userResponse: IUser = (
+				await readUser(galleryResponse.user_id)
+			).data
 			setGallery(galleryResponse)
 			setCompany(userResponse.company)
 		}
