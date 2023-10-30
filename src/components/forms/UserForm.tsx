@@ -1,21 +1,13 @@
-import React from "react"
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-	faArrowAltCircleRight,
-	faCancel,
-	faRefresh,
-} from "@fortawesome/free-solid-svg-icons"
-
-import { InputGroup } from "./utils/InputGroups"
-import { copy } from "../../data/app-constants"
-import { useStatus } from "../../hooks/useStatus"
 import { FileUpload } from "./utils/FileUpload"
+import { copy } from "../../data/app-constants"
+import { InputGroup } from "./utils/InputGroups"
+import { useStatus } from "../../hooks/useStatus"
 import { useUserForm } from "../../hooks/useUserForm"
+import { BannerActions } from "./utils/BannerActions"
 import { initialUserData } from "../../data/initial-data"
 import { useUserContext } from "../../context/ContextProvider"
-import { Alert, Form, FormRow } from "../../styles/components/forms.style"
-import { TransparentButton } from "../../styles/components/buttons.style"
+import { MagnifiedDiv } from "../../styles/components/util.style"
+import { Form, FormRow } from "../../styles/components/forms.style"
 import { ContentBlockHeader } from "../../styles/components/content.style"
 import {
 	user_email_validation,
@@ -29,62 +21,48 @@ function UserForm() {
 	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
 		useUserForm(handleSuccess, handleError)
 
+	// build props
+	const bannerActionsProps = {
+		success,
+		error,
+		onReset,
+		onClear,
+		onSubmit,
+	}
+
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
-			<FormRow>
-				<ContentBlockHeader>User Details</ContentBlockHeader>
-			</FormRow>
+			<ContentBlockHeader>{copy.userFormHeader}</ContentBlockHeader>
 
-			<FormRow>
-				<InputGroup
-					{...user_name_validation}
-					value={formData.user_name}
-					onChange={onChange}
-				/>
-			</FormRow>
+			<MagnifiedDiv>
+				<FormRow>
+					<InputGroup
+						{...user_name_validation}
+						value={formData.user_name}
+						onChange={onChange}
+					/>
+				</FormRow>
 
-			<FormRow>
-				<InputGroup
-					{...user_email_validation}
-					value={formData.email}
-					onChange={onChange}
-				/>
-			</FormRow>
+				<FormRow>
+					<InputGroup
+						{...user_email_validation}
+						value={formData.email}
+						onChange={onChange}
+					/>
+				</FormRow>
 
-			<FormRow>
-				<FileUpload
-					formData={formData}
-					setFormData={setFormData}
-					defaultUrl={user?.img_URL || initialUserData.img_URL}
-					label="Profile Image"
-					isCircle
-				/>
-			</FormRow>
+				<FormRow>
+					<FileUpload
+						formData={formData}
+						setFormData={setFormData}
+						defaultUrl={user?.img_URL || initialUserData.img_URL}
+						label="Profile Image"
+						isCircle
+					/>
+				</FormRow>
+			</MagnifiedDiv>
 
-			<FormRow>
-				{(success || error) && (
-					<Alert error={error !== undefined} success={success}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-			</FormRow>
-
-			<FormRow>
-				{user?.company && (
-					<TransparentButton onClick={onReset}>
-						<FontAwesomeIcon icon={faRefresh} />
-						{" Reset"}
-					</TransparentButton>
-				)}
-				<TransparentButton onClick={onClear}>
-					<FontAwesomeIcon icon={faCancel} />
-					{" Clear"}
-				</TransparentButton>
-				<TransparentButton type="submit">
-					<FontAwesomeIcon icon={faArrowAltCircleRight} />
-					{" Submit"}
-				</TransparentButton>
-			</FormRow>
+			<BannerActions {...bannerActionsProps} />
 		</Form>
 	)
 }

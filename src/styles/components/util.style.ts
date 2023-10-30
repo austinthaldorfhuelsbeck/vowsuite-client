@@ -18,3 +18,7 @@ export const ContentContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 `
+
+export const MagnifiedDiv = styled.div`
+	font-size: 175%;
+`

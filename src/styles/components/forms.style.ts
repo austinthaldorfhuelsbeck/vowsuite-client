@@ -100,6 +100,10 @@ export const PreviewHeader = styled.h1<PreviewHeaderProps>`
 	font-family: ${(props) => `"${props.font}"`};
 `
 
+export const PreviewSubheader = styled.p`
+	font-size: 50% !important;
+`
+
 export const DragUploadButton = styled(TransparentButton)`
 	height: 100%;
 	width: 30rem;
