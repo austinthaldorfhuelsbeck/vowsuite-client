@@ -1,17 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { ModalResource } from "../interfaces/common"
-import { ContextListItem } from "../styles/components/lists.styles"
-import { ButtonTitle } from "../styles/components/buttons.style"
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons"
+
+import { Modal } from "../components/menus/Modal"
+import { ModalResource } from "../interfaces/common"
+import { UserForm } from "../components/forms/UserForm"
 import { VideoForm } from "../components/forms/VideoForm"
+import { GalleryForm } from "../components/forms/GalleryForm"
+import { ButtonTitle } from "../styles/components/buttons.style"
+import { ContextListItem } from "../styles/components/lists.styles"
 import { VideoDeleteForm } from "../components/forms/ConfirmDeleteForm"
 import { VideoDeleteButton } from "../components/buttons/api/VideoDeleteButton"
-import { GalleryForm } from "../components/forms/GalleryForm"
 import { GalleryDeleteButton } from "../components/buttons/api/GalleryDeleteButton"
-import { Modal } from "../components/menus/Modal"
-import { UserForm } from "../components/forms/UserForm"
 
-export const renderMenu = (resources: ModalResource[]) =>
+export const renderModalContextMenu = (resources: ModalResource[]) =>
 	resources.map((resource, index) => (
 		<Modal
 			key={index}

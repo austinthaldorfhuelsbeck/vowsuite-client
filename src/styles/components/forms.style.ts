@@ -7,8 +7,9 @@ export const Form = styled.form`
 
 	label {
 		font-family: monospace;
-		margin-top: 1rem;
-		margin: 0 1rem;
+		margin: auto 1rem;
+		width: 6rem;
+		padding: 0;
 	}
 
 	input,
@@ -41,7 +42,7 @@ export const FormInput = styled.input<FormInputProps>`
 	position: relative;
 	min-width: ${(props) => (props.text ? "30rem" : "10rem")};
 	min-height: ${(props) => (props.color ? "10rem" : "none")};
-	border: ${(props) => (props.color ? "none" : "solid")};
+	border: ${(props) => (props.color ? "none" : "solid 0.1rem")};
 	left: ${(props) => (props.color ? "-8rem" : "0")};
 `
 
@@ -56,8 +57,8 @@ export const FormInputOverlay = styled.label`
 export const FormRow = styled.div`
 	display: flex;
 	justify-content: flex-start;
-	align-items: center;
-	padding: 3rem 0rem 0rem 0rem;
+	align-items: flex-start;
+	padding: 1rem 0rem 0rem 0rem;
 `
 
 export const FormColumn = styled.div`

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react"
+import { PropsWithChildren } from "react"
 
 import { NavBar } from "../nav/NavBar"
 import { PageFooter } from "../static/PageFooter"

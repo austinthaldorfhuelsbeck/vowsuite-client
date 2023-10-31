@@ -9,7 +9,10 @@ import { imagePaths } from "../../../data/app-constants"
 import { ButtonTitle } from "../../../styles/components/buttons.style"
 import { NavProfileImg } from "../../../styles/components/nav-bar.style"
 import { ContextListItem } from "../../../styles/components/lists.styles"
-import { profileContextList, renderMenu } from "../../../data/context-lists"
+import {
+	profileContextList,
+	renderModalContextMenu,
+} from "../../../data/context-lists"
 import { useUserContext } from "../../../context/ContextProvider"
 
 function ProfileButton() {
@@ -32,7 +35,7 @@ function ProfileButton() {
 			}
 			content={
 				<>
-					{renderMenu(profileContextList)}
+					{renderModalContextMenu(profileContextList)}
 					<ContextListItem onClick={onLogout}>
 						<FontAwesomeIcon icon={faSignOut} />
 						<ButtonTitle>Log Out</ButtonTitle>

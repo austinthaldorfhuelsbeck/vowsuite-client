@@ -1,11 +1,14 @@
 import { RouteObject } from "react-router-dom"
+
 import { LandingPage } from "./pages/LandingPage"
-import { AuthenticationGuard } from "./components/common/AuthenticationGuard"
-import { Studio } from "./components/layouts/Studio"
 import { CallbackPage } from "./pages/CallbackPage"
 import { NotFoundPage } from "./pages/NotFoundPage"
 import { Gallery } from "./components/layouts/Gallery"
 import { PageLayout } from "./components/layouts/PageLayout"
+import { AuthenticationGuard } from "./components/common/AuthenticationGuard"
+import { StudioContainer } from "./styles/layouts/dashboard-layout.style"
+import { Sidebar } from "./components/layouts/Sidebar"
+import { Dashboard } from "./components/layouts/Dashboard"
 
 const routes: RouteObject[] = [
 	{
@@ -22,7 +25,10 @@ const routes: RouteObject[] = [
 				path: "studio",
 				element: (
 					<PageLayout>
-						<AuthenticationGuard component={Studio} />
+						<StudioContainer>
+							<AuthenticationGuard component={Sidebar} />
+							<AuthenticationGuard component={Dashboard} />
+						</StudioContainer>
 					</PageLayout>
 				),
 			},
@@ -46,4 +52,4 @@ const routes: RouteObject[] = [
 	},
 ]
 
-export default routes
+export { routes }
