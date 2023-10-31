@@ -6,7 +6,6 @@ import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { initialGalleryData } from "../../data/initial-data"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { useGalleryContext } from "../../context/ContextProvider"
-import { ContentBlockHeader } from "../../styles/components/content.style"
 import {
 	Form,
 	FormInput,
@@ -21,6 +20,7 @@ import {
 	hex2_validation,
 	hex3_validation,
 } from "./utils/inputValidation"
+import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 
 function GalleryForm() {
 	// load context
@@ -33,6 +33,7 @@ function GalleryForm() {
 	const bannerActionsProps = {
 		success,
 		error,
+		reset: gallery !== undefined,
 		onReset,
 		onClear,
 		onSubmit,
@@ -41,9 +42,7 @@ function GalleryForm() {
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
 			<FormRow>
-				<ContentBlockHeader>
-					{copy.galleryFormHeader}
-				</ContentBlockHeader>
+				<DashboardHeader>{copy.galleryFormHeader}</DashboardHeader>
 			</FormRow>
 
 			<FormRow>

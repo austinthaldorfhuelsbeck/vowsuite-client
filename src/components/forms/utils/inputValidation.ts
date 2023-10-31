@@ -87,7 +87,7 @@ export const video_name_validation = {
 }
 
 export const website_URL_validation = {
-	label: "Website URL",
+	label: "Website",
 	type: "text",
 	id: "website_URL",
 	placeholder: "Your company's website",
@@ -99,7 +99,7 @@ export const website_URL_validation = {
 }
 
 export const youtube_URL_validation = {
-	label: "YouTube URL",
+	label: "YouTube",
 	type: "text",
 	id: "youtube_URL",
 	placeholder: "Your company's YouTube URL",
@@ -111,7 +111,7 @@ export const youtube_URL_validation = {
 }
 
 export const instagram_URL_validation = {
-	label: "Instagram URL",
+	label: "Instagram",
 	type: "text",
 	id: "instagram_URL",
 	placeholder: "Your company's Instagram URL",
@@ -123,7 +123,7 @@ export const instagram_URL_validation = {
 }
 
 export const facebook_URL_validation = {
-	label: "Facebook URL",
+	label: "Facebook",
 	type: "text",
 	id: "facebook_URL",
 	placeholder: "Your company's Facebook URL",
@@ -135,7 +135,7 @@ export const facebook_URL_validation = {
 }
 
 export const vimeo_URL_validation = {
-	label: "Vimeo URL",
+	label: "Vimeo",
 	type: "text",
 	id: "vimeo_URL",
 	placeholder: "Your company's Vimeo URL",
@@ -147,7 +147,7 @@ export const vimeo_URL_validation = {
 }
 
 export const tiktok_URL_validation = {
-	label: "TikTok URL",
+	label: "TikTok",
 	type: "text",
 	id: "tiktok_URL",
 	placeholder: "Your company's TikTok URL",

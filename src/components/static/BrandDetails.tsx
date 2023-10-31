@@ -11,11 +11,11 @@ import { baseUrls, copy } from "../../data/app-constants"
 import {
 	AltHeader,
 	AltSubheader,
-	BrandDetailsDivider,
 	BrandSocialSubheader,
 	CompanyLogo,
 	GalleryModalContainer,
 } from "../../styles/layouts/gallery-layout.style"
+import { Divider } from "../../styles/components/util.style"
 
 interface ComponentProps {
 	company: ICompany
@@ -26,7 +26,7 @@ function BrandDetails({ company }: PropsWithChildren<ComponentProps>) {
 		<GalleryModalContainer>
 			<CompanyLogo src={company.img_URL} />
 			<AltHeader>{company.company_name}</AltHeader>
-			<BrandDetailsDivider />
+			<Divider />
 			<Link
 				to={company.website_URL}
 				target="_blank"
@@ -37,12 +37,12 @@ function BrandDetails({ company }: PropsWithChildren<ComponentProps>) {
 					{copy.brandDetailsSubheader}
 				</AltSubheader>
 			</Link>
-			<BrandDetailsDivider />
+			<Divider />
 			<BrandSocialSubheader>
 				{copy.brandDetailsSocial}
 			</BrandSocialSubheader>
 			<BrandSocials company={company} />
-			<BrandDetailsDivider />
+			<Divider />
 			<Link
 				to={baseUrls.homePage}
 				target="_blank"

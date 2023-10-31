@@ -128,9 +128,8 @@ function FileUpload({
 		onDrop,
 	})
 
-	// JSX
 	return (
-		<>
+		<FormRow>
 			<ButtonTitle htmlFor="file">{label}</ButtonTitle>
 			<FormColumn>
 				<FormRow>
@@ -166,11 +165,8 @@ function FileUpload({
 						src={previewUrl}
 					/>
 				</FormRow>
-				<PreviewSubheader>
-					{isVideo ? formData.video_URL : formData.img_URL}
-				</PreviewSubheader>
 			</FormColumn>
-		</>
+		</FormRow>
 	)
 }
 

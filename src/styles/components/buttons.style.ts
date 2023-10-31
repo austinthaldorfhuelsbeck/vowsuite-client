@@ -2,17 +2,13 @@ import styled from "styled-components"
 
 export const TabButton = styled.button`
 	cursor: pointer;
-	margin-left: 1rem;
 	font-weight: 500;
 	color: var(--aluminium);
 	font-size: 14px;
 	line-height: 16px;
-	background-color: var(--dark-aluminium);
-	width: 22rem;
+	background: none;
 	padding: 1rem 0;
 	border: none;
-	border-radius: 1rem 1rem 0 0;
-
 	&:hover {
 		color: var(--white);
 	}
@@ -33,7 +29,6 @@ export const TransparentButton = styled.button`
 	cursor: pointer;
 	user-select: none;
 	transition: background 0.3s ease-out, color 0.3s ease-out;
-	min-width: 10rem;
 	width: 100%;
 	height: 5rem;
 	padding: 1rem 1rem;

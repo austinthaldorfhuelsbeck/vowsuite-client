@@ -5,18 +5,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { IVideo } from "../../interfaces/models"
 import { ContextMenu } from "../menus/ContextMenu"
-import { formatDate } from "../../services/util.service"
+import { formatDatePretty } from "../../services/util.service"
 import { useVideoContext } from "../../context/ContextProvider"
 import { ContentContainer } from "../../styles/components/util.style"
-import { renderMenu, videoContextList } from "../../data/context-lists"
 import {
-	ContentBlockHeader,
-	ContentBlockImg,
-	ContentBlockListItem,
-	ContentBlockSubheader,
-} from "../../styles/components/content.style"
+	renderModalContextMenu,
+	videoContextList,
+} from "../../data/context-lists"
 import { Modal } from "../menus/Modal"
 import ReactPlayer from "react-player"
+import {
+	DashboardHeader,
+	DashboardImg,
+	DashboardListItem,
+	DashboardSubheader,
+} from "../../styles/layouts/dashboard-layout.style"
 
 interface ComponentProps {
 	video: IVideo
@@ -31,13 +34,10 @@ function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
 	}
 
 	return (
-		<ContentBlockListItem onClick={(e: any) => handleClick(e, video)}>
+		<DashboardListItem onClick={(e: any) => handleClick(e, video)}>
 			<Modal
 				button={
-					<ContentBlockImg
-						src={video.img_URL}
-						alt={video.video_name}
-					/>
+					<DashboardImg src={video.img_URL} alt={video.video_name} />
 				}
 				content={
 					<ReactPlayer
@@ -48,17 +48,17 @@ function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
 					/>
 				}
 			/>
-			<ContentBlockHeader>{video.video_name}</ContentBlockHeader>
+			<DashboardHeader>{video.video_name}</DashboardHeader>
 			<ContentContainer>
-				<ContentBlockSubheader>
-					{`Updated - ${formatDate(video.updated_at)}`}
-				</ContentBlockSubheader>
+				<DashboardSubheader>
+					{`Updated - ${formatDatePretty(video.updated_at)}`}
+				</DashboardSubheader>
 				<ContextMenu
 					button={<FontAwesomeIcon icon={faEllipsis} />}
-					content={<>{renderMenu(videoContextList)}</>}
+					content={<>{renderModalContextMenu(videoContextList)}</>}
 				/>
 			</ContentContainer>
-		</ContentBlockListItem>
+		</DashboardListItem>
 	)
 }
 

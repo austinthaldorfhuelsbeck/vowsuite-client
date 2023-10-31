@@ -22,3 +22,7 @@ export const ContentContainer = styled.div`
 export const MagnifiedDiv = styled.div`
 	font-size: 175%;
 `
+
+export const Divider = styled.hr`
+	width: 100%;
+`

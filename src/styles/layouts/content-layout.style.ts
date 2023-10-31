@@ -1,17 +1,12 @@
 import styled from "styled-components"
 
 export const ContentContainer = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-
-    width: 100%;
-    min-height: 640px;
-
-    /* responsive */
-
-    padding: 48px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	flex-shrink: 0;
+	width: 100%;
+	padding: 48px;
 `
 
 export const ContentTitle = styled.h1`

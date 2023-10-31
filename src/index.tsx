@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react"
+import { StrictMode } from "react"
 
 import { BrowserRouter } from "react-router-dom"
 
@@ -8,10 +8,10 @@ import { App } from "./App"
 import { GlobalStyles } from "./styles/global-styles.style"
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate"
 
-// get root element
+// Get root element
 const container = document.getElementById("root") as HTMLElement
 const root = createRoot(container)
-
+// Render
 root.render(
 	<StrictMode>
 		<BrowserRouter>

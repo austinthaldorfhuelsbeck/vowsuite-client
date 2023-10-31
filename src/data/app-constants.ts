@@ -16,6 +16,11 @@ export const footerResourceList: ILinkResource[] = [
 	},
 ]
 
+export const baseUrls: IStringHash = {
+	homePage: "https://vowsuite.vercel.app",
+	galleryPage: "https://vowsuite.vercel.app/galleries",
+}
+
 export const imagePaths: IStringHash = {
 	loadingIcon: "https://cdn.auth0.com/blog/hello-auth0/loader.svg",
 	defaultUser: "https://i.stack.imgur.com/HQwHI.jpg",
@@ -55,14 +60,15 @@ export const copy: IStringHash = {
 	videoCardSubheader: " Play film",
 	brandDetailsCopyright: "Made with Vowsuite",
 	companyFormHeader: "Company Details",
-	companyFormSubheader: "Public Links",
+	companyFormSubheader: "Public URLs",
 	confirmDeleteHeader: "Are you sure?",
 	galleryFormHeader: "Gallery Details",
 	userFormHeader: "User Details",
 	videoFormHeader: "Video Details",
-}
-
-export const baseUrls: IStringHash = {
-	homePage: "https://vowsuite.vercel.app",
-	galleryPage: "https://vowsuite.vercel.app/galleries",
+	sidebarHeader: "Galleries",
+	newGalleryButtonHeader: "New Gallery",
+	galleryLIOpen: "Open Gallery",
+	galleryLICopy: "Copy Link",
+	galleryLICopySuccess: "Link copied!",
+	companyTabNew: "New Company",
 }

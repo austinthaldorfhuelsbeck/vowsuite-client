@@ -8,11 +8,11 @@ import { initialUserData } from "../../data/initial-data"
 import { useUserContext } from "../../context/ContextProvider"
 import { MagnifiedDiv } from "../../styles/components/util.style"
 import { Form, FormRow } from "../../styles/components/forms.style"
-import { ContentBlockHeader } from "../../styles/components/content.style"
 import {
 	user_email_validation,
 	user_name_validation,
 } from "./utils/inputValidation"
+import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 
 function UserForm() {
 	// load context
@@ -32,7 +32,7 @@ function UserForm() {
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
-			<ContentBlockHeader>{copy.userFormHeader}</ContentBlockHeader>
+			<DashboardHeader>{copy.userFormHeader}</DashboardHeader>
 
 			<MagnifiedDiv>
 				<FormRow>

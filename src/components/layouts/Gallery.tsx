@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import ReactPlayer from "react-player"
 import { useParams } from "react-router-dom"
@@ -15,7 +15,7 @@ import { VideoCardListItem } from "../lists/VideoCardListItem"
 import { ICompany, IGallery, IUser, IVideo } from "../../interfaces/models"
 import {
 	CardsList,
-	GalleryContainer,
+	SidebarContainer,
 	GalleryHeader,
 	PlayButton,
 } from "../../styles/layouts/gallery-layout.style"
@@ -41,7 +41,7 @@ function Gallery() {
 
 	if (gallery && company)
 		return (
-			<GalleryContainer
+			<SidebarContainer
 				url={gallery.img_URL}
 				font={gallery.font}
 				hex1={gallery.hex1}
@@ -73,7 +73,7 @@ function Gallery() {
 						<VideoCardListItem video={video} />
 					))}
 				</CardsList>
-			</GalleryContainer>
+			</SidebarContainer>
 		)
 	return <></>
 }

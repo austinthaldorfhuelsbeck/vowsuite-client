@@ -6,7 +6,6 @@ import { BannerActions } from "./utils/BannerActions"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
 import { initialCompanyData } from "../../data/initial-data"
 import { useUserContext } from "../../context/ContextProvider"
-import { ContentBlockHeader } from "../../styles/components/content.style"
 import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	company_name_validation,
@@ -17,6 +16,7 @@ import {
 	website_URL_validation,
 	youtube_URL_validation,
 } from "./utils/inputValidation"
+import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 
 function CompanyForm() {
 	// context
@@ -29,6 +29,7 @@ function CompanyForm() {
 	const bannerActionsProps = {
 		success,
 		error,
+		reset: user?.company !== undefined,
 		onReset,
 		onClear,
 		onSubmit,
@@ -36,35 +37,32 @@ function CompanyForm() {
 
 	return (
 		<Form onSubmit={onSubmit}>
-			<ContentBlockHeader>{copy.companyFormHeader}</ContentBlockHeader>
-
-			<FormRow>
-				<InputGroup
-					{...company_name_validation}
-					value={formData.company_name}
-					onChange={onChange}
-				/>
-			</FormRow>
-
-			<FormRow>
-				<FileUpload
-					formData={formData}
-					setFormData={setFormData}
-					defaultUrl={
-						user?.company?.img_URL || initialCompanyData.img_URL
-					}
-					label="Company Logo"
-					isCircle
-				/>
-			</FormRow>
-
-			<FormRow>
-				<ContentBlockHeader>
-					{copy.companyFormSubheader}
-				</ContentBlockHeader>
-			</FormRow>
 			<FormRow>
 				<FormColumn>
+					<DashboardHeader>{copy.companyFormHeader}</DashboardHeader>
+					<InputGroup
+						{...company_name_validation}
+						value={formData.company_name}
+						onChange={onChange}
+					/>
+					<FileUpload
+						formData={formData}
+						setFormData={setFormData}
+						defaultUrl={
+							user?.company?.img_URL || initialCompanyData.img_URL
+						}
+						label="Company Logo"
+						isCircle
+					/>
+					<DashboardHeader>Default Font</DashboardHeader>
+					<DashboardHeader>Default Colors</DashboardHeader>
+					<BannerActions {...bannerActionsProps} />
+				</FormColumn>
+
+				<FormColumn>
+					<DashboardHeader>
+						{copy.companyFormSubheader}
+					</DashboardHeader>
 					<InputGroup
 						{...website_URL_validation}
 						value={formData.website_URL}
@@ -80,8 +78,6 @@ function CompanyForm() {
 						value={formData.instagram_URL}
 						onChange={onChange}
 					/>
-				</FormColumn>
-				<FormColumn>
 					<InputGroup
 						{...facebook_URL_validation}
 						value={formData.facebook_URL}
@@ -99,8 +95,6 @@ function CompanyForm() {
 					/>
 				</FormColumn>
 			</FormRow>
-
-			<BannerActions {...bannerActionsProps} />
 		</Form>
 	)
 }

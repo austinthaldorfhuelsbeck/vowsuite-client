@@ -20,13 +20,8 @@ export const HeroBannerHeadline = styled.h1`
 
 export const HeroBannerDescription = styled.p`
 	max-width: 58rem;
-
 	text-align: center;
-
-	/* responsive */
-
 	margin-bottom: 3.2rem;
-
 	font-size: 20px;
 	line-height: 3.2rem;
 `
@@ -35,21 +30,14 @@ export const HeroButton = styled.button`
 	border: 0;
 	border-radius: 0.8rem;
 	background-color: var(--white);
-
 	font-family: var(--font-primary);
 	font-weight: 600;
 	color: var(--black);
-
 	cursor: pointer;
 	user-select: none;
-
 	transition: background 0.3s ease-out, color 0.3s ease-out;
-
-	/* responsive */
-
 	min-width: 10rem;
 	padding: 1.6rem 1.6rem;
-
 	font-size: 1.6rem;
 	line-height: 2.4rem;
 `

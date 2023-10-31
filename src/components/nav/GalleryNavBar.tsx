@@ -21,8 +21,8 @@ import {
 	HeaderLink,
 	HeaderLinkContainer,
 	HeaderLinkWrapper,
-	HeaderStatusMessage,
 } from "../../styles/layouts/gallery-layout.style"
+import { Alert } from "../../styles/components/forms.style"
 
 interface ComponentProps {
 	company: ICompany
@@ -89,7 +89,7 @@ function GalleryNavBar({
 						icon={faShareAlt}
 					/>
 				</HeaderLinkContainer>
-				{status && <HeaderStatusMessage>{status}</HeaderStatusMessage>}
+				{status && <Alert>{status}</Alert>}
 			</HeaderLinkWrapper>
 		</GalleryNavContainer>
 	)

@@ -11,10 +11,8 @@ export const SelectorListItem = styled.li`
 	justify-content: space-between;
 	background-color: rgba(255, 255, 255, 0.04);
 	cursor: pointer;
-	padding: 1rem;
-	padding-bottom: 2.5rem;
+	padding: 1.5rem 1rem 2.5rem 1rem;
 	margin-top: 1.6rem;
-	padding-top: 1.5rem;
 	color: rgba(206, 206, 206, 1);
 	font-size: 14px;
 	line-height: 16px;

@@ -1,9 +1,12 @@
-import React, { ChangeEvent, PropsWithChildren } from "react"
+import { ChangeEvent, PropsWithChildren } from "react"
 
 import { ErrorProps } from "./inputValidation"
-import { Alert, FormInput } from "../../../styles/components/forms.style"
+import {
+	Alert,
+	FormInput,
+	FormRow,
+} from "../../../styles/components/forms.style"
 import { IOption } from "../../../data/temp-data"
-import { ButtonTitle } from "../../../styles/components/buttons.style"
 
 // Data
 interface BaseProps {
@@ -42,8 +45,8 @@ function InputGroup({
 	validation,
 }: PropsWithChildren<InputProps>) {
 	return (
-		<>
-			<ButtonTitle htmlFor={id}>{label}</ButtonTitle>
+		<FormRow>
+			<label htmlFor={id}>{label}</label>
 			<FormInput
 				name={id}
 				type={type}
@@ -54,7 +57,7 @@ function InputGroup({
 				color={type === "color"}
 			/>
 			<InputError validation={validation} value={value} />
-		</>
+		</FormRow>
 	)
 }
 
@@ -68,7 +71,7 @@ function ControlGroup({
 }: PropsWithChildren<ControlProps>) {
 	return (
 		<>
-			<ButtonTitle htmlFor={id}>{label}</ButtonTitle>
+			<label htmlFor={id}>{label}</label>
 			<select name={id} value={value} onChange={onChange}>
 				{options.map((option: IOption) => (
 					<option key={option.id} value={option.name}>

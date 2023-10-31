@@ -2,11 +2,11 @@ import React, { PropsWithChildren } from "react"
 
 import { copy } from "../../data/app-constants"
 
-import {
-	ContentBlockHeader,
-	ContentBlockSubheader,
-} from "../../styles/components/content.style"
 import { Form, FormRow } from "../../styles/components/forms.style"
+import {
+	DashboardHeader,
+	DashboardSubheader,
+} from "../../styles/layouts/dashboard-layout.style"
 
 interface ComponentProps {
 	children: JSX.Element
@@ -15,10 +15,8 @@ interface ComponentProps {
 function VideoDeleteForm({ children }: PropsWithChildren<ComponentProps>) {
 	return (
 		<Form>
-			<ContentBlockHeader>{copy.confirmDeleteHeader}</ContentBlockHeader>
-			<ContentBlockSubheader>
-				{copy.confirmDeleteMessage}
-			</ContentBlockSubheader>
+			<DashboardHeader>{copy.confirmDeleteHeader}</DashboardHeader>
+			<DashboardSubheader>{copy.confirmDeleteMessage}</DashboardSubheader>
 			<FormRow>{children}</FormRow>
 		</Form>
 	)

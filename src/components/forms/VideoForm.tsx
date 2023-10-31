@@ -8,7 +8,7 @@ import { initialVideoData } from "../../data/initial-data"
 import { useVideoContext } from "../../context/ContextProvider"
 import { video_name_validation } from "./utils/inputValidation"
 import { Form, FormRow } from "../../styles/components/forms.style"
-import { ContentBlockHeader } from "../../styles/components/content.style"
+import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 
 function VideoForm() {
 	// load context
@@ -28,7 +28,7 @@ function VideoForm() {
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
-			<ContentBlockHeader>{copy.videoFormHeader}</ContentBlockHeader>
+			<DashboardHeader>{copy.videoFormHeader}</DashboardHeader>
 
 			<FormRow>
 				<FileUpload

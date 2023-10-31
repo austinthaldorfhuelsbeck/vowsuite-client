@@ -3,7 +3,7 @@ import { List } from "../components/lists.styles"
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-interface GalleryContainerProps {
+interface SidebarContainerProps {
 	url: string
 	font: string
 	hex1: string
@@ -11,13 +11,13 @@ interface GalleryContainerProps {
 	hex3: string
 }
 
-export const GalleryContainer = styled.div<GalleryContainerProps>`
+export const SidebarContainer = styled.div<SidebarContainerProps>`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	background-image: ${(GalleryContainerProps) =>
+	background-image: ${(SidebarContainerProps) =>
 		`linear-gradient(rgba(0, 0, 0, 0.6),
-		rgba(0, 0, 0, 0.2)),url(${GalleryContainerProps.url})`};
+		rgba(0, 0, 0, 0.2)),url(${SidebarContainerProps.url})`};
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -205,10 +205,6 @@ export const GalleryModalContainer = styled.div`
 	font-size: 120%;
 `
 
-export const BrandDetailsDivider = styled.hr`
-	width: 100%;
-`
-
 export const BrandSocialSubheader = styled.h5`
 	color: var(--white);
 `
@@ -240,11 +236,4 @@ export const HeaderLink = styled(FontAwesomeIcon)`
 	&:hover {
 		background: rgb(255, 255, 255, 0.4);
 	}
-`
-
-export const HeaderStatusMessage = styled.h5`
-	padding: 1rem;
-	background: rgb(255, 255, 255, 0.2);
-	border-radius: 0.5rem;
-	transition: all 300ms;
 `
