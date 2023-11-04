@@ -1,4 +1,3 @@
-import { defaultFonts } from "../../../data/app-constants"
 import { testFontData } from "../../../data/temp-data"
 
 interface IRequired {
@@ -11,7 +10,7 @@ interface IMaxLength {
 }
 interface IValidation {
 	required: IRequired
-	maxLength: IMaxLength
+	maxLength?: IMaxLength
 }
 export interface ErrorProps {
 	validation: IValidation
@@ -177,7 +176,7 @@ export const user_email_validation = {
 
 export const font_validation = {
 	label: "Font",
-	id: "font",
+	id: "font_id",
 	options: testFontData,
 	validation: {
 		required: {

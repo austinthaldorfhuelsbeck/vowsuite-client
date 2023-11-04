@@ -46,7 +46,7 @@ export const copy: IStringHash = {
 	footerMessage: "Copyright © 2023 Vowsuite, Inc. All Rights Reserved.",
 	confirmDeleteMessage:
 		"Deleting is permanent. You will not be able to recover this object.",
-	formSuccess: "Form has been submitted successfully!",
+	formSuccess: "Success!",
 	linkCopySuccess: "Link has been copied successfully!",
 	galleryNotFoundHeader: "No Gallery Selected",
 	galleryNotFoundSubheader:

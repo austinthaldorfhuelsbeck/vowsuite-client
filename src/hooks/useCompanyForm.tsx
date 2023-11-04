@@ -1,5 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react"
-import { ICompany } from "../interfaces/models"
+import { IBaseCompany } from "../interfaces/models"
 import { useUserContext } from "../context/ContextProvider"
 import { initialCompanyData } from "../data/initial-data"
 import { IApiResponse, IAppError } from "../interfaces/api"
@@ -12,7 +12,7 @@ function useCompanyForm(
 	// context
 	const { user, setUser } = useUserContext()
 	// determine initial form data
-	const initialData: ICompany = user?.company
+	const initialData: IBaseCompany = user?.company
 		? {
 				...user.company,
 				user_id: user.user_id,
@@ -23,16 +23,12 @@ function useCompanyForm(
 		  }
 
 	// state
-	const [formData, setFormData] = useState<ICompany>(initialData)
+	const [formData, setFormData] = useState<IBaseCompany>(initialData)
 
 	// handlers
 	function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
-	}
-	function onClear(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		setFormData({ ...initialCompanyData, user_id: initialData.user_id })
 	}
 	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
@@ -53,12 +49,11 @@ function useCompanyForm(
 			handleSuccess()
 		}
 		if (response.error) {
-			// useStatus
 			handleError(response.error)
 		}
 	}
 
-	return { formData, setFormData, onChange, onClear, onReset, onSubmit }
+	return { formData, setFormData, onChange, onReset, onSubmit }
 }
 
 export { useCompanyForm }

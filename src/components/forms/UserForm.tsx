@@ -25,6 +25,7 @@ function UserForm() {
 	const bannerActionsProps = {
 		success,
 		error,
+		reset: !(user === undefined),
 		onReset,
 		onClear,
 		onSubmit,

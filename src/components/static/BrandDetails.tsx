@@ -28,7 +28,10 @@ function BrandDetails({ company }: PropsWithChildren<ComponentProps>) {
 			<AltHeader>{company.company_name}</AltHeader>
 			<Divider />
 			<Link
-				to={company.website_URL}
+				to={
+					company.urls.filter((url) => url.label === "Website")[0]
+						.target
+				}
 				target="_blank"
 				rel="noopener noreferrer"
 			>

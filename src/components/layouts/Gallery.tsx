@@ -43,10 +43,10 @@ function Gallery() {
 		return (
 			<SidebarContainer
 				url={gallery.img_URL}
-				font={gallery.font}
-				hex1={gallery.hex1}
-				hex2={gallery.hex2}
-				hex3={gallery.hex3}
+				font={gallery.font.font_name}
+				hex1={gallery.colors[0].value}
+				hex2={gallery.colors[1].value}
+				hex3={gallery.colors[2].value}
 			>
 				<GalleryNavBar company={company} gallery={gallery} />
 				<GalleryHeader>{gallery.gallery_name}</GalleryHeader>

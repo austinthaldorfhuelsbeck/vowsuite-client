@@ -45,10 +45,6 @@ export const updateGallery = async (gallery: IBaseGallery): Promise<IApiResponse
 		user_id: gallery.user_id,
 		gallery_name: gallery.gallery_name,
 		img_URL: gallery.img_URL,
-		font: gallery.font,
-		hex1: gallery.hex1,
-		hex2: gallery.hex2,
-		hex3: gallery.hex3,
 		updated_at: new Date(),
 	}
 

@@ -12,7 +12,7 @@ export const DashboardBlock = styled.div`
 `
 
 export const DashboardHeader = styled.h4`
-	margin: 0 auto 1rem 1rem;
+	margin: 1rem auto 1rem 1rem;
 	color: var(--white);
 `
 
