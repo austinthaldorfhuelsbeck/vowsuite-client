@@ -1,7 +1,7 @@
 import { PropsWithChildren, SyntheticEvent } from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCancel, faRefresh, faSave } from "@fortawesome/free-solid-svg-icons"
+import { faRefresh, faSave } from "@fortawesome/free-solid-svg-icons"
 
 import { copy } from "../../../data/app-constants"
 import { IAppError } from "../../../interfaces/api"
@@ -12,7 +12,6 @@ interface ComponentProps {
 	success?: boolean
 	error?: IAppError | undefined
 	onReset?: (e: SyntheticEvent<any>) => void
-	onClear?: (e: SyntheticEvent<any>) => void
 	onSubmit?: (e: SyntheticEvent<any>) => any
 }
 
@@ -20,7 +19,6 @@ function BannerActions({
 	success,
 	error,
 	onReset,
-	onClear,
 	onSubmit,
 }: PropsWithChildren<ComponentProps>) {
 	return (
@@ -32,16 +30,10 @@ function BannerActions({
 					</Alert>
 				)}
 			</FormRow>
-
 			<FormRow>
 				{onReset && (
 					<TransparentButton onClick={onReset}>
 						<FontAwesomeIcon icon={faRefresh} />
-					</TransparentButton>
-				)}
-				{onClear && (
-					<TransparentButton onClick={onClear}>
-						<FontAwesomeIcon icon={faCancel} />
 					</TransparentButton>
 				)}
 				{onSubmit && (

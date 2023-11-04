@@ -19,10 +19,6 @@ export const ContentContainer = styled.div`
 	justify-content: space-between;
 `
 
-export const MagnifiedDiv = styled.div`
-	font-size: 175%;
-`
-
 export const Divider = styled.hr`
 	width: 100%;
 `

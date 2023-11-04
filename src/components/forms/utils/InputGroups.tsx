@@ -10,7 +10,7 @@ import { IFont } from "../../../interfaces/models"
 
 // Data
 interface BaseProps {
-	label: string
+	label?: string
 	id: string
 	onChange: (e: ChangeEvent<any>) => void
 	validation: any
@@ -50,7 +50,7 @@ function InputGroup({
 }: PropsWithChildren<InputProps>) {
 	return (
 		<FormRow>
-			<label htmlFor={id}>{label}</label>
+			{type === "text" && <label htmlFor={id}>{label}</label>}
 			<FormInput
 				name={id}
 				type={type}

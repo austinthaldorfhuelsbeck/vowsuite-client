@@ -14,7 +14,7 @@ export const Form = styled.form`
 
 	input,
 	select {
-		padding: 1rem;
+		padding: 0.5rem;
 		font: inherit;
 		background: transparent !important;
 		border-top: none;
@@ -41,8 +41,8 @@ interface FormInputProps {
 
 export const FormInput = styled.input<FormInputProps>`
 	position: relative;
-	min-width: ${(props) => (props.text ? "30rem" : "10rem")};
-	min-height: ${(props) => (props.color ? "10rem" : "none")};
+	min-width: ${(props) => (props.text ? "30rem" : "8rem")};
+	min-height: ${(props) => (props.color ? "8rem" : "none")};
 	border: ${(props) => (props.color ? "none !important" : "solid 0.1rem")};
 `
 
@@ -50,7 +50,7 @@ export const FormRow = styled.div`
 	display: flex;
 	justify-content: flex-start;
 	align-items: flex-start;
-	padding: 1rem 0rem 0rem 0rem;
+	padding: 0.5rem 0rem 0rem 0rem;
 `
 
 export const FormColumn = styled.div`
@@ -105,7 +105,7 @@ export const DragUploadButton = styled(TransparentButton)`
 	background: none;
 	color: var(--aluminium);
 	padding: 3rem 0;
-	margin: auto 3rem auto 0;
+	margin-left: 1rem;
 	border: none;
 
 	&:hover {

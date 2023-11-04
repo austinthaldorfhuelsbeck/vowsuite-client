@@ -19,7 +19,6 @@ import {
 	FormInput,
 	FormRow,
 	PreviewImg,
-	PreviewSubheader,
 	PreviewVideo,
 	ProgressBar,
 	ProgressBarProgress,
@@ -133,6 +132,11 @@ function FileUpload({
 			<ButtonTitle htmlFor="file">{label}</ButtonTitle>
 			<FormColumn>
 				<FormRow>
+					<Preview
+						isCircle={isCircle}
+						isVideo={isVideo}
+						src={previewUrl}
+					/>
 					{100 > progress && 0 < progress ? (
 						<ProgressBar>
 							<ProgressBarProgress
@@ -159,11 +163,6 @@ function FileUpload({
 							</DragUploadButton>
 						</div>
 					)}
-					<Preview
-						isCircle={isCircle}
-						isVideo={isVideo}
-						src={previewUrl}
-					/>
 				</FormRow>
 			</FormColumn>
 		</FormRow>

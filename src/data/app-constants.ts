@@ -67,7 +67,7 @@ export const copy: IStringHash = {
 	videoFormHeader: "Video Details",
 	sidebarHeader: "Galleries",
 	newGalleryButtonHeader: "New Gallery",
-	galleryLIOpen: "Open Gallery",
+	galleryLIOpen: "View Gallery",
 	galleryLICopy: "Copy Link",
 	galleryLICopySuccess: "Link copied!",
 	companyTabNew: "New Company",

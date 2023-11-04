@@ -1,32 +1,25 @@
-import React from "react"
-
 import { copy, footerResourceList } from "../../data/app-constants"
-import { PageFooterLink } from "../../styles/layouts/page-layout.style"
 import {
-	FooterGrid,
+	FooterLink,
 	FooterLinkContainer,
 	FooterMessage,
 	LandingPageFooter,
+	LegalContainer,
 } from "../../styles/components/footer.style"
 
 function PageFooter() {
 	return (
 		<LandingPageFooter>
-			<FooterGrid>
-				<FooterMessage>{copy.footerMessage}</FooterMessage>
+			<LegalContainer>
 				<FooterLinkContainer>
 					{footerResourceList.map((resource) => (
-						<PageFooterLink
-							key={resource.path}
-							to={resource.path}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<FooterLink key={resource.path} to={resource.path}>
 							<>{resource.label}</>
-						</PageFooterLink>
+						</FooterLink>
 					))}
 				</FooterLinkContainer>
-			</FooterGrid>
+				<FooterMessage>{copy.footerMessage}</FooterMessage>
+			</LegalContainer>
 		</LandingPageFooter>
 	)
 }

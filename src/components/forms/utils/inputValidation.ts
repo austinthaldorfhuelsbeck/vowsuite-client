@@ -2,7 +2,7 @@ import { testFontData } from "../../../data/temp-data"
 
 interface IRequired {
 	value: boolean
-	message: string
+	message?: string
 }
 interface IMaxLength {
 	value: number
@@ -85,81 +85,9 @@ export const video_name_validation = {
 	},
 }
 
-export const website_URL_validation = {
-	label: "Website",
-	type: "text",
-	id: "website_URL",
-	placeholder: "Your company's website",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
-export const youtube_URL_validation = {
-	label: "YouTube",
-	type: "text",
-	id: "youtube_URL",
-	placeholder: "Your company's YouTube URL",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
-export const instagram_URL_validation = {
-	label: "Instagram",
-	type: "text",
-	id: "instagram_URL",
-	placeholder: "Your company's Instagram URL",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
-export const facebook_URL_validation = {
-	label: "Facebook",
-	type: "text",
-	id: "facebook_URL",
-	placeholder: "Your company's Facebook URL",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
-export const vimeo_URL_validation = {
-	label: "Vimeo",
-	type: "text",
-	id: "vimeo_URL",
-	placeholder: "Your company's Vimeo URL",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
-export const tiktok_URL_validation = {
-	label: "TikTok",
-	type: "text",
-	id: "tiktok_URL",
-	placeholder: "Your company's TikTok URL",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
 export const user_email_validation = {
 	label: "Email",
-	type: "email",
+	type: "text",
 	id: "email",
 	placeholder: "Your email address",
 	validation: {
@@ -186,10 +114,10 @@ export const font_validation = {
 	},
 }
 
-export const hex1_validation = {
-	label: "Color 1",
+export const color_validation = {
 	type: "color",
-	id: "hex1",
+	id: "value",
+	color: true,
 	validation: {
 		required: {
 			value: false,
@@ -197,21 +125,10 @@ export const hex1_validation = {
 	},
 }
 
-export const hex2_validation = {
-	label: "Color 2",
-	type: "color",
-	id: "hex2",
-	validation: {
-		required: {
-			value: false,
-		},
-	},
-}
-
-export const hex3_validation = {
-	label: "Color 3",
-	type: "color",
-	id: "hex3",
+export const url_validation = {
+	type: "text",
+	id: "target",
+	placeholder: "Paste URL Here",
 	validation: {
 		required: {
 			value: false,

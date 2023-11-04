@@ -5,8 +5,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Modal } from "../menus/Modal"
 import { VideoList } from "../lists/VideoList"
 import { VideoForm } from "../forms/VideoForm"
+import { useStatus } from "../../hooks/useStatus"
 import { CompanyForm } from "../forms/CompanyForm"
 import { InlineButton } from "../buttons/InlineButton"
+import { NotFoundPage } from "../../pages/NotFoundPage"
+import { IGallery, IUser } from "../../interfaces/models"
+import { CompanyUrlsForm } from "../forms/CompanyUrlsForm"
+import { formatGreeting } from "../../services/util.service"
+import { BannerActions } from "../forms/utils/BannerActions"
+import { CompanyColorsForm } from "../forms/CompanyColorsForm"
+import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -18,13 +26,6 @@ import {
 	DashboardHeader,
 	GalleryHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
-import { IGallery, IUser } from "../../interfaces/models"
-import { formatGreeting } from "../../services/util.service"
-import { NotFoundPage } from "../../pages/NotFoundPage"
-import { CompanyUrlsForm } from "../forms/CompanyUrlsForm"
-import { CompanyColorsForm } from "../forms/CompanyColorsForm"
-import { FormColumn, FormRow } from "../../styles/components/forms.style"
-import { BannerActions } from "../forms/utils/BannerActions"
 
 interface DashboardProps {
 	user: IUser
@@ -35,6 +36,9 @@ interface GalleryEditorProps {
 }
 
 function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
+	// Context
+	const { success, error, handleSuccess, handleError } = useStatus()
+
 	// State
 	const [submit, setSubmit] = useState<
 		SyntheticEvent<HTMLButtonElement> | undefined
@@ -51,36 +55,46 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 	function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
 		setSubmit(e)
-		setTimeout(setSubmit, 1000, undefined)
+		setTimeout(setSubmit, 500, undefined)
 	}
 	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
 		setReset(e)
-		setTimeout(setReset, 1000, undefined)
+		setTimeout(setReset, 500, undefined)
 	}
 
 	// Props
-	const props = {
+	const formProps = {
 		submit,
 		reset,
+		handleSuccess,
+		handleError,
+	}
+	const bannerProps = {
+		onSubmit,
+		onReset,
+		success,
+		error,
 	}
 
 	return (
 		<>
 			<GalleryHeaderContainer>
 				<DashboardHeader>{greeting}</DashboardHeader>
-				<BannerActions onSubmit={onSubmit} onReset={onReset} />
+				<BannerActions {...bannerProps} />
 			</GalleryHeaderContainer>
 			<DashboardBlock>
-				<FormRow>
-					<FormColumn>
-						<CompanyForm {...props} />
-						<CompanyColorsForm {...props} />
-					</FormColumn>
-					<FormColumn>
-						<CompanyUrlsForm {...props} />
-					</FormColumn>
-				</FormRow>
+				<Form>
+					<FormRow>
+						<FormColumn>
+							<CompanyForm {...formProps} />
+							<CompanyColorsForm {...formProps} />
+						</FormColumn>
+						<FormColumn>
+							<CompanyUrlsForm {...formProps} />
+						</FormColumn>
+					</FormRow>
+				</Form>
 			</DashboardBlock>
 		</>
 	)

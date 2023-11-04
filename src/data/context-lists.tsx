@@ -51,7 +51,7 @@ export const galleryContextList: ModalResource[] = [
 		button: (
 			<ContextListItem>
 				<FontAwesomeIcon icon={faPencil} />
-				<ButtonTitle>Edit Gallery</ButtonTitle>
+				<ButtonTitle>Gallery Details</ButtonTitle>
 			</ContextListItem>
 		),
 		content: <GalleryForm />,
@@ -76,7 +76,7 @@ export const profileContextList: ModalResource[] = [
 		button: (
 			<ContextListItem>
 				<FontAwesomeIcon icon={faPencil} />
-				<ButtonTitle>Edit User Profile</ButtonTitle>
+				<ButtonTitle>Edit User Details</ButtonTitle>
 			</ContextListItem>
 		),
 		content: <UserForm />,

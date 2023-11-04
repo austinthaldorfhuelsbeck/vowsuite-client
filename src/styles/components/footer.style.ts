@@ -1,35 +1,43 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 export const LandingPageFooter = styled.footer`
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	flex-shrink: 0;
 	width: 100%;
 	background-color: var(--black);
-	color: var(--light-aluminium);
-	font-weight: 500;
-	text-align: center;
-	font-size: 1.6rem;
-	line-height: 2.4rem;
-`
-
-export const FooterGrid = styled.div`
-	display: grid;
-	grid-template-rows: auto auto;
-	grid-template-columns: 1.5fr 1fr auto;
-	column-gap: 2.4rem;
-	width: 100%;
-	max-width: 120rem;
-	padding: 3.2rem;
+	margin-top: 2rem;
+	padding: 0 1rem;
 `
 
 export const FooterMessage = styled.p`
-    text-align: left;
-    margin: 0 0 1.4rem;
-    font-weight: 500;
+	text-align: left;
+	font-weight: 100;
+	margin: 0;
+`
+
+export const LegalContainer = styled.div`
+	color: var(--light-aluminium);
+	font-weight: 500;
+	text-align: center;
+	line-height: 2rem;
 `
 
 export const FooterLinkContainer = styled.div`
-    display: grid;
-    row-gap: 0.8rem;
+	display: flex;
+	justify-content: flex-start;
+`
+
+export const FooterLink = styled(Link)`
+	letter-spacing: 0.001rem;
+	margin: 0 1rem;
+	color: var(--white);
+	&:active,
+	&:visited {
+		color: var(--white);
+	}
+	&:hover {
+		color: var(--aluminium);
+	}
 `

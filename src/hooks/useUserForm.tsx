@@ -33,13 +33,9 @@ function useUserForm(
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}
-	function onClear(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		if (user) setFormData({ ...initialUserData, user_id: user.user_id })
-	}
 	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
-		if (user) setFormData(user)
+		setFormData(initialFormData)
 	}
 	async function onSubmit(e: SyntheticEvent) {
 		e.preventDefault()
@@ -64,7 +60,7 @@ function useUserForm(
 		}
 	}
 
-	return { formData, setFormData, onChange, onClear, onReset, onSubmit }
+	return { formData, setFormData, onChange, onReset, onSubmit }
 }
 
 export { useUserForm }

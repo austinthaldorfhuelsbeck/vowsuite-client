@@ -1,11 +1,8 @@
 import React, { useRef, MouseEvent, useEffect, PropsWithChildren } from "react"
 
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
-
 import { useModal } from "../../hooks/useModal"
 import { BlankSpan } from "../../styles/components/util.style"
 import {
-	ModalCancel,
 	ModalDialog,
 	ModalDialogContainer,
 } from "../../styles/components/modal.style"
@@ -45,12 +42,7 @@ function Modal({ button, content }: PropsWithChildren<ComponentProps>) {
 		<>
 			<BlankSpan onClick={toggle}>{button}</BlankSpan>
 			<ModalDialog ref={modalRef} onClick={onBackgroundClick}>
-				<ModalDialogContainer>
-					<>
-						<ModalCancel icon={faXmark} onClick={toggle} />
-						{content}
-					</>
-				</ModalDialogContainer>
+				<ModalDialogContainer>{content}</ModalDialogContainer>
 			</ModalDialog>
 		</>
 	)

@@ -1,24 +1,29 @@
-export interface IOption {
-	id: number
-	name: string
-}
+import { IFont } from "../interfaces/models"
 
-export const testFontData: IOption[] = [
+export const testFontData: IFont[] = [
 	{
-		id: 0,
-		name: "Playflair Display",
+		font_id: 0,
+		font_name: "Playflair Display",
+		created_at: new Date(),
+		updated_at: new Date(),
 	},
 	{
-		id: 1,
-		name: "Georgia",
+		font_id: 1,
+		font_name: "Georgia",
+		created_at: new Date(),
+		updated_at: new Date(),
 	},
 
 	{
-		id: 2,
-		name: "Roboto Mono",
+		font_id: 2,
+		font_name: "Roboto Mono",
+		created_at: new Date(),
+		updated_at: new Date(),
 	},
 	{
-		id: 3,
-		name: "Futura",
+		font_id: 3,
+		font_name: "Futura",
+		created_at: new Date(),
+		updated_at: new Date(),
 	},
 ]
