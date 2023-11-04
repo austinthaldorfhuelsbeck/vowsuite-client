@@ -20,6 +20,7 @@ export const Form = styled.form`
 		border-top: none;
 		border-left: none;
 		border-right: none;
+		border-bottom: solid 0.1rem;
 		outline: none;
 		max-width: 100%;
 		vertical-align: bottom;
@@ -42,16 +43,7 @@ export const FormInput = styled.input<FormInputProps>`
 	position: relative;
 	min-width: ${(props) => (props.text ? "30rem" : "10rem")};
 	min-height: ${(props) => (props.color ? "10rem" : "none")};
-	border: ${(props) => (props.color ? "none" : "solid 0.1rem")};
-	left: ${(props) => (props.color ? "-8rem" : "0")};
-`
-
-export const FormInputOverlay = styled.label`
-	position: relative;
-	right: -1rem;
-	top: 3rem;
-	color: var(--dark-aluminium);
-	z-index: 1;
+	border: ${(props) => (props.color ? "none !important" : "solid 0.1rem")};
 `
 
 export const FormRow = styled.div`
@@ -102,27 +94,19 @@ export const PreviewVideo = styled.video`
 	max-height: 15rem;
 `
 
-interface PreviewHeaderProps {
-	font?: string
-}
-
-export const PreviewHeader = styled.h1<PreviewHeaderProps>`
-	margin-left: auto;
-	font-family: ${(props) => `"${props.font}"`};
-`
-
 export const PreviewSubheader = styled.p`
 	font-size: 50% !important;
 `
 
 export const DragUploadButton = styled(TransparentButton)`
 	height: 100%;
-	width: 30rem;
+	width: 25rem;
 	font-size: 400%;
 	background: none;
 	color: var(--aluminium);
 	padding: 3rem 0;
 	margin: auto 3rem auto 0;
+	border: none;
 
 	&:hover {
 		background-color: var(--dark-aluminium);

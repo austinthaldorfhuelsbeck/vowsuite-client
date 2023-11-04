@@ -1,100 +1,87 @@
 import { copy } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
-import { InputGroup } from "./utils/InputGroups"
+import { IFont } from "../../interfaces/models"
 import { useStatus } from "../../hooks/useStatus"
 import { BannerActions } from "./utils/BannerActions"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
 import { initialCompanyData } from "../../data/initial-data"
+import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { useUserContext } from "../../context/ContextProvider"
-import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
-import {
-	company_name_validation,
-	facebook_URL_validation,
-	instagram_URL_validation,
-	tiktok_URL_validation,
-	vimeo_URL_validation,
-	website_URL_validation,
-	youtube_URL_validation,
-} from "./utils/inputValidation"
+import { company_name_validation } from "./utils/inputValidation"
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
+import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
+import { PropsWithChildren, SyntheticEvent, useEffect } from "react"
 
-function CompanyForm() {
+interface ComponentProps {
+	submit: SyntheticEvent<HTMLButtonElement> | undefined
+	reset: SyntheticEvent<HTMLButtonElement> | undefined
+}
+
+function CompanyForm({ submit, reset }: PropsWithChildren<ComponentProps>) {
 	// context
 	const { user } = useUserContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
-	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
+	const { formData, setFormData, onChange, onReset, onSubmit } =
 		useCompanyForm(handleSuccess, handleError)
 
-	// build props
+	// Props
 	const bannerActionsProps = {
 		success,
 		error,
-		reset: user?.company !== undefined,
-		onReset,
-		onClear,
-		onSubmit,
 	}
 
-	return (
-		<Form onSubmit={onSubmit}>
-			<FormRow>
-				<FormColumn>
-					<DashboardHeader>{copy.companyFormHeader}</DashboardHeader>
-					<InputGroup
-						{...company_name_validation}
-						value={formData.company_name}
-						onChange={onChange}
-					/>
-					<FileUpload
-						formData={formData}
-						setFormData={setFormData}
-						defaultUrl={
-							user?.company?.img_URL || initialCompanyData.img_URL
-						}
-						label="Company Logo"
-						isCircle
-					/>
-					<DashboardHeader>Default Font</DashboardHeader>
-					<DashboardHeader>Default Colors</DashboardHeader>
-					<BannerActions {...bannerActionsProps} />
-				</FormColumn>
+	// Effects
+	useEffect(() => {
+		if (submit) onSubmit(submit)
+		if (reset) onReset(reset)
+	}, [onReset, onSubmit, reset, submit])
 
-				<FormColumn>
-					<DashboardHeader>
-						{copy.companyFormSubheader}
-					</DashboardHeader>
-					<InputGroup
-						{...website_URL_validation}
-						value={formData.website_URL}
-						onChange={onChange}
-					/>
-					<InputGroup
-						{...youtube_URL_validation}
-						value={formData.youtube_URL}
-						onChange={onChange}
-					/>
-					<InputGroup
-						{...instagram_URL_validation}
-						value={formData.instagram_URL}
-						onChange={onChange}
-					/>
-					<InputGroup
-						{...facebook_URL_validation}
-						value={formData.facebook_URL}
-						onChange={onChange}
-					/>
-					<InputGroup
-						{...vimeo_URL_validation}
-						value={formData.vimeo_URL}
-						onChange={onChange}
-					/>
-					<InputGroup
-						{...tiktok_URL_validation}
-						value={formData.tiktok_URL}
-						onChange={onChange}
-					/>
-				</FormColumn>
-			</FormRow>
+	const options: IFont[] = [
+		{
+			font_id: 0,
+			font_name: "Georgia",
+			created_at: new Date(),
+			updated_at: new Date(),
+		},
+		{
+			font_id: 1,
+			font_name: "Comic Sans",
+			created_at: new Date(),
+			updated_at: new Date(),
+		},
+	]
+
+	return (
+		<Form>
+			<DashboardHeader>{copy.companyFormHeader}</DashboardHeader>
+			<InputGroup
+				{...company_name_validation}
+				value={formData.company_name}
+				onChange={onChange}
+			/>
+			<FileUpload
+				formData={formData}
+				setFormData={setFormData}
+				defaultUrl={
+					user?.company?.img_URL || initialCompanyData.img_URL
+				}
+				label="Company Logo"
+				isCircle
+			/>
+			<ControlGroup
+				label="Font"
+				id="font_id"
+				options={options}
+				validation={{
+					required: {
+						value: true,
+						message: "Select a font",
+					},
+				}}
+				value={formData.font_id}
+				onChange={onChange}
+			/>
+			<BannerActions {...bannerActionsProps} />
 		</Form>
 	)
 }

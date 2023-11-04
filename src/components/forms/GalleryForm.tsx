@@ -4,22 +4,10 @@ import { useStatus } from "../../hooks/useStatus"
 import { BannerActions } from "./utils/BannerActions"
 import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { initialGalleryData } from "../../data/initial-data"
-import { ControlGroup, InputGroup } from "./utils/InputGroups"
+import { InputGroup } from "./utils/InputGroups"
 import { useGalleryContext } from "../../context/ContextProvider"
-import {
-	Form,
-	FormInput,
-	FormInputOverlay,
-	FormRow,
-	PreviewHeader,
-} from "../../styles/components/forms.style"
-import {
-	font_validation,
-	gallery_name_validation,
-	hex1_validation,
-	hex2_validation,
-	hex3_validation,
-} from "./utils/inputValidation"
+import { Form, FormRow } from "../../styles/components/forms.style"
+import { gallery_name_validation } from "./utils/inputValidation"
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 
 function GalleryForm() {
@@ -51,18 +39,15 @@ function GalleryForm() {
 					value={formData.gallery_name}
 					onChange={onChange}
 				/>
-				<PreviewHeader font={formData.font}>
-					{formData.gallery_name}
-				</PreviewHeader>
 			</FormRow>
 
-			<FormRow>
+			{/* <FormRow>
 				<ControlGroup
 					{...font_validation}
 					value={formData.font}
 					onChange={onChange}
 				/>
-			</FormRow>
+			</FormRow> */}
 
 			<FormRow>
 				<FileUpload
@@ -73,7 +58,7 @@ function GalleryForm() {
 				/>
 			</FormRow>
 
-			<FormRow>
+			{/* <FormRow>
 				<FormInputOverlay>{hex1_validation.label}</FormInputOverlay>
 				<FormInput
 					{...hex1_validation}
@@ -95,7 +80,7 @@ function GalleryForm() {
 					onChange={onChange}
 					color
 				/>
-			</FormRow>
+			</FormRow> */}
 
 			<BannerActions {...bannerActionsProps} />
 		</Form>

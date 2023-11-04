@@ -1,16 +1,18 @@
-import { ICompany, IBaseGallery, IVideo, IBaseUser } from "../interfaces/models"
-import { defaultFonts, defaultGalleryStyle, imagePaths } from "./app-constants"
+import {
+	IBaseGallery,
+	IVideo,
+	IBaseUser,
+	IBaseCompany,
+} from "../interfaces/models"
+import { imagePaths } from "./app-constants"
 
 // gallery form data
 export const initialGalleryData: IBaseGallery = {
 	gallery_id: new Date().valueOf(),
 	user_id: 0,
+	font_id: 0,
 	gallery_name: "",
 	img_URL: imagePaths.defaultUser,
-	font: defaultFonts[0],
-	hex1: defaultGalleryStyle.hex1,
-	hex2: defaultGalleryStyle.hex2,
-	hex3: defaultGalleryStyle.hex3,
 	created_at: new Date(),
 	updated_at: new Date(),
 }
@@ -30,17 +32,12 @@ export const initialVideoData: IVideo = {
 }
 
 // company form data
-export const initialCompanyData: ICompany = {
+export const initialCompanyData: IBaseCompany = {
 	company_id: new Date().valueOf(),
 	user_id: 0,
+	font_id: 0,
 	company_name: "",
 	img_URL: imagePaths.defaultUser,
-	website_URL: "",
-	youtube_URL: "",
-	instagram_URL: "",
-	facebook_URL: "",
-	vimeo_URL: "",
-	tiktok_URL: "",
 	created_at: new Date(),
 	updated_at: new Date(),
 }

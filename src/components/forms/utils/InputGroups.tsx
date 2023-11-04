@@ -6,7 +6,7 @@ import {
 	FormInput,
 	FormRow,
 } from "../../../styles/components/forms.style"
-import { IOption } from "../../../data/temp-data"
+import { IFont } from "../../../interfaces/models"
 
 // Data
 interface BaseProps {
@@ -21,16 +21,20 @@ interface InputProps extends BaseProps {
 	value: string
 }
 interface ControlProps extends BaseProps {
-	options: IOption[]
-	value: string
+	options: IFont[]
+	value: number
 }
 
 function InputError({ validation, value }: PropsWithChildren<ErrorProps>) {
 	if (validation.required.value && value?.length === 0) {
 		return <Alert error>{validation.required.message}</Alert>
 	}
-	if (value && value.length > validation.maxLength?.value) {
-		return <Alert error>{validation.maxLength.message}</Alert>
+	if (
+		value &&
+		validation.maxLength &&
+		value.length > validation.maxLength.value
+	) {
+		return <Alert error>{validation.maxLength?.message}</Alert>
 	}
 	return <></>
 }
@@ -70,18 +74,18 @@ function ControlGroup({
 	validation,
 }: PropsWithChildren<ControlProps>) {
 	return (
-		<>
+		<FormRow>
 			<label htmlFor={id}>{label}</label>
 			<select name={id} value={value} onChange={onChange}>
-				{options.map((option: IOption) => (
-					<option key={option.id} value={option.name}>
-						{option.name}
+				{options.map((option: IFont) => (
+					<option key={option.font_id} value={option.font_id}>
+						{option.font_name}
 					</option>
 				))}
 			</select>
-			<InputError validation={validation} value={value} />
-		</>
+			<InputError validation={validation} value={value.toString()} />
+		</FormRow>
 	)
 }
 
-export { InputGroup, ControlGroup }
+export { InputError, InputGroup, ControlGroup }

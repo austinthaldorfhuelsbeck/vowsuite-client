@@ -1,72 +1,55 @@
-import React, { PropsWithChildren } from "react"
+import { PropsWithChildren } from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons"
 import {
 	faFacebookF,
 	faInstagram,
 	faSquareYoutube,
 	faTiktok,
 	faVimeo,
+	IconDefinition,
 } from "@fortawesome/free-brands-svg-icons"
 
-import { ICompany } from "../../interfaces/models"
+import { ICompany, ICompanyUrl } from "../../interfaces/models"
 import {
 	BrandLink,
 	BrandSocialContainer,
 } from "../../styles/layouts/gallery-layout.style"
 
+// Data Models
+interface IconProps {
+	url: ICompanyUrl
+}
 interface ComponentProps {
 	company: ICompany
+}
+
+// Components
+function BrandIcon({ url }: PropsWithChildren<IconProps>) {
+	let icon: IconDefinition = faExternalLinkAlt
+	const label: string = url.label.toLowerCase()
+	if (label === "facebook") icon = faFacebookF
+	if (label === "instagram") icon = faInstagram
+	if (label === "tiktok") icon = faTiktok
+	if (label === "vimeo") icon = faVimeo
+	if (label === "youtube") icon = faSquareYoutube
+	return <FontAwesomeIcon icon={icon} />
 }
 
 function BrandSocials({ company }: PropsWithChildren<ComponentProps>) {
 	return (
 		<BrandSocialContainer>
-			{company.facebook_URL && (
+			{company.urls.map((url) => (
 				<BrandLink
-					to={company.facebook_URL}
+					key={url.company_url_id}
+					to={url.target}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<FontAwesomeIcon icon={faFacebookF} />
+					<BrandIcon url={url} />
 				</BrandLink>
-			)}
-			{company.instagram_URL && (
-				<BrandLink
-					to={company.instagram_URL}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<FontAwesomeIcon icon={faInstagram} />
-				</BrandLink>
-			)}
-			{company.tiktok_URL && (
-				<BrandLink
-					to={company.tiktok_URL}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<FontAwesomeIcon icon={faTiktok} />
-				</BrandLink>
-			)}
-			{company.vimeo_URL && (
-				<BrandLink
-					to={company.vimeo_URL}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<FontAwesomeIcon icon={faVimeo} />
-				</BrandLink>
-			)}
-			{company.youtube_URL && (
-				<BrandLink
-					to={company.youtube_URL}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<FontAwesomeIcon icon={faSquareYoutube} />
-				</BrandLink>
-			)}
+			))}
 		</BrandSocialContainer>
 	)
 }

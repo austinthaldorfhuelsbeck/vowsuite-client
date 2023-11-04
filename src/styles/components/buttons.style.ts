@@ -36,6 +36,7 @@ export const TransparentButton = styled.button`
 	font-size: 1.4rem;
 	letter-spacing: 0.11rem;
 	line-height: 2.4rem;
+	min-width: 5rem;
 
 	@media (max-width: 715px) {
 		min-width: 0;

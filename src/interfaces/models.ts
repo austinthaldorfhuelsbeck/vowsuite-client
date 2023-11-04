@@ -12,36 +12,61 @@ export interface IUser extends IBaseUser {
 	galleries: IGallery[]
 }
 
-export interface ICompany {
+export interface IBaseCompany {
 	company_id: number
+	img_URL: string
 	user_id: number
 	company_name: string
-	img_URL: string
-	website_URL: string
-	youtube_URL: string
-	instagram_URL: string
-	facebook_URL: string
-	vimeo_URL: string
-	tiktok_URL: string
+	font_id: number
 	created_at: Date
 	updated_at: Date
+}
+
+export interface ICompany extends IBaseCompany {
+	colors: ICompanyColor[]
+	urls: ICompanyUrl[]
+	font: IFont
 }
 
 export interface IBaseGallery {
 	gallery_id: number
 	user_id: number
+	font_id: number
 	gallery_name: string
 	img_URL: string
-	font: string
-	hex1: string
-	hex2: string
-	hex3: string
 	created_at: Date
 	updated_at: Date
 }
 
 export interface IGallery extends IBaseGallery {
+	colors: IGalleryColor[]
 	videos: IVideo[]
+	font: IFont
+}
+
+export interface IGalleryColor {
+	gallery_color_id: number
+	gallery_id: number
+	value: string
+	created_at: Date
+	updated_at: Date
+}
+
+export interface ICompanyColor {
+	company_color_id: number
+	company_id: number
+	value: string
+	created_at: Date
+	updated_at: Date
+}
+
+export interface ICompanyUrl {
+	company_url_id: number
+	company_id: number
+	label: string
+	target: string
+	created_at: Date
+	updated_at: Date
 }
 
 export interface IVideo {
@@ -57,17 +82,9 @@ export interface IVideo {
 	updated_at: Date
 }
 
-export interface ICompany {
-	company_id: number
-	img_URL: string
-	user_id: number
-	company_name: string
-	website_URL: string
-	youtube_URL: string
-	instagram_URL: string
-	facebook_URL: string
-	vimeo_URL: string
-	tiktok_URL: string
+export interface IFont {
+	font_id: number
+	font_name: string
 	created_at: Date
 	updated_at: Date
 }
