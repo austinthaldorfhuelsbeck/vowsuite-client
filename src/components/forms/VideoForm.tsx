@@ -63,7 +63,7 @@ function VideoForm() {
 					formData={formData}
 					setFormData={setFormData}
 					defaultUrl={video?.img_URL || initialVideoData.img_URL}
-					label="Thumbnail Image"
+					label="Cover Image"
 				/>
 			</FormRow>
 			<FormRow>

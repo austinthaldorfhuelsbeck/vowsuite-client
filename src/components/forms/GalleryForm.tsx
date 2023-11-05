@@ -80,7 +80,7 @@ function GalleryForm({
 						defaultUrl={
 							gallery?.img_URL || initialGalleryData.img_URL
 						}
-						label="Thumbnail Image"
+						label="Cover Image"
 					/>
 				</FormColumn>
 				<FormColumn>

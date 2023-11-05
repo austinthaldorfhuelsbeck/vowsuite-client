@@ -97,7 +97,7 @@ export const PreviewImg = styled.img<PreviewImgProps>`
 
 export const PreviewVideo = styled.video`
 	max-width: 20rem;
-	max-height: 10rem;
+	max-height: 20rem;
 `
 
 export const PreviewSubheader = styled.p`
@@ -106,7 +106,7 @@ export const PreviewSubheader = styled.p`
 
 export const DragUploadButton = styled(TransparentButton)`
 	height: 100%;
-	width: 25rem;
+	width: 15rem;
 	font-size: 400%;
 	background: none;
 	color: var(--aluminium);

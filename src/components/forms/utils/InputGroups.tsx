@@ -108,7 +108,7 @@ function CheckboxGroup({
 				checked={false}
 				onClick={onChange}
 			/>
-			<FormInput name={id} type={type} checked={value} />
+			{value ? "Yes!" : "No"}
 			<InputError validation={validation} value={value.toString()} />
 		</FormRow>
 	)
