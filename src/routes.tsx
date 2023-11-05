@@ -9,6 +9,8 @@ import { AuthenticationGuard } from "./components/common/AuthenticationGuard"
 import { StudioContainer } from "./styles/layouts/dashboard-layout.style"
 import { Sidebar } from "./components/layouts/Sidebar"
 import { Dashboard } from "./components/layouts/Dashboard"
+import { Terms } from "./components/static/Terms"
+import { Privacy } from "./components/static/Privacy"
 
 const routes: RouteObject[] = [
 	{
@@ -33,12 +35,28 @@ const routes: RouteObject[] = [
 				),
 			},
 			{
-				path: "callback",
-				element: <CallbackPage />,
-			},
-			{
 				path: "galleries/:gallery_id",
 				element: <Gallery />,
+			},
+			{
+				path: "terms",
+				element: (
+					<PageLayout>
+						<Terms />
+					</PageLayout>
+				),
+			},
+			{
+				path: "privacy",
+				element: (
+					<PageLayout>
+						<Privacy />
+					</PageLayout>
+				),
+			},
+			{
+				path: "callback",
+				element: <CallbackPage />,
 			},
 			{
 				path: "*",

@@ -1,4 +1,4 @@
-import { MouseEvent, PropsWithChildren } from "react"
+import { MouseEvent, PropsWithChildren, useEffect, useState } from "react"
 
 import { Link } from "react-router-dom"
 
@@ -29,6 +29,7 @@ import {
 	List,
 	SelectorListItem,
 } from "../../styles/components/lists.styles"
+import { readGallery } from "../../services/galleries.service"
 
 interface ContextMenuProps {
 	gallery: IGallery | undefined
@@ -46,7 +47,7 @@ function GalleryContextMenu({ gallery }: PropsWithChildren<ContextMenuProps>) {
 	const galleryUrl: string = `${baseUrls.galleryPage}/${gallery?.gallery_id}`
 
 	// Handlers
-	const onCopy = (e: MouseEvent<HTMLLIElement>) => {
+	function onCopy(e: MouseEvent<HTMLLIElement>) {
 		e.preventDefault()
 		// function to copy text
 		const copyText = async (text: string) => {
@@ -81,12 +82,22 @@ function GalleryContextMenu({ gallery }: PropsWithChildren<ContextMenuProps>) {
 function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	// Context
 	const { gallery, setGallery } = useGalleryContext()
+
+	// Handlers
+	async function onClick(e: MouseEvent<HTMLLIElement>) {
+		e.preventDefault()
+		const foundGallery: IGallery = (
+			await readGallery(String(currentGallery.gallery_id))
+		).data
+		setGallery(foundGallery)
+	}
+
 	// highlights if selected, sets selected on click
 	// selected is determined if gallery is equal to context gallery
 	return (
 		<SelectorListItem
 			aria-selected={currentGallery === gallery}
-			onClick={() => setGallery(currentGallery)}
+			onClick={onClick}
 		>
 			<ButtonTitle>
 				<FontAwesomeIcon icon={faFolder} />
@@ -103,22 +114,37 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 function GalleryList() {
 	// Context
 	const { user } = useUserContext()
-	// Functions
-	function renderGalleries(galleries: IGallery[]) {
-		return galleries.map(
-			(currentGallery: IGallery) =>
-				currentGallery && (
-					<GalleryListItem
-						key={currentGallery.gallery_id}
-						currentGallery={currentGallery}
-					/>
-				),
-		)
-	}
+
+	// State
+	const [listedGalleries, setListedGalleries] = useState<
+		(IGallery | undefined)[]
+	>([])
+
+	// Effects
+	useEffect(() => {
+		// Function to get a list of full galleries
+		async function validateGalleries(galleries: IGallery[]) {
+			console.log("Effect run. Galleries: ", galleries)
+			setListedGalleries(galleries)
+		}
+		if (user?.galleries?.length) validateGalleries(user.galleries)
+	}, [user])
 
 	return (
 		<List>
-			{user?.galleries?.length ? renderGalleries(user.galleries) : <></>}
+			{listedGalleries.length ? (
+				listedGalleries.map(
+					(currentGallery: IGallery | undefined) =>
+						currentGallery && (
+							<GalleryListItem
+								key={currentGallery.gallery_id}
+								currentGallery={currentGallery}
+							/>
+						),
+				)
+			) : (
+				<></>
+			)}
 		</List>
 	)
 }

@@ -1,4 +1,4 @@
-import { PropsWithChildren, SyntheticEvent, useEffect } from "react"
+import { PropsWithChildren, SyntheticEvent, useEffect, useState } from "react"
 
 import { copy } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
@@ -13,6 +13,8 @@ import {
 } from "./utils/inputValidation"
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 import { IAppError } from "../../interfaces/api"
+import { listFonts } from "../../services/fonts.service"
+import { IFont } from "../../interfaces/models"
 
 interface ComponentProps {
 	submit: SyntheticEvent<HTMLButtonElement> | undefined
@@ -32,7 +34,21 @@ function CompanyForm({
 	const { formData, setFormData, onChange, onReset, onSubmit } =
 		useCompanyForm(handleSuccess, handleError)
 
+	// State
+	const [fonts, setFonts] = useState<(IFont | undefined)[]>([])
+
 	// Effects
+	useEffect(() => {
+		async function getAllFonts() {
+			try {
+				const allFonts: IFont[] = (await listFonts()).data
+				setFonts(allFonts)
+			} catch (err) {
+				console.error(err)
+			}
+		}
+		getAllFonts()
+	}, [])
 	useEffect(() => {
 		if (submit) onSubmit(submit)
 		if (reset) onReset(reset)
@@ -55,11 +71,15 @@ function CompanyForm({
 				label="Company Logo"
 				isCircle
 			/>
-			<ControlGroup
-				{...font_validation}
-				value={formData.font_id}
-				onChange={onChange}
-			/>
+			<DashboardHeader>{copy.companyFormSubheader}</DashboardHeader>
+			{fonts && (
+				<ControlGroup
+					{...font_validation}
+					options={fonts}
+					value={formData.font_id}
+					onChange={onChange}
+				/>
+			)}
 		</>
 	)
 }

@@ -8,7 +8,10 @@ import { initialVideoData } from "../../data/initial-data"
 import { useVideoContext } from "../../context/ContextProvider"
 import { video_name_validation } from "./utils/inputValidation"
 import { Form, FormRow } from "../../styles/components/forms.style"
-import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
+import {
+	DashboardHeader,
+	StudioHeaderContainer,
+} from "../../styles/layouts/dashboard-layout.style"
 
 function VideoForm() {
 	// load context
@@ -28,8 +31,17 @@ function VideoForm() {
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
-			<DashboardHeader>{copy.videoFormHeader}</DashboardHeader>
-
+			<StudioHeaderContainer>
+				<DashboardHeader>{copy.videoFormHeader}</DashboardHeader>
+				<BannerActions {...bannerActionsProps} />
+			</StudioHeaderContainer>
+			<FormRow>
+				<InputGroup
+					{...video_name_validation}
+					value={formData.video_name}
+					onChange={onChange}
+				/>
+			</FormRow>
 			<FormRow>
 				<FileUpload
 					formData={formData}
@@ -39,15 +51,6 @@ function VideoForm() {
 					isVideo
 				/>
 			</FormRow>
-
-			<FormRow>
-				<InputGroup
-					{...video_name_validation}
-					value={formData.video_name}
-					onChange={onChange}
-				/>
-			</FormRow>
-
 			<FormRow>
 				<FileUpload
 					formData={formData}
@@ -56,8 +59,6 @@ function VideoForm() {
 					label="Thumbnail Image"
 				/>
 			</FormRow>
-
-			<BannerActions {...bannerActionsProps} />
 		</Form>
 	)
 }

@@ -67,7 +67,6 @@ interface AlertProps {
 export const Alert = styled.div<AlertProps>`
 	font-family: monospace;
 	padding: 0.5rem;
-	margin: 1rem 0 0.5rem auto;
 	border-radius: 1rem;
 	background-color: ${(AlertProps) => {
 		if (AlertProps.error) return "var(--orange)"
@@ -85,13 +84,13 @@ interface PreviewImgProps {
 export const PreviewImg = styled.img<PreviewImgProps>`
 	border-radius: ${(props) => (props.circle ? "100%" : "0%")};
 	object-fit: cover;
-	width: ${(props) => (props.circle ? "10rem" : "25rem")};
-	height: ${(props) => (props.circle ? "10rem" : "15rem")};
+	width: ${(props) => (props.circle ? "10rem" : "20rem")};
+	height: 10rem;
 `
 
 export const PreviewVideo = styled.video`
-	max-width: 25rem;
-	max-height: 15rem;
+	max-width: 20rem;
+	max-height: 10rem;
 `
 
 export const PreviewSubheader = styled.p`

@@ -6,7 +6,6 @@ import {
 	FormInput,
 	FormRow,
 } from "../../../styles/components/forms.style"
-import { IFont } from "../../../interfaces/models"
 
 // Data
 interface BaseProps {
@@ -21,7 +20,7 @@ interface InputProps extends BaseProps {
 	value: string
 }
 interface ControlProps extends BaseProps {
-	options: IFont[]
+	options: any[]
 	value: number
 }
 
@@ -77,7 +76,7 @@ function ControlGroup({
 		<FormRow>
 			<label htmlFor={id}>{label}</label>
 			<select name={id} value={value} onChange={onChange}>
-				{options.map((option: IFont) => (
+				{options.map((option: any) => (
 					<option key={option.font_id} value={option.font_id}>
 						{option.font_name}
 					</option>

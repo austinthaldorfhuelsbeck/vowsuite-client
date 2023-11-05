@@ -1,5 +1,3 @@
-import React from "react"
-
 import { VideoListItem } from "./VideoListItem"
 import { IVideo } from "../../interfaces/models"
 import { VideosNotFound } from "../static/VideosNotFound"

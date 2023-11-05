@@ -12,7 +12,7 @@ import {
 } from "../../context/ContextProvider"
 import {
 	DashboardHeader,
-	GalleryHeaderContainer,
+	StudioHeaderContainer,
 	SidebarContainer,
 	SidebarSection,
 } from "../../styles/layouts/dashboard-layout.style"
@@ -54,7 +54,7 @@ function Sidebar() {
 			<CompanyTabButton />
 			<Divider />
 			<SidebarSection>
-				<GalleryHeaderContainer>
+				<StudioHeaderContainer>
 					<DashboardHeader>{copy.sidebarHeader}</DashboardHeader>
 					<Modal
 						button={
@@ -64,7 +64,7 @@ function Sidebar() {
 						}
 						content={<GalleryForm />}
 					/>
-				</GalleryHeaderContainer>
+				</StudioHeaderContainer>
 				<GalleryList />
 			</SidebarSection>
 		</SidebarContainer>

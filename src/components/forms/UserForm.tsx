@@ -13,7 +13,7 @@ import {
 } from "./utils/inputValidation"
 import {
 	DashboardHeader,
-	GalleryHeaderContainer,
+	StudioHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
 
 function UserForm() {
@@ -36,10 +36,10 @@ function UserForm() {
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
-			<GalleryHeaderContainer>
+			<StudioHeaderContainer>
 				<DashboardHeader>{copy.userFormHeader}</DashboardHeader>
 				<BannerActions {...bannerActionsProps} />
-			</GalleryHeaderContainer>
+			</StudioHeaderContainer>
 			<FormRow>
 				<InputGroup
 					{...user_name_validation}

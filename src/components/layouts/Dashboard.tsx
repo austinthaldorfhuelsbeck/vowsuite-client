@@ -24,7 +24,7 @@ import {
 	DashboardBlock,
 	DashboardContainer,
 	DashboardHeader,
-	GalleryHeaderContainer,
+	StudioHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
 
 interface DashboardProps {
@@ -79,10 +79,10 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 
 	return (
 		<>
-			<GalleryHeaderContainer>
+			<StudioHeaderContainer>
 				<DashboardHeader>{greeting}</DashboardHeader>
 				<BannerActions {...bannerProps} />
-			</GalleryHeaderContainer>
+			</StudioHeaderContainer>
 			<DashboardBlock>
 				<Form>
 					<FormRow>
@@ -111,7 +111,7 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 
 	return (
 		<>
-			<GalleryHeaderContainer>
+			<StudioHeaderContainer>
 				<DashboardHeader>{gallery.gallery_name}</DashboardHeader>
 				<Modal
 					button={
@@ -123,7 +123,7 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 					}
 					content={<VideoForm />}
 				/>
-			</GalleryHeaderContainer>
+			</StudioHeaderContainer>
 			<VideoList />
 		</>
 	)

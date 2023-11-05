@@ -5,9 +5,9 @@ import { callExternalApi } from "./external-api.service"
 
 const apiUrl: string = process.env.REACT_APP_API_SERVER_URL || ""
 
-async function readColor(id: number): Promise<IApiResponse> {
+async function listFonts(): Promise<IApiResponse> {
 	const config: AxiosRequestConfig = {
-		url: `${apiUrl}/colors/${id}`,
+		url: `${apiUrl}/fonts`,
 		method: "GET",
 		headers: {
 			"content-type": "application/json",
@@ -22,4 +22,4 @@ async function readColor(id: number): Promise<IApiResponse> {
 	}
 }
 
-export { readColor }
+export { listFonts }

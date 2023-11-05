@@ -1,5 +1,4 @@
-import { testFontData } from "../../../data/temp-data"
-
+// Data Models
 interface IRequired {
 	value: boolean
 	message?: string
@@ -105,7 +104,6 @@ export const user_email_validation = {
 export const font_validation = {
 	label: "Font",
 	id: "font_id",
-	options: testFontData,
 	validation: {
 		required: {
 			value: true,

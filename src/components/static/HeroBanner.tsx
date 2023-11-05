@@ -1,5 +1,3 @@
-import React from "react"
-
 import { Link } from "react-router-dom"
 
 import { copy, heroResource } from "../../data/app-constants"
@@ -8,7 +6,7 @@ import {
 	HeroBannerDescription,
 	HeroBannerHeadline,
 	HeroButton,
-} from "../../styles/components/landing-page.style"
+} from "../../styles/components/static.style"
 
 function HeroBanner() {
 	return (

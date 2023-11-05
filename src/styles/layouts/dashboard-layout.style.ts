@@ -62,7 +62,7 @@ export const DashboardListItem = styled.li`
 	}
 `
 
-export const GalleryHeaderContainer = styled.div`
+export const StudioHeaderContainer = styled.div`
 	flex: 1;
 	display: flex;
 	align-items: center;

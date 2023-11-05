@@ -60,7 +60,7 @@ export const copy: IStringHash = {
 	videoCardSubheader: " Play film",
 	brandDetailsCopyright: "Made with Vowsuite",
 	companyFormHeader: "Company Details",
-	companyFormSubheader: "Public URLs",
+	companyFormSubheader: "Font",
 	confirmDeleteHeader: "Are you sure?",
 	galleryFormHeader: "Gallery Details",
 	userFormHeader: "User Details",
