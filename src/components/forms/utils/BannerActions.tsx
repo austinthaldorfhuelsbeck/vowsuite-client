@@ -39,6 +39,7 @@ function BannerActions({
 				{onSubmit && (
 					<TransparentButton onClick={onSubmit}>
 						<FontAwesomeIcon icon={faSave} />
+						{" Save"}
 					</TransparentButton>
 				)}
 			</FormRow>

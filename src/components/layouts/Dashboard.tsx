@@ -10,19 +10,13 @@ import { VideoList } from "../lists/VideoList"
 import { VideoForm } from "../forms/VideoForm"
 import { useStatus } from "../../hooks/useStatus"
 import { CompanyForm } from "../forms/CompanyForm"
-import { InlineButton } from "../buttons/InlineButton"
 import { NotFoundPage } from "../../pages/NotFoundPage"
 import { IGallery, IUser } from "../../interfaces/models"
 import { CompanyUrlsForm } from "../forms/CompanyUrlsForm"
 import { formatGreeting } from "../../services/util.service"
 import { BannerActions } from "../forms/utils/BannerActions"
 import { CompanyColorsForm } from "../forms/CompanyColorsForm"
-import {
-	Form,
-	FormColumn,
-	FormLink,
-	FormRow,
-} from "../../styles/components/forms.style"
+import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -38,6 +32,7 @@ import { GalleryForm } from "../forms/GalleryForm"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { TransparentButton } from "../../styles/components/buttons.style"
 import { baseUrls } from "../../data/app-constants"
+import { Link } from "react-router-dom"
 
 // Data Models
 interface DashboardProps {
@@ -163,7 +158,7 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 			<StudioHeaderContainer>
 				<DashboardHeader>Gallery Details</DashboardHeader>
 				<FormRow>
-					<FormLink
+					<Link
 						to={galleryUrl}
 						target="_blank"
 						rel="noopener noreferrer"
@@ -171,7 +166,7 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 						<TransparentButton>
 							<FontAwesomeIcon icon={faExternalLinkSquareAlt} />
 						</TransparentButton>
-					</FormLink>
+					</Link>
 				</FormRow>
 				<BannerActions {...bannerProps} />
 			</StudioHeaderContainer>
@@ -184,11 +179,10 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 				<DashboardHeader>Videos</DashboardHeader>
 				<Modal
 					button={
-						<InlineButton
-							icon={faPlus}
-							title="New Video"
-							onClick={onClick}
-						/>
+						<TransparentButton onClick={onClick}>
+							<FontAwesomeIcon icon={faPlus} />
+							{" New Video"}
+						</TransparentButton>
 					}
 					content={<VideoForm />}
 				/>

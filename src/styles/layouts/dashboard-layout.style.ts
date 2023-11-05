@@ -11,6 +11,13 @@ export const DashboardBlock = styled.div`
 	margin: 1.5rem 0;
 `
 
+export const ContentContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	flex-shrink: 0;
+	width: 100%;
+`
+
 export const DashboardHeader = styled.h4`
 	margin: 1rem auto 1rem 1rem;
 	color: var(--white);

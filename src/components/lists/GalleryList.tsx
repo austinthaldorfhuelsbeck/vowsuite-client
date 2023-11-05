@@ -1,21 +1,14 @@
 import { MouseEvent, PropsWithChildren, useEffect, useState } from "react"
 
-import { Link } from "react-router-dom"
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-	faEllipsis,
-	faExternalLinkSquareAlt,
-	faFolder,
-	faLink,
-} from "@fortawesome/free-solid-svg-icons"
+import { faEllipsis, faFolder, faLink } from "@fortawesome/free-solid-svg-icons"
 
 import { useStatus } from "../../hooks/useStatus"
 import { IGallery } from "../../interfaces/models"
 import { ContextMenu } from "../menus/ContextMenu"
 import { baseUrls, copy } from "../../data/app-constants"
 import { Alert } from "../../styles/components/forms.style"
-import { ButtonTitle } from "../../styles/components/buttons.style"
+import { readGallery } from "../../services/galleries.service"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -23,18 +16,20 @@ import {
 import {
 	galleryContextList,
 	renderModalContextMenu,
-} from "../../data/context-lists"
+} from "../../data/modal-context-lists"
 import {
+	ContextListButton,
 	ContextListItem,
 	List,
 	SelectorListItem,
+	SidebarLabel,
 } from "../../styles/components/lists.styles"
-import { readGallery } from "../../services/galleries.service"
+import { ButtonTitle } from "../../styles/components/buttons.style"
 
+// Data Models
 interface ContextMenuProps {
 	gallery: IGallery | undefined
 }
-
 interface ListItemProps {
 	currentGallery: IGallery
 }
@@ -78,7 +73,7 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	const { gallery, setGallery } = useGalleryContext()
 
 	// Handlers
-	async function onClick(e: MouseEvent<HTMLLIElement>) {
+	async function onClick(e: MouseEvent<HTMLLabelElement>) {
 		e.preventDefault()
 		const foundGallery: IGallery = (
 			await readGallery(String(currentGallery.gallery_id))
@@ -91,14 +86,13 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	return (
 		<SelectorListItem
 			aria-selected={currentGallery.gallery_id === gallery?.gallery_id}
-			onClick={onClick}
 		>
-			<ButtonTitle>
+			<SidebarLabel onClick={onClick}>
 				<FontAwesomeIcon icon={faFolder} />
 				{" " + currentGallery.gallery_name}
-			</ButtonTitle>
+			</SidebarLabel>
 			<ContextMenu
-				button={<FontAwesomeIcon icon={faEllipsis} />}
+				button={<ContextListButton icon={faEllipsis} />}
 				content={<GalleryContextMenu gallery={gallery} />}
 			/>
 		</SelectorListItem>

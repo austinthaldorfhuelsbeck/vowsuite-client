@@ -62,6 +62,9 @@ function GalleryForm({
 		if (submit) onSubmit(submit)
 		if (reset) onReset(reset)
 	}, [onReset, onSubmit, reset, submit])
+	useEffect(() => {
+		if (gallery) setFormData(gallery)
+	}, [gallery, setFormData])
 
 	return (
 		<>

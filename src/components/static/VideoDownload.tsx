@@ -1,13 +1,14 @@
-import React, { PropsWithChildren } from "react"
+import { PropsWithChildren } from "react"
 
 import { faCloudDownloadAlt } from "@fortawesome/free-solid-svg-icons"
 
-import { InlineButton } from "../buttons/InlineButton"
 import { IGallery, IVideo } from "../../interfaces/models"
 import {
 	GalleryModalContainer,
 	GallerySubheader,
 } from "../../styles/layouts/gallery-layout.style"
+import { TransparentButton } from "../../styles/components/buttons.style"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 interface ComponentProps {
 	gallery: IGallery
@@ -34,12 +35,13 @@ function VideoDownload({ gallery }: PropsWithChildren<ComponentProps>) {
 		<GalleryModalContainer>
 			<GallerySubheader>Downloads</GallerySubheader>
 			{gallery.videos.map((video: IVideo) => (
-				<InlineButton
+				<TransparentButton
 					key={video.video_id}
-					title={video.video_name}
-					icon={faCloudDownloadAlt}
 					onClick={() => downloadVideo(video)}
-				/>
+				>
+					<FontAwesomeIcon icon={faCloudDownloadAlt} />
+					{" " + video.video_name}
+				</TransparentButton>
 			))}
 		</GalleryModalContainer>
 	)
