@@ -2,7 +2,6 @@ import { PropsWithChildren, SyntheticEvent, useEffect, useState } from "react"
 
 import { copy } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
-import { Form } from "../../styles/components/forms.style"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
 import { initialCompanyData } from "../../data/initial-data"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"

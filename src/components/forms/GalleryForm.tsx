@@ -1,89 +1,104 @@
 import { copy } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
-import { useStatus } from "../../hooks/useStatus"
-import { BannerActions } from "./utils/BannerActions"
 import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { initialGalleryData } from "../../data/initial-data"
-import { InputGroup } from "./utils/InputGroups"
+import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { useGalleryContext } from "../../context/ContextProvider"
-import { Form, FormRow } from "../../styles/components/forms.style"
-import { gallery_name_validation } from "./utils/inputValidation"
+import { FormColumn, FormRow } from "../../styles/components/forms.style"
+import {
+	font_validation,
+	gallery_name_validation,
+} from "./utils/inputValidation"
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
+import { PropsWithChildren, SyntheticEvent, useEffect, useState } from "react"
+import { IFont } from "../../interfaces/models"
+import { listFonts } from "../../services/fonts.service"
+import { IAppError } from "../../interfaces/api"
+import { CompanyColorsForm } from "./CompanyColorsForm"
+import { GalleryColorsForm } from "./GalleryColorsForm"
 
-function GalleryForm() {
-	// load context
+interface ComponentProps {
+	submit: SyntheticEvent<HTMLButtonElement> | undefined
+	reset: SyntheticEvent<HTMLButtonElement> | undefined
+	handleSuccess: () => void
+	handleError: (e: IAppError) => void
+}
+
+function GalleryForm({
+	submit,
+	reset,
+	handleSuccess,
+	handleError,
+}: PropsWithChildren<ComponentProps>) {
+	// Context
 	const { gallery } = useGalleryContext()
-	const { success, error, handleSuccess, handleError } = useStatus()
-	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
+	const { formData, setFormData, onChange, onReset, onSubmit } =
 		useGalleryForm(handleSuccess, handleError)
 
-	// build props
-	const bannerActionsProps = {
-		success,
-		error,
-		reset: gallery !== undefined,
-		onReset,
-		onClear,
-		onSubmit,
+	// State
+	const [fonts, setFonts] = useState<(IFont | undefined)[]>([])
+
+	// Props
+	const formProps = {
+		submit,
+		reset,
+		handleSuccess,
+		handleError,
 	}
 
+	// Effects
+	useEffect(() => {
+		async function getAllFonts() {
+			try {
+				const allFonts: IFont[] = (await listFonts()).data
+				setFonts(allFonts)
+			} catch (err) {
+				console.error(err)
+			}
+		}
+		getAllFonts()
+	}, [])
+	useEffect(() => {
+		if (submit) onSubmit(submit)
+		if (reset) onReset(reset)
+	}, [onReset, onSubmit, reset, submit])
+
 	return (
-		<Form onSubmit={onSubmit} noValidate autoComplete="off">
+		<>
 			<FormRow>
-				<DashboardHeader>{copy.galleryFormHeader}</DashboardHeader>
+				<FormColumn>
+					<DashboardHeader>
+						<InputGroup
+							{...gallery_name_validation}
+							value={formData.gallery_name}
+							onChange={onChange}
+						/>
+					</DashboardHeader>
+					<FileUpload
+						formData={formData}
+						setFormData={setFormData}
+						defaultUrl={
+							gallery?.img_URL || initialGalleryData.img_URL
+						}
+						label="Thumbnail Image"
+					/>
+				</FormColumn>
+				<FormColumn>
+					<DashboardHeader>
+						{copy.companyFormSubheader}
+					</DashboardHeader>
+					{fonts && (
+						<ControlGroup
+							{...font_validation}
+							options={fonts}
+							value={formData.font_id}
+							onChange={onChange}
+						/>
+					)}
+					<GalleryColorsForm {...formProps} />
+				</FormColumn>
 			</FormRow>
-
-			<FormRow>
-				<InputGroup
-					{...gallery_name_validation}
-					value={formData.gallery_name}
-					onChange={onChange}
-				/>
-			</FormRow>
-
-			{/* <FormRow>
-				<ControlGroup
-					{...font_validation}
-					value={formData.font}
-					onChange={onChange}
-				/>
-			</FormRow> */}
-
-			<FormRow>
-				<FileUpload
-					formData={formData}
-					setFormData={setFormData}
-					defaultUrl={gallery?.img_URL || initialGalleryData.img_URL}
-					label="Thumbnail Image"
-				/>
-			</FormRow>
-
-			{/* <FormRow>
-				<FormInputOverlay>{hex1_validation.label}</FormInputOverlay>
-				<FormInput
-					{...hex1_validation}
-					value={formData.hex1}
-					onChange={onChange}
-					color
-				/>
-				<FormInputOverlay>{hex2_validation.label}</FormInputOverlay>
-				<FormInput
-					{...hex2_validation}
-					value={formData.hex2}
-					onChange={onChange}
-					color
-				/>
-				<FormInputOverlay>{hex3_validation.label}</FormInputOverlay>
-				<FormInput
-					{...hex3_validation}
-					value={formData.hex3}
-					onChange={onChange}
-					color
-				/>
-			</FormRow> */}
-
-			<BannerActions {...bannerActionsProps} />
-		</Form>
+		</>
 	)
 }
 

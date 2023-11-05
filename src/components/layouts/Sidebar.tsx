@@ -3,7 +3,7 @@ import { MouseEvent } from "react"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 
 import { Modal } from "../menus/Modal"
-import { copy } from "../../data/app-constants"
+import { copy, defaultFonts, imagePaths } from "../../data/app-constants"
 import { GalleryList } from "../lists/GalleryList"
 import { GalleryForm } from "../forms/GalleryForm"
 import {
@@ -24,6 +24,9 @@ import {
 import { NavProfileImg } from "../../styles/components/nav-bar.style"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Divider } from "../../styles/components/util.style"
+import { IApiResponse } from "../../interfaces/api"
+import { createGallery } from "../../services/galleries.service"
+import { IBaseGallery, IGallery } from "../../interfaces/models"
 
 function CompanyTabButton() {
 	// Context
@@ -42,11 +45,35 @@ function CompanyTabButton() {
 
 function Sidebar() {
 	// Context
+	const { user, setUser } = useUserContext()
 	const { setGallery } = useGalleryContext()
 	// Handlers
-	const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+	function onClick(e: MouseEvent<HTMLButtonElement>) {
 		e.preventDefault()
-		setGallery(undefined)
+		async function createNewGallery(gallery: IBaseGallery) {
+			try {
+				const response: IApiResponse = await createGallery(gallery)
+				// update context
+				setGallery(response.data)
+				if (user)
+					setUser({
+						...user,
+						galleries: [...user.galleries, response.data],
+					})
+			} catch (err) {
+				console.error(err)
+			}
+		}
+		if (user)
+			createNewGallery({
+				user_id: user.user_id,
+				gallery_name: "Untitled",
+				gallery_id: new Date().valueOf(),
+				created_at: new Date(),
+				updated_at: new Date(),
+				img_URL: imagePaths.defaultUser,
+				font_id: 0,
+			})
 	}
 
 	return (
@@ -56,14 +83,9 @@ function Sidebar() {
 			<SidebarSection>
 				<StudioHeaderContainer>
 					<DashboardHeader>{copy.sidebarHeader}</DashboardHeader>
-					<Modal
-						button={
-							<TransparentButton onClick={onClick}>
-								<FontAwesomeIcon icon={faPlus} />
-							</TransparentButton>
-						}
-						content={<GalleryForm />}
-					/>
+					<TransparentButton onClick={onClick}>
+						<FontAwesomeIcon icon={faPlus} />
+					</TransparentButton>
 				</StudioHeaderContainer>
 				<GalleryList />
 			</SidebarSection>

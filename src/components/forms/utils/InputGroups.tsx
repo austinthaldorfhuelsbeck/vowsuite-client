@@ -53,7 +53,7 @@ function InputGroup({
 }: PropsWithChildren<InputProps>) {
 	return (
 		<FormRow>
-			{type === "text" && <label htmlFor={id}>{label}</label>}
+			{label && <label htmlFor={id}>{label}</label>}
 			<FormInput
 				name={id}
 				type={type}

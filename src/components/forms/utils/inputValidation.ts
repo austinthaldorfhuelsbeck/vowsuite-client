@@ -51,7 +51,6 @@ export const company_name_validation = {
 }
 
 export const gallery_name_validation = {
-	label: "Gallery Name",
 	type: "text",
 	id: "gallery_name",
 	placeholder: "Name your gallery",

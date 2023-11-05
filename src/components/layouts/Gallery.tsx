@@ -43,7 +43,7 @@ function Gallery() {
 		return (
 			<SidebarContainer
 				url={gallery.img_URL}
-				font={gallery.font.font_name}
+				font={String(gallery.font_id)}
 				hex1={gallery.colors[0].value}
 				hex2={gallery.colors[1].value}
 				hex3={gallery.colors[2].value}

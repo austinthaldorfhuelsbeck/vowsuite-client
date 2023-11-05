@@ -26,11 +26,12 @@ import {
 	DashboardHeader,
 	StudioHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
+import { GalleryForm } from "../forms/GalleryForm"
 
+// Data Models
 interface DashboardProps {
 	user: IUser
 }
-
 interface GalleryEditorProps {
 	gallery: IGallery
 }
@@ -84,7 +85,7 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 				<BannerActions {...bannerProps} />
 			</StudioHeaderContainer>
 			<DashboardBlock>
-				<Form>
+				<Form noValidate autoComplete="off">
 					<FormRow>
 						<FormColumn>
 							<CompanyForm {...formProps} />
@@ -103,22 +104,65 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 	// Context
 	const { setVideo } = useVideoContext()
+	const { success, error, handleSuccess, handleError } = useStatus()
+
+	// State
+	const [submit, setSubmit] = useState<
+		SyntheticEvent<HTMLButtonElement> | undefined
+	>()
+	const [reset, setReset] = useState<
+		SyntheticEvent<HTMLButtonElement> | undefined
+	>()
+
 	// Handlers
-	const handleClick = (e: MouseEvent) => {
+	const onClick = (e: MouseEvent) => {
 		e.preventDefault()
 		setVideo(undefined)
+	}
+	function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
+		e.preventDefault()
+		setSubmit(e)
+		setTimeout(setSubmit, 500, undefined)
+	}
+	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
+		e.preventDefault()
+		setReset(e)
+		setTimeout(setReset, 500, undefined)
+	}
+
+	// Props
+	const formProps = {
+		submit,
+		reset,
+		handleSuccess,
+		handleError,
+	}
+	const bannerProps = {
+		onSubmit,
+		onReset,
+		success,
+		error,
 	}
 
 	return (
 		<>
 			<StudioHeaderContainer>
-				<DashboardHeader>{gallery.gallery_name}</DashboardHeader>
+				<DashboardHeader>Gallery Details</DashboardHeader>
+				<BannerActions {...bannerProps} />
+			</StudioHeaderContainer>
+			<DashboardBlock>
+				<Form noValidate autoComplete="off">
+					<GalleryForm {...formProps} />
+				</Form>
+			</DashboardBlock>
+			<StudioHeaderContainer>
+				<DashboardHeader>Videos</DashboardHeader>
 				<Modal
 					button={
 						<InlineButton
 							icon={faPlus}
 							title="New Video"
-							onClick={handleClick}
+							onClick={onClick}
 						/>
 					}
 					content={<VideoForm />}

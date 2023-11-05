@@ -14,7 +14,7 @@ interface ComponentProps {
 
 function VideoDeleteForm({ children }: PropsWithChildren<ComponentProps>) {
 	return (
-		<Form>
+		<Form noValidate autoComplete="off">
 			<DashboardHeader>{copy.confirmDeleteHeader}</DashboardHeader>
 			<DashboardSubheader>{copy.confirmDeleteMessage}</DashboardSubheader>
 			<FormRow>{children}</FormRow>

@@ -40,7 +40,7 @@ function BrandIcon({ url }: PropsWithChildren<IconProps>) {
 function BrandSocials({ company }: PropsWithChildren<ComponentProps>) {
 	return (
 		<BrandSocialContainer>
-			{company.urls.map((url) => (
+			{company.urls?.map((url) => (
 				<BrandLink
 					key={url.company_url_id}
 					to={url.target}

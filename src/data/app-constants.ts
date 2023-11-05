@@ -17,8 +17,8 @@ export const footerResourceList: ILinkResource[] = [
 ]
 
 export const baseUrls: IStringHash = {
-	homePage: "https://vowsuite.vercel.app",
-	galleryPage: "https://vowsuite.vercel.app/galleries",
+	homePage: "http://localhost:4040",
+	galleryPage: "http://localhost:4040/galleries",
 }
 
 export const imagePaths: IStringHash = {

@@ -41,7 +41,6 @@ export interface IBaseGallery {
 export interface IGallery extends IBaseGallery {
 	colors: IGalleryColor[]
 	videos: IVideo[]
-	font: IFont
 }
 
 export interface IGalleryColor {

@@ -29,7 +29,7 @@ function BrandDetails({ company }: PropsWithChildren<ComponentProps>) {
 			<Divider />
 			<Link
 				to={
-					company.urls.filter((url) => url.label === "Website")[0]
+					company.urls?.filter((url) => url.label === "Website")[0]
 						.target
 				}
 				target="_blank"

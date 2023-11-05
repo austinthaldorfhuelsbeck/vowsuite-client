@@ -27,7 +27,7 @@ function ContextMenu({ button, content }: PropsWithChildren<ComponentProps>) {
 
 	// event handlers
 	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault()
+		// e.preventDefault()
 		setX(e.clientX - 150)
 		setY(e.clientY + 20)
 		flipMenu(isMenu)

@@ -50,15 +50,6 @@ export const galleryContextList: ModalResource[] = [
 	{
 		button: (
 			<ContextListItem>
-				<FontAwesomeIcon icon={faPencil} />
-				<ButtonTitle>Gallery Details</ButtonTitle>
-			</ContextListItem>
-		),
-		content: <GalleryForm />,
-	},
-	{
-		button: (
-			<ContextListItem>
 				<FontAwesomeIcon icon={faTrash} />
 				<ButtonTitle>Delete Gallery</ButtonTitle>
 			</ContextListItem>
