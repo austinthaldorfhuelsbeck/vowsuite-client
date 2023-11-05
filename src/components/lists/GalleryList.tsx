@@ -63,12 +63,6 @@ function GalleryContextMenu({ gallery }: PropsWithChildren<ContextMenuProps>) {
 
 	return (
 		<>
-			<ContextListItem>
-				<Link to={galleryUrl} target="_blank" rel="noopener noreferrer">
-					<FontAwesomeIcon icon={faExternalLinkSquareAlt} />
-					<ButtonTitle>{copy.galleryLIOpen}</ButtonTitle>
-				</Link>
-			</ContextListItem>
 			{renderModalContextMenu(galleryContextList)}
 			<ContextListItem onClick={onCopy}>
 				<FontAwesomeIcon icon={faLink} />

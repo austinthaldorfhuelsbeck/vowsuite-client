@@ -1,6 +1,9 @@
 import { MouseEvent, PropsWithChildren, SyntheticEvent, useState } from "react"
 
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import {
+	faExternalLinkSquareAlt,
+	faPlus,
+} from "@fortawesome/free-solid-svg-icons"
 
 import { Modal } from "../menus/Modal"
 import { VideoList } from "../lists/VideoList"
@@ -14,7 +17,12 @@ import { CompanyUrlsForm } from "../forms/CompanyUrlsForm"
 import { formatGreeting } from "../../services/util.service"
 import { BannerActions } from "../forms/utils/BannerActions"
 import { CompanyColorsForm } from "../forms/CompanyColorsForm"
-import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
+import {
+	Form,
+	FormColumn,
+	FormLink,
+	FormRow,
+} from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -27,6 +35,9 @@ import {
 	StudioHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
 import { GalleryForm } from "../forms/GalleryForm"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { TransparentButton } from "../../styles/components/buttons.style"
+import { baseUrls } from "../../data/app-constants"
 
 // Data Models
 interface DashboardProps {
@@ -106,6 +117,9 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 	const { setVideo } = useVideoContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
 
+	// Constants
+	const galleryUrl: string = `${baseUrls.galleryPage}/${gallery?.gallery_id}`
+
 	// State
 	const [submit, setSubmit] = useState<
 		SyntheticEvent<HTMLButtonElement> | undefined
@@ -148,6 +162,17 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 		<>
 			<StudioHeaderContainer>
 				<DashboardHeader>Gallery Details</DashboardHeader>
+				<FormRow>
+					<FormLink
+						to={galleryUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<TransparentButton>
+							<FontAwesomeIcon icon={faExternalLinkSquareAlt} />
+						</TransparentButton>
+					</FormLink>
+				</FormRow>
 				<BannerActions {...bannerProps} />
 			</StudioHeaderContainer>
 			<DashboardBlock>

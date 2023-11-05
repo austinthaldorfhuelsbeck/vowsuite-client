@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import styled from "styled-components"
 import { TransparentButton } from "./buttons.style"
 
@@ -58,6 +60,10 @@ export const FormColumn = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 1rem;
+`
+
+export const FormLink = styled(Link)`
+	margin-right: 1rem;
 `
 
 interface AlertProps {
