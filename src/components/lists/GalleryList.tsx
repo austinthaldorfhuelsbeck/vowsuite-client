@@ -96,7 +96,7 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	// selected is determined if gallery is equal to context gallery
 	return (
 		<SelectorListItem
-			aria-selected={currentGallery === gallery}
+			aria-selected={currentGallery.gallery_id === gallery?.gallery_id}
 			onClick={onClick}
 		>
 			<ButtonTitle>
@@ -124,7 +124,6 @@ function GalleryList() {
 	useEffect(() => {
 		// Function to get a list of full galleries
 		async function validateGalleries(galleries: IGallery[]) {
-			console.log("Effect run. Galleries: ", galleries)
 			setListedGalleries(galleries)
 		}
 		if (user?.galleries?.length) validateGalleries(user.galleries)

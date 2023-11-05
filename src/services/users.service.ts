@@ -58,7 +58,6 @@ export const createUser = async (user: IBaseUser): Promise<IApiResponse> => {
 }
 
 export const updateUser = async (user: IBaseUser): Promise<IApiResponse> => {
-	console.log("Data: ", user)
 	const config: Axios.AxiosRequestConfig = {
 		url: `${apiUrl}/users/${user.user_id}`,
 		method: "PUT",

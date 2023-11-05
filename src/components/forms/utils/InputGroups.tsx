@@ -23,6 +23,10 @@ interface ControlProps extends BaseProps {
 	options: any[]
 	value: number
 }
+interface CheckboxProps extends BaseProps {
+	type: string
+	value: boolean
+}
 
 function InputError({ validation, value }: PropsWithChildren<ErrorProps>) {
 	if (validation.required.value && value?.length === 0) {
@@ -87,4 +91,27 @@ function ControlGroup({
 	)
 }
 
-export { InputError, InputGroup, ControlGroup }
+function CheckboxGroup({
+	label,
+	type,
+	id,
+	value,
+	onChange,
+	validation,
+}: PropsWithChildren<CheckboxProps>) {
+	return (
+		<FormRow>
+			<label htmlFor={id}>{label}</label>
+			<FormInput
+				name={id}
+				type={type}
+				checked={false}
+				onClick={onChange}
+			/>
+			<FormInput name={id} type={type} checked={value} />
+			<InputError validation={validation} value={value.toString()} />
+		</FormRow>
+	)
+}
+
+export { InputError, InputGroup, ControlGroup, CheckboxGroup }

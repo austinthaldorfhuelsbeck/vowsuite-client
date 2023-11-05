@@ -44,7 +44,6 @@ function useCompanyColorForm(
 			? await updateCompanyColor(formData, formData.company_color_id)
 			: await createCompanyColor(formData)
 		if (response.data) {
-			console.log("Response: ", response.data)
 			// update context
 			handleSuccess()
 		}

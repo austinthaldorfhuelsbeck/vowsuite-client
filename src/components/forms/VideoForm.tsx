@@ -1,6 +1,6 @@
 import { FileUpload } from "./utils/FileUpload"
 import { copy } from "../../data/app-constants"
-import { InputGroup } from "./utils/InputGroups"
+import { CheckboxGroup, InputGroup } from "./utils/InputGroups"
 import { useStatus } from "../../hooks/useStatus"
 import { BannerActions } from "./utils/BannerActions"
 import { useVideoForm } from "../../hooks/useVideoForm"
@@ -17,8 +17,15 @@ function VideoForm() {
 	// load context
 	const { video } = useVideoContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
-	const { formData, setFormData, onChange, onClear, onReset, onSubmit } =
-		useVideoForm(handleSuccess, handleError)
+	const {
+		formData,
+		setFormData,
+		onChange,
+		onClear,
+		onCheck,
+		onReset,
+		onSubmit,
+	} = useVideoForm(handleSuccess, handleError)
 
 	// build props
 	const bannerActionsProps = {
@@ -57,6 +64,21 @@ function VideoForm() {
 					setFormData={setFormData}
 					defaultUrl={video?.img_URL || initialVideoData.img_URL}
 					label="Thumbnail Image"
+				/>
+			</FormRow>
+			<FormRow>
+				<CheckboxGroup
+					label="Displayed?"
+					id="is_displayed"
+					type="checkbox"
+					validation={{
+						required: {
+							value: true,
+							message: "Is the video displayed?",
+						},
+					}}
+					value={formData.is_displayed}
+					onChange={onCheck}
 				/>
 			</FormRow>
 		</Form>

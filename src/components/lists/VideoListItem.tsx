@@ -53,6 +53,12 @@ function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
 				<DashboardSubheader>
 					{`Updated - ${formatDatePretty(video.updated_at)}`}
 				</DashboardSubheader>
+				<DashboardSubheader>
+					{`Views - ${video.views}`}
+				</DashboardSubheader>
+				<DashboardSubheader>
+					{`Downloads - ${video.downloads}`}
+				</DashboardSubheader>
 				<ContextMenu
 					button={<FontAwesomeIcon icon={faEllipsis} />}
 					content={<>{renderModalContextMenu(videoContextList)}</>}

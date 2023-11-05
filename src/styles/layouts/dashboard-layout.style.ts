@@ -14,6 +14,7 @@ export const DashboardBlock = styled.div`
 export const DashboardHeader = styled.h4`
 	margin: 1rem auto 1rem 1rem;
 	color: var(--white);
+	cursor: default;
 `
 
 export const StudioContainer = styled.div`
@@ -40,6 +41,7 @@ export const DashboardSubheader = styled.p`
 	font-family: monospace;
 	font-size: 65%;
 	margin-left: 1rem;
+	cursor: default;
 `
 
 export const DashboardListItem = styled.li`

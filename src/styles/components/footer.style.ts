@@ -15,6 +15,7 @@ export const FooterMessage = styled.p`
 	text-align: left;
 	font-weight: 100;
 	margin: 0;
+	cursor: default;
 `
 
 export const LegalContainer = styled.div`

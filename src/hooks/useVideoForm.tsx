@@ -35,6 +35,10 @@ function useVideoForm(
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}
+	function onCheck(e: ChangeEvent<any>) {
+		const { name } = e.target
+		setFormData({ ...formData, [name]: !formData.is_displayed })
+	}
 	function onClear(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
 		setFormData(blankForm)
@@ -69,7 +73,15 @@ function useVideoForm(
 		}
 	}
 
-	return { formData, setFormData, onChange, onClear, onReset, onSubmit }
+	return {
+		formData,
+		setFormData,
+		onChange,
+		onClear,
+		onCheck,
+		onReset,
+		onSubmit,
+	}
 }
 
 export { useVideoForm }

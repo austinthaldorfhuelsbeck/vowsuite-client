@@ -44,6 +44,7 @@ export const FormInput = styled.input<FormInputProps>`
 	min-width: ${(props) => (props.text ? "30rem" : "8rem")};
 	min-height: ${(props) => (props.color ? "8rem" : "none")};
 	border: ${(props) => (props.color ? "none !important" : "solid 0.1rem")};
+	cursor: ${(props) => (props.text ? "text" : "pointer")};
 `
 
 export const FormRow = styled.div`
