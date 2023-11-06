@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios"
 
-import { IApiResponse } from "../interfaces/api"
-import { callExternalApi } from "./external-api.service"
+import { IApiResponse } from "../../interfaces/api"
+import { callExternalApi } from "../external-api.service"
 
 const apiUrl: string = process.env.REACT_APP_API_SERVER_URL || ""
 

@@ -8,9 +8,9 @@ import {
 	useUserContext,
 	useVideoContext,
 } from "../context/ContextProvider"
-import { createVideo, updateVideo } from "../services/videos.service"
-import { readUser } from "../services/users.service"
-import { readGallery } from "../services/galleries.service"
+import { createVideo, updateVideo } from "../services/vs-api/videos.service"
+import { readUser } from "../services/vs-api/users.service"
+import { readGallery } from "../services/vs-api/galleries.service"
 
 function useVideoForm(
 	handleSuccess: () => void,

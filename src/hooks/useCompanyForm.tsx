@@ -3,7 +3,10 @@ import { IBaseCompany } from "../interfaces/models"
 import { useUserContext } from "../context/ContextProvider"
 import { initialCompanyData } from "../data/initial-data"
 import { IApiResponse, IAppError } from "../interfaces/api"
-import { createCompany, updateCompany } from "../services/companies.service"
+import {
+	createCompany,
+	updateCompany,
+} from "../services/vs-api/companies.service"
 
 function useCompanyForm(
 	handleSuccess: () => void,
@@ -36,10 +39,29 @@ function useCompanyForm(
 	}
 	async function onSubmit(e: SyntheticEvent) {
 		e.preventDefault()
+		// format request
+		const {
+			company_id,
+			img_URL,
+			user_id,
+			company_name,
+			font_id,
+			created_at,
+			updated_at,
+		} = formData
+		const request: IBaseCompany = {
+			company_id,
+			img_URL,
+			user_id,
+			company_name,
+			font_id,
+			created_at,
+			updated_at,
+		}
 		// call API
 		const response: IApiResponse = user?.company
-			? await updateCompany(formData)
-			: await createCompany(formData)
+			? await updateCompany(request)
+			: await createCompany(request)
 		if (response.data) {
 			// update context
 			if (user) {

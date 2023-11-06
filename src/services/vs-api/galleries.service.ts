@@ -1,7 +1,7 @@
 import * as Axios from "axios"
-import { IApiResponse } from "../interfaces/api"
-import { callExternalApi } from "./external-api.service"
-import { IBaseGallery, IGalleryColor } from "../interfaces/models"
+import { IApiResponse } from "../../interfaces/api"
+import { callExternalApi } from "../external-api.service"
+import { IBaseGallery, IGalleryColor } from "../../interfaces/models"
 
 const apiUrl = process.env.REACT_APP_API_SERVER_URL
 const config: Axios.AxiosRequestConfig = {

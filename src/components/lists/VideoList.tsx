@@ -1,14 +1,13 @@
-import { MouseEvent, PropsWithChildren } from "react"
+import { MouseEvent, PropsWithChildren, useEffect } from "react"
 
 import ReactPlayer from "react-player"
 
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
+import { faEllipsis, faVideoSlash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { Modal } from "../menus/Modal"
 import { IVideo } from "../../interfaces/models"
 import { ContextMenu } from "../menus/ContextMenu"
-import { VideosNotFound } from "../static/VideosNotFound"
 import { List } from "../../styles/components/lists.styles"
 import { formatDatePretty } from "../../services/util.service"
 import {
@@ -21,49 +20,72 @@ import {
 } from "../../data/modal-context-lists"
 import {
 	ContentContainer,
+	DashboardBlock,
+	DashboardCenterContent,
 	DashboardHeader,
 	DashboardImg,
 	DashboardListItem,
 	DashboardSubheader,
 } from "../../styles/layouts/dashboard-layout.style"
+import { copy, imagePaths } from "../../data/app-constants"
+import { BigIcon } from "../../styles/components/util.style"
+import { usePreview } from "../../hooks/usePreview"
 
 interface ComponentProps {
-	video: IVideo
+	displayedVideo: IVideo
 }
 
-function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
-	// select the video and save to context on click
+function VideoListItem({ displayedVideo }: PropsWithChildren<ComponentProps>) {
+	// Context
 	const { setVideo } = useVideoContext()
+	const ImagePreview = usePreview()
+	const VideoPreview = usePreview()
+
+	// Effects
+	// load image from aws
+	useEffect(() => {
+		ImagePreview.getUrlFromAws(displayedVideo.img_URL)
+	}, [ImagePreview, displayedVideo])
+	// load video from aws
+	useEffect(() => {
+		VideoPreview.getUrlFromAws(displayedVideo.video_URL)
+	}, [VideoPreview, displayedVideo])
+
+	// Handlers
+	// select the video and save to context on click
 	const handleClick = (e: MouseEvent<HTMLLIElement>, video: IVideo) => {
 		e.preventDefault()
 		setVideo(video)
 	}
 
 	return (
-		<DashboardListItem onClick={(e: any) => handleClick(e, video)}>
+		<DashboardListItem onClick={(e: any) => handleClick(e, displayedVideo)}>
 			<Modal
 				button={
-					<DashboardImg src={video.img_URL} alt={video.video_name} />
+					<DashboardImg
+						src={ImagePreview.preview || imagePaths.defaultUser}
+						alt={displayedVideo.video_name}
+					/>
 				}
 				content={
 					<ReactPlayer
 						controls
 						width={"80vw"}
 						height={"100%"}
-						url={video.video_URL}
+						url={VideoPreview.preview}
 					/>
 				}
 			/>
-			<DashboardHeader>{video.video_name}</DashboardHeader>
+			<DashboardHeader>{displayedVideo.video_name}</DashboardHeader>
 			<ContentContainer>
 				<DashboardSubheader>
-					{`Updated - ${formatDatePretty(video.updated_at)}`}
+					{`Updated - ${formatDatePretty(displayedVideo.updated_at)}`}
 				</DashboardSubheader>
 				<DashboardSubheader>
-					{`Views - ${video.views}`}
+					{`Views - ${displayedVideo.views}`}
 				</DashboardSubheader>
 				<DashboardSubheader>
-					{`Downloads - ${video.downloads}`}
+					{`Downloads - ${displayedVideo.downloads}`}
 				</DashboardSubheader>
 				<ContextMenu
 					button={<FontAwesomeIcon icon={faEllipsis} />}
@@ -71,6 +93,19 @@ function VideoListItem({ video }: PropsWithChildren<ComponentProps>) {
 				/>
 			</ContentContainer>
 		</DashboardListItem>
+	)
+}
+
+function VideosNotFound() {
+	return (
+		<DashboardBlock>
+			<DashboardCenterContent>
+				<BigIcon icon={faVideoSlash} />
+				<DashboardSubheader>
+					{copy.videosNotFoundSubheader}
+				</DashboardSubheader>
+			</DashboardCenterContent>
+		</DashboardBlock>
 	)
 }
 
@@ -82,7 +117,7 @@ function VideoList() {
 	return (
 		<List>
 			{gallery.videos.map((video: IVideo) => (
-				<VideoListItem key={video.video_id} video={video} />
+				<VideoListItem key={video.video_id} displayedVideo={video} />
 			))}
 		</List>
 	)

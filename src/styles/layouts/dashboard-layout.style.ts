@@ -52,7 +52,6 @@ export const DashboardSubheader = styled.p`
 `
 
 export const DashboardListItem = styled.li`
-	width: 30rem;
 	display: inline-grid;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	transition: 0.3s;
@@ -95,4 +94,10 @@ export const DashboardImg = styled.img`
 	margin-bottom: 1rem;
 	margin-left: auto;
 	margin-right: auto;
+`
+
+export const DashboardCenterContent = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 `

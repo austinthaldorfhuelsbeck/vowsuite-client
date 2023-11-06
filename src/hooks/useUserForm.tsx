@@ -4,7 +4,7 @@ import { IBaseUser } from "../interfaces/models"
 import { initialUserData } from "../data/initial-data"
 import { useUserContext } from "../context/ContextProvider"
 import { IApiResponse, IAppError } from "../interfaces/api"
-import { createUser, updateUser } from "../services/users.service"
+import { createUser, updateUser } from "../services/vs-api/users.service"
 
 function useUserForm(
 	handleSuccess: () => void,

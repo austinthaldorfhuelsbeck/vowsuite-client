@@ -6,7 +6,7 @@ import { IApiResponse, IAppError } from "../interfaces/api"
 import {
 	createCompanyColor,
 	updateCompanyColor,
-} from "../services/companies.service"
+} from "../services/vs-api/companies.service"
 
 function useCompanyColorForm(
 	handleSuccess: () => void,

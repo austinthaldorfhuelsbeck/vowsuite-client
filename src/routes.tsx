@@ -11,6 +11,7 @@ import { Sidebar } from "./components/layouts/Sidebar"
 import { Dashboard } from "./components/layouts/Dashboard"
 import { Terms } from "./components/static/Terms"
 import { Privacy } from "./components/static/Privacy"
+import { TestingPage } from "./pages/TestingPage"
 
 const routes: RouteObject[] = [
 	{
@@ -57,6 +58,10 @@ const routes: RouteObject[] = [
 			{
 				path: "callback",
 				element: <CallbackPage />,
+			},
+			{
+				path: "dev",
+				element: <TestingPage />,
 			},
 			{
 				path: "*",

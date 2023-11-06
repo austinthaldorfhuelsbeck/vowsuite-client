@@ -3,8 +3,11 @@ import { IApiResponse, IAppError } from "../interfaces/api"
 import { useGalleryContext, useUserContext } from "../context/ContextProvider"
 import { IBaseGallery } from "../interfaces/models"
 import { initialGalleryData } from "../data/initial-data"
-import { createGallery, updateGallery } from "../services/galleries.service"
-import { readUser } from "../services/users.service"
+import {
+	createGallery,
+	updateGallery,
+} from "../services/vs-api/galleries.service"
+import { readUser } from "../services/vs-api/users.service"
 
 function useGalleryForm(
 	handleSuccess: () => void,

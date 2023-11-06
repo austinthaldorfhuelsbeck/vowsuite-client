@@ -8,7 +8,7 @@ import { IGallery } from "../../interfaces/models"
 import { ContextMenu } from "../menus/ContextMenu"
 import { baseUrls, copy } from "../../data/app-constants"
 import { Alert } from "../../styles/components/forms.style"
-import { readGallery } from "../../services/galleries.service"
+import { readGallery } from "../../services/vs-api/galleries.service"
 import {
 	useGalleryContext,
 	useUserContext,

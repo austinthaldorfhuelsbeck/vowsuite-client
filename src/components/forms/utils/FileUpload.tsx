@@ -4,10 +4,8 @@ import {
 	PropsWithChildren,
 	SetStateAction,
 	useCallback,
-	useState,
 } from "react"
 
-import AWS from "aws-sdk"
 import { useDropzone } from "react-dropzone"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -24,19 +22,7 @@ import {
 	ProgressBarProgress,
 } from "../../../styles/components/forms.style"
 import { ButtonTitle } from "../../../styles/components/buttons.style"
-
-// Config
-const S3_BUCKET = "vowsuite-videos"
-const accessKeyId: string = process.env.REACT_APP_AWS_ACCESS_KEY_ID || ""
-const secretAccessKey: string =
-	process.env.REACT_APP_AWS_SECRET_ACCESS_KEY || ""
-const s3 = new AWS.S3({
-	region: "us-west-2",
-	credentials: {
-		accessKeyId: accessKeyId,
-		secretAccessKey: secretAccessKey,
-	},
-})
+import { usePreview } from "../../../hooks/usePreview"
 
 // Models
 interface BaseProps {
@@ -73,9 +59,8 @@ function FileUpload({
 	isCircle,
 	isVideo,
 }: PropsWithChildren<ComponentProps>) {
-	// State
-	const [preview, setPreview] = useState<string | ArrayBuffer | null>(null)
-	const [progress, setProgress] = useState<number>(0)
+	// Context
+	const { preview, progress, uploadToAws } = usePreview()
 
 	// Constants
 	const previewUrl: string = (preview || defaultUrl).toString()
@@ -83,45 +68,17 @@ function FileUpload({
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
-			async function uploadToAws(file: File) {
-				const target = {
-					Bucket: S3_BUCKET,
-					Key: file.name,
-					Body: file,
-				}
-				await s3
-					.putObject(target)
-					.on("httpUploadProgress", (e) => {
-						setProgress(Math.round((e.loaded / e.total) * 100))
-					})
-					.promise()
-				await setUrlFromAws(file)
-			}
-
-			async function setUrlFromAws(file: File) {
-				const target = {
-					Bucket: S3_BUCKET,
-					Key: file.name,
-				}
-				const response: string = await s3.getSignedUrl(
-					"getObject",
-					target,
-				)
-				const publicUrl: string = response.split("?")[0]
-				setFormData(
-					isVideo
-						? { ...formData, video_URL: publicUrl }
-						: { ...formData, img_URL: publicUrl },
-				)
-				setPreview(publicUrl)
-			}
-
-			// call upload function
+			// call upload function, set form data
 			if (files[0]) {
 				uploadToAws(files[0])
+				setFormData(
+					isVideo
+						? { ...formData, video_URL: files[0].name }
+						: { ...formData, img_URL: files[0].name },
+				)
 			}
 		},
-		[formData, isVideo, setFormData],
+		[formData, isVideo, setFormData, uploadToAws],
 	)
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,

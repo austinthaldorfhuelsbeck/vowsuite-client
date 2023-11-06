@@ -12,10 +12,10 @@ import {
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 import { PropsWithChildren, SyntheticEvent, useEffect, useState } from "react"
 import { IFont } from "../../interfaces/models"
-import { listFonts } from "../../services/fonts.service"
+import { listFonts } from "../../services/vs-api/fonts.service"
 import { IAppError } from "../../interfaces/api"
-import { CompanyColorsForm } from "./CompanyColorsForm"
 import { GalleryColorsForm } from "./GalleryColorsForm"
+import { usePreview } from "../../hooks/usePreview"
 
 interface ComponentProps {
 	submit: SyntheticEvent<HTMLButtonElement> | undefined
@@ -34,6 +34,7 @@ function GalleryForm({
 	const { gallery } = useGalleryContext()
 	const { formData, setFormData, onChange, onReset, onSubmit } =
 		useGalleryForm(handleSuccess, handleError)
+	const { preview, getUrlFromAws } = usePreview()
 
 	// State
 	const [fonts, setFonts] = useState<(IFont | undefined)[]>([])
@@ -47,6 +48,7 @@ function GalleryForm({
 	}
 
 	// Effects
+	// load all available fonts for select options
 	useEffect(() => {
 		async function getAllFonts() {
 			try {
@@ -58,13 +60,19 @@ function GalleryForm({
 		}
 		getAllFonts()
 	}, [])
+	// for submitting multiple forms at once
 	useEffect(() => {
 		if (submit) onSubmit(submit)
 		if (reset) onReset(reset)
 	}, [onReset, onSubmit, reset, submit])
+	// update gallery if it exists
 	useEffect(() => {
 		if (gallery) setFormData(gallery)
 	}, [gallery, setFormData])
+	// load preview image from aws
+	useEffect(() => {
+		if (gallery?.img_URL) getUrlFromAws(gallery.img_URL)
+	})
 
 	return (
 		<>
@@ -80,9 +88,7 @@ function GalleryForm({
 					<FileUpload
 						formData={formData}
 						setFormData={setFormData}
-						defaultUrl={
-							gallery?.img_URL || initialGalleryData.img_URL
-						}
+						defaultUrl={preview || initialGalleryData.img_URL}
 						label="Cover Image"
 					/>
 				</FormColumn>

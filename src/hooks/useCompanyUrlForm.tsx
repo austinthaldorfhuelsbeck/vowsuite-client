@@ -5,7 +5,7 @@ import { useUserContext } from "../context/ContextProvider"
 import {
 	createCompanyUrl,
 	updateCompanyUrl,
-} from "../services/companies.service"
+} from "../services/vs-api/companies.service"
 
 function useCompanyUrlForm(
 	handleSuccess: () => void,

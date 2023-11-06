@@ -3,10 +3,9 @@ import { MouseEvent, PropsWithChildren } from "react"
 import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 import { copy } from "../../data/app-constants"
-import { IGallery } from "../../interfaces/models"
 import { IApiResponse } from "../../interfaces/api"
-import { readUser } from "../../services/users.service"
-import { deleteGallery } from "../../services/galleries.service"
+import { readUser } from "../../services/vs-api/users.service"
+import { deleteGallery } from "../../services/vs-api/galleries.service"
 import { Form, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
@@ -17,7 +16,7 @@ import {
 	DashboardHeader,
 	DashboardSubheader,
 } from "../../styles/layouts/dashboard-layout.style"
-import { deleteVideo } from "../../services/videos.service"
+import { deleteVideo } from "../../services/vs-api/videos.service"
 import { TransparentButton } from "../../styles/components/buttons.style"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
@@ -47,6 +46,7 @@ function GalleryDeleteForm() {
 
 	const onDelete = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
+		console.log("Delete gallery registered. ", gallery)
 		// function to delete a gallery
 		const getGalleryResponse = async (id: number) => {
 			// API call
@@ -78,7 +78,6 @@ function GalleryDeleteForm() {
 
 function VideoDeleteForm() {
 	// context
-	const { setUser } = useUserContext()
 	const { gallery, setGallery } = useGalleryContext()
 	const { video, setVideo } = useVideoContext()
 
@@ -93,10 +92,11 @@ function VideoDeleteForm() {
 				// video
 				setVideo(undefined)
 				// gallery
-				if (gallery) setGallery(response.data)
-				// user
-				const updatedUser = await readUser(response.data.user_id)
-				if (updatedUser.data) setUser(updatedUser.data)
+				if (gallery)
+					setGallery({
+						...gallery,
+						videos: gallery.videos.filter((v) => v.video_id !== id),
+					})
 			}
 		}
 		// call the async function on click if confirm

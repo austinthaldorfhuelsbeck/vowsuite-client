@@ -12,11 +12,16 @@ import {
 	renderModalContextMenu,
 } from "../../data/modal-context-lists"
 import { useUserContext } from "../../context/ContextProvider"
+import { useEffect } from "react"
+import { usePreview } from "../../hooks/usePreview"
 
 function ProfileButton() {
+	// Context
 	const { logout } = useAuth0()
 	const { user } = useUserContext()
+	const { preview, getUrlFromAws } = usePreview()
 
+	// Handlers
 	const onLogout = () => {
 		logout({
 			logoutParams: {
@@ -26,11 +31,14 @@ function ProfileButton() {
 		})
 	}
 
+	// Effects
+	useEffect(() => {
+		if (user?.img_URL) getUrlFromAws(user.img_URL)
+	}, [getUrlFromAws, user])
+
 	return (
 		<ContextMenu
-			button={
-				<NavProfileImg src={user?.img_URL || imagePaths.defaultUser} />
-			}
+			button={<NavProfileImg src={preview || imagePaths.defaultUser} />}
 			content={
 				<>
 					{renderModalContextMenu(profileContextList)}

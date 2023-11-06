@@ -1,11 +1,9 @@
-import { MouseEvent } from "react"
+import { MouseEvent, useEffect } from "react"
 
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 
-import { Modal } from "../menus/Modal"
-import { copy, defaultFonts, imagePaths } from "../../data/app-constants"
+import { copy, imagePaths } from "../../data/app-constants"
 import { GalleryList } from "../lists/GalleryList"
-import { GalleryForm } from "../forms/GalleryForm"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -25,17 +23,25 @@ import { NavProfileImg } from "../../styles/components/nav-bar.style"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Divider } from "../../styles/components/util.style"
 import { IApiResponse } from "../../interfaces/api"
-import { createGallery } from "../../services/galleries.service"
-import { IBaseGallery, IGallery } from "../../interfaces/models"
+import { createGallery } from "../../services/vs-api/galleries.service"
+import { IBaseGallery } from "../../interfaces/models"
+import { usePreview } from "../../hooks/usePreview"
 
 function CompanyTabButton() {
 	// Context
 	const { user } = useUserContext()
 	const { setGallery } = useGalleryContext()
+	const { preview, getUrlFromAws } = usePreview()
+
+	// Effects
+	useEffect(() => {
+		if (user?.company?.img_URL) getUrlFromAws(user.company.img_URL)
+	})
+
 	// button shows company name or "new company"
 	return (
 		<TabButton onClick={() => setGallery(undefined)}>
-			<NavProfileImg src={user?.company?.img_URL} />
+			<NavProfileImg src={preview} />
 			<ButtonTitle>
 				{user ? user.company.company_name : copy.companyTabNew}
 			</ButtonTitle>

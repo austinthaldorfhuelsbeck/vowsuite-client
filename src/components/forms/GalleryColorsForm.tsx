@@ -3,12 +3,19 @@ import { PropsWithChildren, SyntheticEvent, useEffect, useState } from "react"
 import { InputGroup } from "./utils/InputGroups"
 import { IAppError } from "../../interfaces/api"
 import { color_validation } from "./utils/inputValidation"
-import { useGalleryContext } from "../../context/ContextProvider"
-import { IGallery, IGalleryColor } from "../../interfaces/models"
+import {
+	useGalleryContext,
+	useUserContext,
+} from "../../context/ContextProvider"
+import { ICompanyColor, IGallery, IGalleryColor } from "../../interfaces/models"
 import { FormRow } from "../../styles/components/forms.style"
-import { listGalleryColors } from "../../services/galleries.service"
+import {
+	createGalleryColor,
+	listGalleryColors,
+} from "../../services/vs-api/galleries.service"
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 import { useGalleryColorForm } from "../../hooks/useGalleryColorForm"
+import { listCompanyColors } from "../../services/vs-api/companies.service"
 
 interface ComponentProps {
 	submit: SyntheticEvent<HTMLButtonElement> | undefined
@@ -59,6 +66,7 @@ function GalleryColorsForm({
 	handleError,
 }: PropsWithChildren<ComponentProps>) {
 	// Context
+	const { user } = useUserContext()
 	const { gallery } = useGalleryContext()
 
 	// State
@@ -74,11 +82,70 @@ function GalleryColorsForm({
 
 	// Effects
 	useEffect(() => {
-		async function listColors(gallery: IGallery) {
-			setColors((await listGalleryColors(gallery.gallery_id)).data)
+		// Function to create a new gallery color
+		async function createColor(color: IGalleryColor) {
+			await createGalleryColor(color)
 		}
-		if (gallery) listColors(gallery)
-	}, [gallery])
+
+		// Function to list all gallery colors and set state
+		async function listColors(gallery: IGallery) {
+			const galleryColors: IGalleryColor[] = (
+				await listGalleryColors(gallery.gallery_id)
+			).data
+			console.log("List colors ran! ", galleryColors.length)
+			if (galleryColors.length) {
+				setColors(galleryColors)
+			} else if (user) {
+				const companyColors: ICompanyColor[] = (
+					await listCompanyColors(user?.company.company_id)
+				).data
+				const newColors: IGalleryColor[] = companyColors.map(
+					(color: ICompanyColor) => ({
+						gallery_color_id: 0,
+						gallery_id: gallery.gallery_id,
+						value: color.value,
+						created_at: new Date(),
+						updated_at: new Date(),
+					}),
+				)
+				console.log("We'll have to make colors. ", newColors)
+				setColors(newColors)
+			}
+		}
+		console.log("Gallery effect hook ran! ", gallery)
+		if (gallery && colors.length === 0) listColors(gallery)
+	}, [user, gallery, colors])
+	// useEffect(() => {
+	// 	// Function to list all company colors,
+	// 	// create new gallery colors, and post
+	// 	async function createColors(companyId: number, galleryId: number) {
+	// 		console.log("Create colors ran!")
+	// 		const companyColors: ICompanyColor[] = (
+	// 			await listCompanyColors(companyId)
+	// 		).data
+	// 		console.log("Company Colors! ", companyColors)
+	// 		const newColors: IGalleryColor[] = companyColors.map(
+	// 			(color: ICompanyColor, index) => ({
+	// 				gallery_color_id: new Date().valueOf() + index,
+	// 				gallery_id: galleryId,
+	// 				value: color.value,
+	// 				created_at: new Date(),
+	// 				updated_at: new Date(),
+	// 			}),
+	// 		)
+	// 		if (colors.length === 0) {
+	// 			setColors(newColors)
+	// 			newColors.forEach(async (color: IGalleryColor) => {
+	// 				console.log("Here is a color: ", color)
+	// 				await createGalleryColor(color)
+	// 			})
+	// 		}
+	// 	}
+	// 	console.log("User effect hook ran!")
+	// 	if (user && gallery && colors.length === 0) {
+	// 		createColors(user.company.company_id, gallery.gallery_id)
+	// 	}
+	// }, [user, gallery, colors])
 
 	return (
 		<>

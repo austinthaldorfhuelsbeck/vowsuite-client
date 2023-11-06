@@ -1,6 +1,10 @@
-import { IApiResponse } from "../interfaces/api"
-import { callExternalApi } from "./external-api.service"
-import { IBaseCompany, ICompanyColor, ICompanyUrl } from "../interfaces/models"
+import { IApiResponse } from "../../interfaces/api"
+import { callExternalApi } from "../external-api.service"
+import {
+	IBaseCompany,
+	ICompanyColor,
+	ICompanyUrl,
+} from "../../interfaces/models"
 import { AxiosRequestConfig } from "axios"
 
 const apiUrl: string = process.env.REACT_APP_API_SERVER_URL || ""

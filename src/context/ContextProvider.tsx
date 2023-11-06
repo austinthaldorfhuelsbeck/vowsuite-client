@@ -11,7 +11,7 @@ import React, {
 
 import { useAuth0 } from "@auth0/auth0-react"
 
-import { getUserByEmail } from "../services/users.service"
+import { getUserByEmail } from "../services/vs-api/users.service"
 import { IGallery, IUser, IVideo } from "../interfaces/models"
 
 // DEFINE INTERFACES

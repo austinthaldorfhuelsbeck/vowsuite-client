@@ -6,7 +6,7 @@ import { IApiResponse, IAppError } from "../interfaces/api"
 import {
 	createGalleryColor,
 	updateGalleryColor,
-} from "../services/galleries.service"
+} from "../services/vs-api/galleries.service"
 
 function useGalleryColorForm(
 	handleSuccess: () => void,

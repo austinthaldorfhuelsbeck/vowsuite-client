@@ -6,7 +6,7 @@ import { color_validation } from "./utils/inputValidation"
 import { useUserContext } from "../../context/ContextProvider"
 import { ICompany, ICompanyColor } from "../../interfaces/models"
 import { Form, FormRow } from "../../styles/components/forms.style"
-import { listCompanyColors } from "../../services/companies.service"
+import { listCompanyColors } from "../../services/vs-api/companies.service"
 import { useCompanyColorForm } from "../../hooks/useCompanyColorForm"
 import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
 

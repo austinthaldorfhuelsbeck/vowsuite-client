@@ -24,13 +24,6 @@ function BannerActions({
 	return (
 		<>
 			<FormRow>
-				{(success || error) && (
-					<Alert error={error !== undefined} success={success}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-			</FormRow>
-			<FormRow>
 				{onReset && (
 					<TransparentButton onClick={onReset}>
 						<FontAwesomeIcon icon={faRefresh} />
@@ -41,6 +34,13 @@ function BannerActions({
 						<FontAwesomeIcon icon={faSave} />
 						{" Save"}
 					</TransparentButton>
+				)}
+			</FormRow>
+			<FormRow>
+				{(success || error) && (
+					<Alert error={error !== undefined} success={success}>
+						{error ? error.message : copy.formSuccess}
+					</Alert>
 				)}
 			</FormRow>
 		</>
