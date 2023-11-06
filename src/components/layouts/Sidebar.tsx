@@ -23,8 +23,15 @@ import { NavProfileImg } from "../../styles/components/nav-bar.style"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Divider } from "../../styles/components/util.style"
 import { IApiResponse } from "../../interfaces/api"
-import { createGallery } from "../../services/vs-api/galleries.service"
-import { IBaseGallery } from "../../interfaces/models"
+import {
+	createGallery,
+	createGalleryColor,
+} from "../../services/vs-api/galleries.service"
+import {
+	IBaseGallery,
+	ICompanyColor,
+	IGalleryColor,
+} from "../../interfaces/models"
 import { usePreview } from "../../hooks/usePreview"
 
 function CompanyTabButton() {
@@ -56,30 +63,47 @@ function Sidebar() {
 	// Handlers
 	function onClick(e: MouseEvent<HTMLButtonElement>) {
 		e.preventDefault()
+		const now = new Date()
 		async function createNewGallery(gallery: IBaseGallery) {
 			try {
 				const response: IApiResponse = await createGallery(gallery)
-				// update context
 				setGallery(response.data)
-				if (user)
+				if (user) {
+					// update context
 					setUser({
 						...user,
 						galleries: [...user.galleries, response.data],
 					})
+					// create new gallery color objects
+					user.company.colors.forEach(
+						async (color: ICompanyColor, index: number) => {
+							const newColor: IGalleryColor = {
+								gallery_color_id: now.valueOf() + index,
+								gallery_id: gallery.gallery_id,
+								value: color.value,
+								created_at: now,
+								updated_at: now,
+							}
+							await createGalleryColor(newColor)
+						},
+					)
+				}
 			} catch (err) {
 				console.error(err)
 			}
 		}
-		if (user)
-			createNewGallery({
+		if (user) {
+			const newGallery: IBaseGallery = {
 				user_id: user.user_id,
 				gallery_name: "Untitled",
-				gallery_id: new Date().valueOf(),
-				created_at: new Date(),
-				updated_at: new Date(),
+				gallery_id: now.valueOf(),
+				created_at: now,
+				updated_at: now,
 				img_URL: imagePaths.defaultUser,
 				font_id: 0,
-			})
+			}
+			createNewGallery(newGallery)
+		}
 	}
 
 	return (

@@ -11,10 +11,6 @@ import { useDropzone } from "react-dropzone"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 
-import { Modal } from "../../menus/Modal"
-import { usePreview } from "../../../hooks/usePreview"
-import { imagePaths } from "../../../data/app-constants"
-import { ButtonTitle } from "../../../styles/components/buttons.style"
 import {
 	DragUploadButton,
 	FormColumn,
@@ -25,6 +21,10 @@ import {
 	ProgressBarProgress,
 	ShadowboxImg,
 } from "../../../styles/components/forms.style"
+import { ButtonTitle } from "../../../styles/components/buttons.style"
+import { usePreview } from "../../../hooks/usePreview"
+import { Modal } from "../../menus/Modal"
+import { initialGalleryData } from "../../../data/initial-data"
 
 // Models
 interface BaseProps {
@@ -75,13 +75,13 @@ function FileUpload({
 						<Modal
 							button={
 								<PreviewImg
-									src={preview || imagePaths.defaultUser}
+									src={preview || initialGalleryData.img_URL}
 									circle={isCircle}
 								/>
 							}
 							content={
 								<ShadowboxImg
-									src={preview || imagePaths.defaultUser}
+									src={preview || initialGalleryData.img_URL}
 								/>
 							}
 						/>

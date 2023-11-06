@@ -4,7 +4,6 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 
 import { copy } from "../../data/app-constants"
 import { IApiResponse } from "../../interfaces/api"
-import { readUser } from "../../services/vs-api/users.service"
 import { deleteGallery } from "../../services/vs-api/galleries.service"
 import { Form, FormRow } from "../../styles/components/forms.style"
 import {
@@ -46,7 +45,6 @@ function GalleryDeleteForm() {
 
 	const onDelete = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
-		console.log("Delete gallery registered. ", gallery)
 		// function to delete a gallery
 		const getGalleryResponse = async (id: number) => {
 			// API call
