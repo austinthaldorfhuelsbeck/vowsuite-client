@@ -1,10 +1,14 @@
+import { useEffect } from "react"
+
 import { FileUpload } from "./utils/FileUpload"
-import { copy } from "../../data/app-constants"
 import { useStatus } from "../../hooks/useStatus"
+import { usePreview } from "../../hooks/usePreview"
 import { BannerActions } from "./utils/BannerActions"
 import { useVideoForm } from "../../hooks/useVideoForm"
+import { copy, imagePaths } from "../../data/app-constants"
 import { CheckboxGroup, InputGroup } from "./utils/InputGroups"
 import { video_name_validation } from "./utils/inputValidation"
+import { useVideoContext } from "../../context/ContextProvider"
 import { Form, FormRow } from "../../styles/components/forms.style"
 import {
 	DashboardHeader,
@@ -12,7 +16,8 @@ import {
 } from "../../styles/layouts/dashboard-layout.style"
 
 function VideoForm() {
-	// load context
+	// Context
+	const { video } = useVideoContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
 	const {
 		formData,
@@ -23,8 +28,9 @@ function VideoForm() {
 		onReset,
 		onSubmit,
 	} = useVideoForm(handleSuccess, handleError)
+	const { preview, getUrlFromAws } = usePreview()
 
-	// build props
+	// Props
 	const bannerActionsProps = {
 		success,
 		error,
@@ -32,6 +38,12 @@ function VideoForm() {
 		onClear,
 		onSubmit,
 	}
+
+	// Effects
+	// load preview image from aws
+	useEffect(() => {
+		if (video?.img_URL) getUrlFromAws(video.img_URL)
+	})
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
@@ -60,6 +72,7 @@ function VideoForm() {
 					formData={formData}
 					setFormData={setFormData}
 					label="Cover Image"
+					defaultUrl={preview || imagePaths.defaultUser}
 				/>
 			</FormRow>
 			<FormRow>

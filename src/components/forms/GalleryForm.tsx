@@ -1,4 +1,4 @@
-import { copy } from "../../data/app-constants"
+import { copy, imagePaths } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
 import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"
@@ -33,6 +33,7 @@ function GalleryForm({
 	const { gallery } = useGalleryContext()
 	const { formData, setFormData, onChange, onReset, onSubmit } =
 		useGalleryForm(handleSuccess, handleError)
+	const { preview, getUrlFromAws } = usePreview()
 
 	// State
 	const [fonts, setFonts] = useState<(IFont | undefined)[]>([])
@@ -67,6 +68,10 @@ function GalleryForm({
 	useEffect(() => {
 		if (gallery) setFormData(gallery)
 	}, [gallery, setFormData])
+	// load preview image from aws
+	useEffect(() => {
+		if (gallery?.img_URL) getUrlFromAws(gallery.img_URL)
+	})
 
 	return (
 		<>
@@ -83,6 +88,7 @@ function GalleryForm({
 						formData={formData}
 						setFormData={setFormData}
 						label="Cover Image"
+						defaultUrl={preview || imagePaths.defaultUser}
 					/>
 				</FormColumn>
 				<FormColumn>

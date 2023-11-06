@@ -95,10 +95,10 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 					<FormRow>
 						<FormColumn>
 							<CompanyForm {...formProps} />
-							<CompanyColorsForm {...formProps} />
 						</FormColumn>
 						<FormColumn>
 							<CompanyUrlsForm {...formProps} />
+							<CompanyColorsForm {...formProps} />
 						</FormColumn>
 					</FormRow>
 				</Form>

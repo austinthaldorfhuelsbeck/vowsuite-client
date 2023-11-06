@@ -1,10 +1,9 @@
 import { FileUpload } from "./utils/FileUpload"
-import { copy } from "../../data/app-constants"
+import { copy, imagePaths } from "../../data/app-constants"
 import { InputGroup } from "./utils/InputGroups"
 import { useStatus } from "../../hooks/useStatus"
 import { useUserForm } from "../../hooks/useUserForm"
 import { BannerActions } from "./utils/BannerActions"
-import { initialUserData } from "../../data/initial-data"
 import { useUserContext } from "../../context/ContextProvider"
 import { Form, FormRow } from "../../styles/components/forms.style"
 import {
@@ -15,17 +14,20 @@ import {
 	DashboardHeader,
 	StudioHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
+import { usePreview } from "../../hooks/usePreview"
+import { useEffect } from "react"
 
 function UserForm() {
-	// load context
+	// Context
 	const { user } = useUserContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
 	const { formData, setFormData, onChange, onReset, onSubmit } = useUserForm(
 		handleSuccess,
 		handleError,
 	)
+	const { preview, getUrlFromAws } = usePreview()
 
-	// build props
+	// Props
 	const bannerActionsProps = {
 		success,
 		error,
@@ -33,6 +35,11 @@ function UserForm() {
 		onReset,
 		onSubmit,
 	}
+
+	// Effects
+	useEffect(() => {
+		if (user?.img_URL) getUrlFromAws(user.img_URL)
+	})
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
@@ -59,6 +66,7 @@ function UserForm() {
 					formData={formData}
 					setFormData={setFormData}
 					label="Profile Image"
+					defaultUrl={preview || imagePaths.defaultUser}
 					isCircle
 				/>
 			</FormRow>

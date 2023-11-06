@@ -99,7 +99,7 @@ function Sidebar() {
 				gallery_id: now.valueOf(),
 				created_at: now,
 				updated_at: now,
-				img_URL: imagePaths.defaultUser,
+				img_URL: "",
 				font_id: 0,
 			}
 			createNewGallery(newGallery)

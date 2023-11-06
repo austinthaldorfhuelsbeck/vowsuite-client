@@ -24,7 +24,6 @@ import {
 import { ButtonTitle } from "../../../styles/components/buttons.style"
 import { usePreview } from "../../../hooks/usePreview"
 import { Modal } from "../../menus/Modal"
-import { initialGalleryData } from "../../../data/initial-data"
 
 // Models
 interface BaseProps {
@@ -34,12 +33,14 @@ interface BaseProps {
 interface ComponentProps extends BaseProps {
 	formData: any
 	setFormData: Dispatch<SetStateAction<any>>
+	defaultUrl?: string
 	label: string
 }
 
 function FileUpload({
 	formData,
 	setFormData,
+	defaultUrl,
 	label,
 	isCircle,
 	isVideo,
@@ -75,14 +76,12 @@ function FileUpload({
 						<Modal
 							button={
 								<PreviewImg
-									src={preview || initialGalleryData.img_URL}
+									src={preview || defaultUrl}
 									circle={isCircle}
 								/>
 							}
 							content={
-								<ShadowboxImg
-									src={preview || initialGalleryData.img_URL}
-								/>
+								<ShadowboxImg src={preview || defaultUrl} />
 							}
 						/>
 					)}

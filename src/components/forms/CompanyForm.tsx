@@ -1,12 +1,11 @@
 import { PropsWithChildren, SyntheticEvent, useEffect, useState } from "react"
 
-import { copy } from "../../data/app-constants"
+import { copy, imagePaths } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
 import { IFont } from "../../interfaces/models"
 import { IAppError } from "../../interfaces/api"
 import { usePreview } from "../../hooks/usePreview"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
-import { initialCompanyData } from "../../data/initial-data"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { useUserContext } from "../../context/ContextProvider"
 import { listFonts } from "../../services/vs-api/fonts.service"
@@ -73,6 +72,7 @@ function CompanyForm({
 				formData={formData}
 				setFormData={setFormData}
 				label="Company Logo"
+				defaultUrl={preview || imagePaths.defaultUser}
 				isCircle
 			/>
 			<DashboardHeader>{copy.companyFormSubheader}</DashboardHeader>
