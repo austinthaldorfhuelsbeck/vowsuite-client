@@ -72,7 +72,6 @@ function CompanyForm({
 			<FileUpload
 				formData={formData}
 				setFormData={setFormData}
-				defaultUrl={preview || initialCompanyData.img_URL}
 				label="Company Logo"
 				isCircle
 			/>

@@ -88,7 +88,6 @@ function GalleryForm({
 					<FileUpload
 						formData={formData}
 						setFormData={setFormData}
-						defaultUrl={preview || initialGalleryData.img_URL}
 						label="Cover Image"
 					/>
 				</FormColumn>

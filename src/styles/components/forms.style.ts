@@ -34,17 +34,19 @@ export const Form = styled.form`
 	}
 `
 
-interface FormInputProps {
-	text?: boolean
-	color?: boolean
-}
+// interface FormInputProps {
+// 	type: string
+// }
 
-export const FormInput = styled.input<FormInputProps>`
-	position: relative;
-	min-width: ${(props) => (props.text ? "30rem" : "8rem")};
-	min-height: ${(props) => (props.color ? "8rem" : "none")};
-	border: ${(props) => (props.color ? "none !important" : "solid 0.1rem")};
-	cursor: ${(props) => (props.text ? "text" : "pointer")};
+export const FormInput = styled.input`
+	min-width: ${(props) => (props.type === "text" ? "30rem" : "8rem")};
+	cursor: ${(props) => (props.type === "text" ? "text" : "pointer")};
+	min-height: ${(props) => (props.type === "color" ? "8rem" : "none")};
+	border: ${(props) =>
+		props.type === "color" ? "none !important" : "solid 0.1rem"};
+	opacity: ${(props) => (props.type === "checkbox" ? "0" : "100")};
+	position: ${(props) =>
+		props.type === "checkbox" ? "absolute" : "relative"};
 `
 
 export const FormRow = styled.div`
@@ -87,6 +89,12 @@ export const PreviewImg = styled.img<PreviewImgProps>`
 	object-fit: cover;
 	width: ${(props) => (props.circle ? "10rem" : "20rem")};
 	height: 10rem;
+	cursor: pointer;
+`
+
+export const ShadowboxImg = styled.img`
+	object-fit: contain;
+	width: 100%;
 `
 
 export const PreviewVideo = styled.video`
@@ -111,6 +119,38 @@ export const DragUploadButton = styled(TransparentButton)`
 	&:hover {
 		background-color: var(--dark-aluminium);
 		color: var(--white);
+	}
+`
+
+export const CheckboxContainer = styled(FormRow)`
+	position: relative;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+`
+
+interface CheckboxProps {
+	checked: boolean
+}
+
+export const Checkbox = styled.div<CheckboxProps>`
+	display: inline-block;
+	width: 3.5rem;
+	height: 3.5rem;
+	border: ${(props) =>
+		props.checked
+			? "0.4rem solid var(--yellow)"
+			: "0.2rem solid var(--aluminium)"};
+	border-radius: 3px;
+	transition: all 150ms;
+
+	svg {
+		transition: all 150ms;
+		margin: 0.6rem 0 0 0.75rem;
+		color: var(--yellow);
+		font-size: ${(props) => (props.checked ? "140%" : "0%")};
 	}
 `
 

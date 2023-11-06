@@ -1,11 +1,9 @@
 import { FileUpload } from "./utils/FileUpload"
 import { copy } from "../../data/app-constants"
-import { CheckboxGroup, InputGroup } from "./utils/InputGroups"
 import { useStatus } from "../../hooks/useStatus"
 import { BannerActions } from "./utils/BannerActions"
 import { useVideoForm } from "../../hooks/useVideoForm"
-import { initialVideoData } from "../../data/initial-data"
-import { useVideoContext } from "../../context/ContextProvider"
+import { CheckboxGroup, InputGroup } from "./utils/InputGroups"
 import { video_name_validation } from "./utils/inputValidation"
 import { Form, FormRow } from "../../styles/components/forms.style"
 import {
@@ -15,7 +13,6 @@ import {
 
 function VideoForm() {
 	// load context
-	const { video } = useVideoContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
 	const {
 		formData,
@@ -38,6 +35,7 @@ function VideoForm() {
 
 	return (
 		<Form onSubmit={onSubmit} noValidate autoComplete="off">
+			{/* {JSON.stringify(formData)} */}
 			<StudioHeaderContainer>
 				<DashboardHeader>{copy.videoFormHeader}</DashboardHeader>
 				<BannerActions {...bannerActionsProps} />
@@ -53,7 +51,6 @@ function VideoForm() {
 				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
-					defaultUrl={video?.video_URL || initialVideoData.video_URL}
 					label="Upload Video"
 					isVideo
 				/>
@@ -62,7 +59,6 @@ function VideoForm() {
 				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
-					defaultUrl={video?.img_URL || initialVideoData.img_URL}
 					label="Cover Image"
 				/>
 			</FormRow>

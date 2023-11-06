@@ -36,8 +36,7 @@ function useVideoForm(
 		setFormData({ ...formData, [name]: value })
 	}
 	function onCheck(e: ChangeEvent<any>) {
-		const { name } = e.target
-		setFormData({ ...formData, [name]: !formData.is_displayed })
+		setFormData({ ...formData, is_displayed: !formData.is_displayed })
 	}
 	function onClear(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()

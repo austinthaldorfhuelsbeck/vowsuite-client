@@ -3,9 +3,13 @@ import { ChangeEvent, PropsWithChildren } from "react"
 import { ErrorProps } from "./inputValidation"
 import {
 	Alert,
+	Checkbox,
+	CheckboxContainer,
 	FormInput,
 	FormRow,
 } from "../../../styles/components/forms.style"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
 
 // Data
 interface BaseProps {
@@ -60,8 +64,6 @@ function InputGroup({
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				text={type === "text"}
-				color={type === "color"}
 			/>
 			<InputError validation={validation} value={value} />
 		</FormRow>
@@ -100,17 +102,14 @@ function CheckboxGroup({
 	validation,
 }: PropsWithChildren<CheckboxProps>) {
 	return (
-		<FormRow>
+		<CheckboxContainer>
 			<label htmlFor={id}>{label}</label>
-			<FormInput
-				name={id}
-				type={type}
-				checked={false}
-				onClick={onChange}
-			/>
-			{value ? "Yes!" : "No"}
+			<Checkbox checked={value} onClick={onChange}>
+				<FontAwesomeIcon icon={faCheck} />
+			</Checkbox>
+
 			<InputError validation={validation} value={value.toString()} />
-		</FormRow>
+		</CheckboxContainer>
 	)
 }
 

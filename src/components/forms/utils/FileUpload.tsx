@@ -11,59 +11,41 @@ import { useDropzone } from "react-dropzone"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 
+import { Modal } from "../../menus/Modal"
+import { usePreview } from "../../../hooks/usePreview"
+import { imagePaths } from "../../../data/app-constants"
+import { ButtonTitle } from "../../../styles/components/buttons.style"
 import {
 	DragUploadButton,
 	FormColumn,
 	FormInput,
 	FormRow,
 	PreviewImg,
-	PreviewVideo,
 	ProgressBar,
 	ProgressBarProgress,
+	ShadowboxImg,
 } from "../../../styles/components/forms.style"
-import { ButtonTitle } from "../../../styles/components/buttons.style"
-import { usePreview } from "../../../hooks/usePreview"
 
 // Models
 interface BaseProps {
 	isCircle?: boolean
 	isVideo?: boolean
 }
-interface PreviewProps extends BaseProps {
-	src: string
-}
 interface ComponentProps extends BaseProps {
 	formData: any
 	setFormData: Dispatch<SetStateAction<any>>
-	defaultUrl: string
 	label: string
 }
 
-// Components
-function Preview({ isCircle, isVideo, src }: PropsWithChildren<PreviewProps>) {
-	return (
-		<>
-			{isVideo ? (
-				<PreviewVideo src={src} />
-			) : (
-				<PreviewImg src={src} circle={isCircle} />
-			)}
-		</>
-	)
-}
 function FileUpload({
 	formData,
 	setFormData,
-	defaultUrl,
 	label,
 	isCircle,
 	isVideo,
 }: PropsWithChildren<ComponentProps>) {
 	// Context
 	const { preview, progress, uploadToAws } = usePreview()
-
-	// Constants
-	const previewUrl: string = (preview || defaultUrl).toString()
 
 	// Callbacks
 	const onDrop = useCallback(
@@ -89,11 +71,21 @@ function FileUpload({
 			<ButtonTitle htmlFor="file">{label}</ButtonTitle>
 			<FormColumn>
 				<FormRow>
-					<Preview
-						isCircle={isCircle}
-						isVideo={isVideo}
-						src={previewUrl}
-					/>
+					{!isVideo && (
+						<Modal
+							button={
+								<PreviewImg
+									src={preview || imagePaths.defaultUser}
+									circle={isCircle}
+								/>
+							}
+							content={
+								<ShadowboxImg
+									src={preview || imagePaths.defaultUser}
+								/>
+							}
+						/>
+					)}
 					{100 > progress && 0 < progress ? (
 						<ProgressBar>
 							<ProgressBarProgress
@@ -102,11 +94,7 @@ function FileUpload({
 						</ProgressBar>
 					) : (
 						<div {...getRootProps()}>
-							<FormInput
-								{...getInputProps()}
-								color={false}
-								text={false}
-							/>
+							<FormInput {...getInputProps()} />
 							<DragUploadButton
 								onClick={(e: MouseEvent<HTMLButtonElement>) =>
 									e.preventDefault()

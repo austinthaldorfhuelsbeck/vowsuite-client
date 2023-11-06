@@ -58,7 +58,6 @@ function UserForm() {
 				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
-					defaultUrl={user?.img_URL || initialUserData.img_URL}
 					label="Profile Image"
 					isCircle
 				/>
