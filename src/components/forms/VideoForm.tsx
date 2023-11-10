@@ -53,18 +53,18 @@ function VideoForm() {
 				<BannerActions {...bannerActionsProps} />
 			</StudioHeaderContainer>
 			<FormRow>
-				<InputGroup
-					{...video_name_validation}
-					value={formData.video_name}
-					onChange={onChange}
-				/>
-			</FormRow>
-			<FormRow>
 				<FileUpload
 					formData={formData}
 					setFormData={setFormData}
 					label="Upload Video"
 					isVideo
+				/>
+			</FormRow>
+			<FormRow>
+				<InputGroup
+					{...video_name_validation}
+					value={formData.video_name}
+					onChange={onChange}
 				/>
 			</FormRow>
 			<FormRow>

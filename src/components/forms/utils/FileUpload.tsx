@@ -4,6 +4,7 @@ import {
 	PropsWithChildren,
 	SetStateAction,
 	useCallback,
+	useEffect,
 } from "react"
 
 import { useDropzone } from "react-dropzone"
@@ -46,14 +47,14 @@ function FileUpload({
 	isVideo,
 }: PropsWithChildren<ComponentProps>) {
 	// Context
-	const { preview, progress, uploadToAws } = usePreview()
+	const { preview, progress, validUrl, setPreview } = usePreview()
 
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
-			// call upload function, set form data
+			console.log("Drop!")
 			if (files[0]) {
-				uploadToAws(files[0])
+				setPreview(URL.createObjectURL(files[0]))
 				setFormData(
 					isVideo
 						? { ...formData, video_URL: files[0].name }
@@ -61,54 +62,55 @@ function FileUpload({
 				)
 			}
 		},
-		[formData, isVideo, setFormData, uploadToAws],
+		[formData, isVideo, setFormData, setPreview],
 	)
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 	})
 
+	// Effects
+	useEffect(() => {
+		// rerenders preview on form reset
+		if (!formData.img_URL) setPreview(defaultUrl)
+	}, [defaultUrl, formData.img_URL, setPreview])
+
 	return (
 		<FormRow>
 			<ButtonTitle htmlFor="file">{label}</ButtonTitle>
-			<FormColumn>
-				<FormRow>
-					{!isVideo && (
-						<Modal
-							button={
-								<PreviewImg
-									src={preview || defaultUrl}
-									circle={isCircle}
-								/>
-							}
-							content={
-								<ShadowboxImg src={preview || defaultUrl} />
-							}
+			{!isVideo && (
+				<Modal
+					button={
+						<PreviewImg
+							src={validUrl || preview}
+							circle={isCircle}
 						/>
-					)}
-					{100 > progress && 0 < progress ? (
-						<ProgressBar>
-							<ProgressBarProgress
-								done={progress}
-							>{`${progress}%`}</ProgressBarProgress>
-						</ProgressBar>
-					) : (
-						<div {...getRootProps()}>
-							<FormInput {...getInputProps()} />
-							<DragUploadButton
-								onClick={(e: MouseEvent<HTMLButtonElement>) =>
-									e.preventDefault()
-								}
-							>
-								{isDragActive ? (
-									<FontAwesomeIcon icon={faSquarePlus} />
-								) : (
-									<FontAwesomeIcon icon={faUpload} />
-								)}
-							</DragUploadButton>
-						</div>
-					)}
-				</FormRow>
-			</FormColumn>
+					}
+					content={<ShadowboxImg src={validUrl || preview} />}
+				/>
+			)}
+			{100 > progress && 0 < progress ? (
+				<ProgressBar>
+					<ProgressBarProgress
+						done={progress}
+					>{`${progress}%`}</ProgressBarProgress>
+				</ProgressBar>
+			) : (
+				<div {...getRootProps()}>
+					<FormInput {...getInputProps()} />
+					<p>{formData.img_URL}</p>
+					<DragUploadButton
+						onClick={(e: MouseEvent<HTMLButtonElement>) =>
+							e.preventDefault()
+						}
+					>
+						{isDragActive ? (
+							<FontAwesomeIcon icon={faSquarePlus} />
+						) : (
+							<FontAwesomeIcon icon={faUpload} />
+						)}
+					</DragUploadButton>
+				</div>
+			)}
 		</FormRow>
 	)
 }

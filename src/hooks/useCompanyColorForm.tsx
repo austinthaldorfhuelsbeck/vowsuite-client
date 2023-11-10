@@ -37,14 +37,13 @@ function useCompanyColorForm(
 		e.preventDefault()
 		if (initialData) setFormData(initialData)
 	}
-	async function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
+	async function onSubmit(e: SyntheticEvent) {
 		e.preventDefault()
 		// call API
 		const response: IApiResponse = initialData
 			? await updateCompanyColor(formData, formData.company_color_id)
 			: await createCompanyColor(formData)
 		if (response.data) {
-			// update context
 			handleSuccess()
 		}
 		if (response.error) {

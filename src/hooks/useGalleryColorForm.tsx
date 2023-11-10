@@ -37,7 +37,7 @@ function useGalleryColorForm(
 		e.preventDefault()
 		if (initialData) setFormData(initialData)
 	}
-	async function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
+	async function onSubmit(e: SyntheticEvent) {
 		e.preventDefault()
 		// call API
 		const response: IApiResponse = initialData

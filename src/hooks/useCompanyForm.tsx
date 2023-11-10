@@ -1,5 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react"
-import { IBaseCompany } from "../interfaces/models"
+import { IBaseCompany, ICompany } from "../interfaces/models"
 import { useUserContext } from "../context/ContextProvider"
 import { initialCompanyData } from "../data/initial-data"
 import { IApiResponse, IAppError } from "../interfaces/api"
@@ -15,18 +15,20 @@ function useCompanyForm(
 	// context
 	const { user, setUser } = useUserContext()
 	// determine initial form data
-	const initialData: IBaseCompany = user?.company
+	const initialData: ICompany = user?.company
 		? {
 				...user.company,
-				user_id: user.user_id,
+				// user_id: user.user_id,
 		  }
 		: {
 				...initialCompanyData,
 				user_id: user?.user_id || initialCompanyData.user_id,
+				colors: [],
+				urls: [],
 		  }
 
 	// state
-	const [formData, setFormData] = useState<IBaseCompany>(initialData)
+	const [formData, setFormData] = useState<ICompany>(initialData)
 
 	// handlers
 	function onChange(e: ChangeEvent<HTMLInputElement>) {

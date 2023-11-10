@@ -1,4 +1,10 @@
-import { MouseEvent, PropsWithChildren, SyntheticEvent, useState } from "react"
+import {
+	MouseEvent,
+	PropsWithChildren,
+	SyntheticEvent,
+	useEffect,
+	useState,
+} from "react"
 
 import {
 	faExternalLinkSquareAlt,
@@ -11,11 +17,14 @@ import { VideoForm } from "../forms/VideoForm"
 import { useStatus } from "../../hooks/useStatus"
 import { CompanyForm } from "../forms/CompanyForm"
 import { NotFoundPage } from "../../pages/NotFoundPage"
-import { IGallery, IUser } from "../../interfaces/models"
-import { CompanyUrlsForm } from "../forms/CompanyUrlsForm"
+import {
+	ICompany,
+	ICompanyColor,
+	IGallery,
+	IUser,
+} from "../../interfaces/models"
 import { formatGreeting } from "../../services/util.service"
 import { BannerActions } from "../forms/utils/BannerActions"
-import { CompanyColorsForm } from "../forms/CompanyColorsForm"
 import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
@@ -33,6 +42,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { TransparentButton } from "../../styles/components/buttons.style"
 import { baseUrls } from "../../data/app-constants"
 import { Link } from "react-router-dom"
+import { useCompanyForm } from "../../hooks/useCompanyForm"
+import { listCompanyColors } from "../../services/vs-api/companies.service"
+import { IApiResponse } from "../../interfaces/api"
 
 // Data Models
 interface DashboardProps {
@@ -45,44 +57,42 @@ interface GalleryEditorProps {
 function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 	// Context
 	const { success, error, handleSuccess, handleError } = useStatus()
-
-	// State
-	const [submit, setSubmit] = useState<
-		SyntheticEvent<HTMLButtonElement> | undefined
-	>()
-	const [reset, setReset] = useState<
-		SyntheticEvent<HTMLButtonElement> | undefined
-	>()
+	const useCompanySection = useCompanyForm(handleSuccess, handleError)
 
 	// Constants
 	const now: Date = new Date()
 	const greeting: string = formatGreeting(now, user.user_name)
 
+	// State
+	const [colors, setColors] = useState<(ICompanyColor | undefined)[]>([])
+
 	// Handlers
-	function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		setSubmit(e)
-		setTimeout(setSubmit, 500, undefined)
-	}
+	// reset/submit all forms at once
 	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		setReset(e)
-		setTimeout(setReset, 500, undefined)
+		useCompanySection.onReset(e)
+	}
+	function onSubmit(e: SyntheticEvent) {
+		useCompanySection.onSubmit(e)
 	}
 
 	// Props
-	const formProps = {
-		submit,
-		reset,
-		handleSuccess,
-		handleError,
-	}
 	const bannerProps = {
-		onSubmit,
-		onReset,
 		success,
 		error,
+		onReset,
+		onSubmit,
 	}
+
+	// Effects
+	useEffect(() => {
+		async function listColors(company: ICompany) {
+			const response: IApiResponse = await listCompanyColors(
+				company.company_id,
+			)
+			setColors(response.data)
+		}
+		if (user?.company) listColors(user.company)
+	}, [user])
 
 	return (
 		<>
@@ -93,15 +103,13 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 			<DashboardBlock>
 				<Form noValidate autoComplete="off">
 					<FormRow>
-						<FormColumn>
-							<CompanyForm {...formProps} />
-						</FormColumn>
-						<FormColumn>
-							<CompanyUrlsForm {...formProps} />
-							<CompanyColorsForm {...formProps} />
-						</FormColumn>
+						<CompanyForm {...useCompanySection} />
 					</FormRow>
 				</Form>
+			</DashboardBlock>
+			<DashboardBlock>
+				<DashboardHeader>Debugging:</DashboardHeader>
+				<pre>{JSON.stringify(user, null, "\t")}</pre>
 			</DashboardBlock>
 		</>
 	)

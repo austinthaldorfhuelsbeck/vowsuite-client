@@ -25,7 +25,6 @@ export interface IBaseCompany {
 export interface ICompany extends IBaseCompany {
 	colors: ICompanyColor[]
 	urls: ICompanyUrl[]
-	font: IFont
 }
 
 export interface IBaseGallery {

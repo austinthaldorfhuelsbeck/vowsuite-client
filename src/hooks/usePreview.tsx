@@ -17,10 +17,12 @@ const s3 = new AWS.S3({
 
 function usePreview() {
 	const [preview, setPreview] = useState<string | undefined>()
+	const [validUrl, setValidUrl] = useState<string | undefined>()
 	const [progress, setProgress] = useState<number>(0)
 
 	// function to get signed url, and set preview state
 	async function getUrlFromAws(key: string) {
+		console.log("Getting url...")
 		const target = {
 			Bucket: S3_BUCKET,
 			Key: key,
@@ -28,11 +30,13 @@ function usePreview() {
 		const response: string = await s3
 			.getSignedUrl("getObject", target)
 			.toString()
-		setPreview(response)
+		setValidUrl(response)
+		console.log(response)
 	}
 
 	// function to upload, set progress bar, and call getUrl
 	async function uploadToAws(file: File) {
+		console.log("Upload ran")
 		const target = {
 			Bucket: S3_BUCKET,
 			Key: file.name,
@@ -50,8 +54,10 @@ function usePreview() {
 	return {
 		preview,
 		progress,
+		validUrl,
 		getUrlFromAws,
 		uploadToAws,
+		setPreview,
 	}
 }
 
