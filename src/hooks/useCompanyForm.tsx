@@ -16,10 +16,7 @@ function useCompanyForm(
 	const { user, setUser } = useUserContext()
 	// determine initial form data
 	const initialData: ICompany = user?.company
-		? {
-				...user.company,
-				// user_id: user.user_id,
-		  }
+		? user.company
 		: {
 				...initialCompanyData,
 				user_id: user?.user_id || initialCompanyData.user_id,
@@ -34,6 +31,10 @@ function useCompanyForm(
 	function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
+	}
+	function onUrlChange(e: ChangeEvent<HTMLInputElement>, index: number) {
+		const { name, value } = e.target
+		console.log("Change: name | value | index", name, value, index)
 	}
 	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
@@ -77,7 +78,7 @@ function useCompanyForm(
 		}
 	}
 
-	return { formData, setFormData, onChange, onReset, onSubmit }
+	return { formData, setFormData, onChange, onUrlChange, onReset, onSubmit }
 }
 
 export { useCompanyForm }

@@ -56,54 +56,34 @@ interface GalleryEditorProps {
 
 function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 	// Context
-	const { success, error, handleSuccess, handleError } = useStatus()
-	const useCompanySection = useCompanyForm(handleSuccess, handleError)
 
 	// Constants
 	const now: Date = new Date()
 	const greeting: string = formatGreeting(now, user.user_name)
 
 	// State
-	const [colors, setColors] = useState<(ICompanyColor | undefined)[]>([])
-
-	// Handlers
-	// reset/submit all forms at once
-	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
-		useCompanySection.onReset(e)
-	}
-	function onSubmit(e: SyntheticEvent) {
-		useCompanySection.onSubmit(e)
-	}
-
-	// Props
-	const bannerProps = {
-		success,
-		error,
-		onReset,
-		onSubmit,
-	}
+	// const [colors, setColors] = useState<(ICompanyColor | undefined)[]>([])
 
 	// Effects
-	useEffect(() => {
-		async function listColors(company: ICompany) {
-			const response: IApiResponse = await listCompanyColors(
-				company.company_id,
-			)
-			setColors(response.data)
-		}
-		if (user?.company) listColors(user.company)
-	}, [user])
+	// useEffect(() => {
+	// 	async function listColors(company: ICompany) {
+	// 		const response: IApiResponse = await listCompanyColors(
+	// 			company.company_id,
+	// 		)
+	// 		setColors(response.data)
+	// 	}
+	// 	if (user?.company) listColors(user.company)
+	// }, [user])
 
 	return (
 		<>
 			<StudioHeaderContainer>
 				<DashboardHeader>{greeting}</DashboardHeader>
-				<BannerActions {...bannerProps} />
 			</StudioHeaderContainer>
 			<DashboardBlock>
 				<Form noValidate autoComplete="off">
 					<FormRow>
-						<CompanyForm {...useCompanySection} />
+						<CompanyForm />
 					</FormRow>
 				</Form>
 			</DashboardBlock>
