@@ -59,7 +59,7 @@ export const FormRow = styled.div`
 export const FormColumn = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 1rem;
+	margin: 0.5rem;
 `
 
 interface AlertProps {
@@ -80,16 +80,17 @@ export const Alert = styled.div<AlertProps>`
 		AlertProps.error ? "var(--white)" : "var(--dark-aluminium)"};
 `
 
-interface PreviewImgProps {
-	circle?: boolean
-}
-
-export const PreviewImg = styled.img<PreviewImgProps>`
-	border-radius: ${(props) => (props.circle ? "100%" : "0%")};
+export const ThumbnailImg = styled.img`
 	object-fit: cover;
-	width: ${(props) => (props.circle ? "10rem" : "20rem")};
+	width: 20rem;
 	height: 10rem;
 	cursor: pointer;
+`
+
+export const PreviewImg = styled(ThumbnailImg)`
+	border-radius: 100%;
+	width: 10rem;
+	margin-top: 1rem;
 `
 
 export const ShadowboxImg = styled.img`

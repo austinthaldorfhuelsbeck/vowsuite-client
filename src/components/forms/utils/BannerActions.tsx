@@ -8,11 +8,25 @@ import { IAppError } from "../../../interfaces/api"
 import { Alert, FormRow } from "../../../styles/components/forms.style"
 import { TransparentButton } from "../../../styles/components/buttons.style"
 
-interface ComponentProps {
+interface BannerProps {
 	success?: boolean
 	error?: IAppError | undefined
+}
+export interface BannerActionsProps extends BannerProps {
 	onReset?: (e: SyntheticEvent<any>) => void
 	onSubmit?: (e: SyntheticEvent<any>) => any
+}
+
+function Banner({ success, error }: PropsWithChildren<BannerProps>) {
+	return (
+		<FormRow>
+			{(success || error) && (
+				<Alert error={error !== undefined} success={success}>
+					{error ? error.message : copy.formSuccess}
+				</Alert>
+			)}
+		</FormRow>
+	)
 }
 
 function BannerActions({
@@ -20,7 +34,7 @@ function BannerActions({
 	error,
 	onReset,
 	onSubmit,
-}: PropsWithChildren<ComponentProps>) {
+}: PropsWithChildren<BannerActionsProps>) {
 	return (
 		<>
 			<FormRow>
@@ -36,15 +50,9 @@ function BannerActions({
 					</TransparentButton>
 				)}
 			</FormRow>
-			<FormRow>
-				{(success || error) && (
-					<Alert error={error !== undefined} success={success}>
-						{error ? error.message : copy.formSuccess}
-					</Alert>
-				)}
-			</FormRow>
+			<Banner success={success} error={error} />
 		</>
 	)
 }
 
-export { BannerActions }
+export { BannerActions, Banner }

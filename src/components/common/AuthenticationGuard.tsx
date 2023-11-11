@@ -2,8 +2,8 @@ import React, { ComponentType, PropsWithChildren } from "react"
 
 import { withAuthenticationRequired } from "@auth0/auth0-react"
 
-import { PageLoader } from "./PageLoader"
-import { PageContent } from "../../styles/layouts/page-layout.style"
+import { Loader, PageContent } from "../../styles/layouts/page-layout.style"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 interface ComponentProps {
 	component: ComponentType
@@ -14,7 +14,7 @@ function AuthenticationGuard({ component }: PropsWithChildren<ComponentProps>) {
 	const Component = withAuthenticationRequired(component, {
 		onRedirecting: () => (
 			<PageContent>
-				<PageLoader />
+				<Loader icon={faSpinner} />
 			</PageContent>
 		),
 	})

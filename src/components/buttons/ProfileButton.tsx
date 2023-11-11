@@ -19,7 +19,7 @@ function ProfileButton() {
 	// Context
 	const { logout } = useAuth0()
 	const { user } = useUserContext()
-	const { preview, getUrlFromAws } = usePreview()
+	const { validUrl, getUrlFromAws } = usePreview()
 
 	// Handlers
 	const onLogout = () => {
@@ -38,7 +38,7 @@ function ProfileButton() {
 
 	return (
 		<ContextMenu
-			button={<NavProfileImg src={preview || imagePaths.defaultUser} />}
+			button={<NavProfileImg src={validUrl || imagePaths.defaultUser} />}
 			content={
 				<>
 					{renderModalContextMenu(profileContextList)}

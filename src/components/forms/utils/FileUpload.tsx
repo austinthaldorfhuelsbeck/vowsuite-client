@@ -14,13 +14,13 @@ import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
 
 import {
 	DragUploadButton,
-	FormColumn,
 	FormInput,
 	FormRow,
 	PreviewImg,
 	ProgressBar,
 	ProgressBarProgress,
 	ShadowboxImg,
+	ThumbnailImg,
 } from "../../../styles/components/forms.style"
 import { ButtonTitle } from "../../../styles/components/buttons.style"
 import { usePreview } from "../../../hooks/usePreview"
@@ -47,12 +47,12 @@ function FileUpload({
 	isVideo,
 }: PropsWithChildren<ComponentProps>) {
 	// Context
-	const { preview, progress, validUrl, setPreview } = usePreview()
+	const { preview, progress, validUrl, getUrlFromAws, setPreview } =
+		usePreview()
 
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
-			console.log("Drop!")
 			if (files[0]) {
 				setPreview(URL.createObjectURL(files[0]))
 				setFormData(
@@ -70,9 +70,14 @@ function FileUpload({
 
 	// Effects
 	useEffect(() => {
+		// fetches valid preview url or
 		// rerenders preview on form reset
-		if (!formData.img_URL) setPreview(defaultUrl)
-	}, [defaultUrl, formData.img_URL, setPreview])
+		if (formData.img_URL) {
+			getUrlFromAws(formData.img_URL)
+		} else {
+			setPreview(defaultUrl)
+		}
+	}, [defaultUrl, formData.img_URL, setPreview, getUrlFromAws])
 
 	return (
 		<FormRow>
@@ -80,10 +85,11 @@ function FileUpload({
 			{!isVideo && (
 				<Modal
 					button={
-						<PreviewImg
-							src={validUrl || preview}
-							circle={isCircle}
-						/>
+						isCircle ? (
+							<PreviewImg src={validUrl || preview} />
+						) : (
+							<ThumbnailImg src={validUrl || preview} />
+						)
 					}
 					content={<ShadowboxImg src={validUrl || preview} />}
 				/>

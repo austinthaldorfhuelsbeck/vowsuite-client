@@ -27,6 +27,18 @@ export interface ICompany extends IBaseCompany {
 	urls: ICompanyUrl[]
 }
 
+export interface ICompanyForm extends IBaseCompany {
+	color0: ICompanyColor
+	color1: ICompanyColor
+	color2: ICompanyColor
+	url0: ICompanyUrl
+	url1: ICompanyUrl
+	url2: ICompanyUrl
+	url3: ICompanyUrl
+	url4: ICompanyUrl
+	url5: ICompanyUrl
+}
+
 export interface IBaseGallery {
 	gallery_id: number
 	user_id: number
@@ -50,10 +62,13 @@ export interface IGalleryColor {
 	updated_at: Date
 }
 
-export interface ICompanyColor {
-	company_color_id: number
+export interface ICompanyColorReq {
 	company_id: number
 	value: string
+}
+
+export interface ICompanyColor extends ICompanyColorReq {
+	company_color_id: number
 	created_at: Date
 	updated_at: Date
 }

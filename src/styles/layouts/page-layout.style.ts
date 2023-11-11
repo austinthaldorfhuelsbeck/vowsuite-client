@@ -1,10 +1,10 @@
-import styled from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import styled, { keyframes } from "styled-components"
 
 export const PageContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	/* height: 100%; */
 	width: 100%;
 `
 
@@ -15,13 +15,18 @@ export const PageContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 8rem;
-	/* max-width: 120rem; */
 	width: 100%;
 `
 
-export const Loader = styled.div`
-	height: 5rem;
-	width: 5rem;
+const spinAnimation = keyframes`
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(720deg); }
+`
+
+export const Loader = styled(FontAwesomeIcon)`
+	font-size: 500%;
 	margin: auto;
-	animation: spin 2s infinite linear;
+	animation-name: ${spinAnimation};
+	animation-duration: 2.5s;
+	animation-iteration-count: infinite;
 `

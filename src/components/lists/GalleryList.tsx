@@ -75,10 +75,13 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	// Handlers
 	async function onClick(e: MouseEvent<HTMLLabelElement>) {
 		e.preventDefault()
-		const foundGallery: IGallery = (
-			await readGallery(String(currentGallery.gallery_id))
-		).data
-		setGallery(foundGallery)
+		if (gallery?.gallery_id !== currentGallery.gallery_id) {
+			setGallery(currentGallery)
+			const foundGallery: IGallery = (
+				await readGallery(String(currentGallery.gallery_id))
+			).data
+			setGallery(foundGallery)
+		}
 	}
 
 	// highlights if selected, sets selected on click

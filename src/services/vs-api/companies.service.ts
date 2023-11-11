@@ -68,10 +68,9 @@ export const listCompanyUrls = async (id: number): Promise<IApiResponse> => {
 
 export const updateCompanyUrl = async (
 	url: ICompanyUrl,
-	id: number,
 ): Promise<IApiResponse> => {
 	const config: AxiosRequestConfig = {
-		url: `${apiUrl}/companies/urls/${id}`,
+		url: `${apiUrl}/companies/urls/${url.company_url_id}`,
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
@@ -91,7 +90,7 @@ export const createCompanyUrl = async (
 	url: ICompanyUrl,
 ): Promise<IApiResponse> => {
 	const config: AxiosRequestConfig = {
-		url: `${apiUrl}/companies/${url.company_id}`,
+		url: `${apiUrl}/companies/${url.company_id}/urls`,
 		method: "POST",
 		headers: {
 			"content-type": "application/json",
@@ -126,10 +125,9 @@ export const listCompanyColors = async (id: number): Promise<IApiResponse> => {
 
 export const updateCompanyColor = async (
 	color: ICompanyColor,
-	id: number,
 ): Promise<IApiResponse> => {
 	const config: AxiosRequestConfig = {
-		url: `${apiUrl}/companies/colors/${id}`,
+		url: `${apiUrl}/companies/colors/${color.company_color_id}`,
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
@@ -149,7 +147,7 @@ export const createCompanyColor = async (
 	color: ICompanyColor,
 ): Promise<IApiResponse> => {
 	const config: AxiosRequestConfig = {
-		url: `${apiUrl}/companies/${color.company_id}`,
+		url: `${apiUrl}/companies/${color.company_id}/colors`,
 		method: "POST",
 		headers: {
 			"content-type": "application/json",

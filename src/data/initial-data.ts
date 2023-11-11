@@ -3,6 +3,7 @@ import {
 	IVideo,
 	IBaseUser,
 	IBaseCompany,
+	ICompanyForm,
 } from "../interfaces/models"
 import { imagePaths } from "./app-constants"
 
@@ -32,14 +33,77 @@ export const initialVideoData: IVideo = {
 }
 
 // company form data
+const dates = {
+	created_at: new Date(),
+	updated_at: new Date(),
+}
 export const initialCompanyData: IBaseCompany = {
-	company_id: new Date().valueOf(),
+	company_id: 0,
 	user_id: 0,
 	font_id: 0,
 	company_name: "",
 	img_URL: imagePaths.defaultUser,
-	created_at: new Date(),
-	updated_at: new Date(),
+	// color0: {
+	// 	company_color_id: new Date().valueOf(),
+	// 	company_id: id,
+	// 	value: "#000000",
+	// 	...dates,
+	// },
+	// color1: {
+	// 	company_color_id: new Date().valueOf() + 1,
+	// 	company_id: id,
+	// 	value: "#000000",
+	// 	...dates,
+	// },
+	// color2: {
+	// 	company_color_id: new Date().valueOf() + 2,
+	// 	company_id: id,
+	// 	value: "#000000",
+	// 	...dates,
+	// },
+	// url0: {
+	// 	company_url_id: new Date().valueOf(),
+	// 	company_id: id,
+	// 	label: "Website",
+	// 	target: "",
+	// 	...dates,
+	// },
+	// url1: {
+	// 	company_url_id: new Date().valueOf() + 1,
+	// 	company_id: id,
+	// 	label: "Facebook",
+	// 	target: "",
+	// 	...dates,
+	// },
+	// url2: {
+	// 	company_url_id: new Date().valueOf() + 2,
+	// 	company_id: id,
+	// 	label: "Instagram",
+	// 	target: "",
+	// 	...dates,
+	// },
+	// url3: {
+	// 	company_url_id: new Date().valueOf() + 3,
+	// 	company_id: id,
+	// 	label: "YouTube",
+	// 	target: "",
+	// 	...dates,
+	// },
+	// url4: {
+	// 	company_url_id: new Date().valueOf() + 4,
+	// 	company_id: id,
+	// 	label: "TikTok",
+	// 	target: "",
+	// 	...dates,
+	// },
+	// url5: {
+	// 	company_url_id: new Date().valueOf() + 5,
+	// 	company_id: id,
+	// 	label: "Vimeo",
+	// 	target: "",
+	// 	...dates,
+	// },
+	...dates,
 }
 
 // user form data

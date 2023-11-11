@@ -1,9 +1,9 @@
 import { useRoutes } from "react-router-dom"
 
 import { routes } from "./routes"
-import { PageLoader } from "./components/common/PageLoader"
 import { ContextProvider } from "./context/ContextProvider"
-import { PageContainer } from "./styles/layouts/page-layout.style"
+import { Loader, PageContainer } from "./styles/layouts/page-layout.style"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons"
 
 function App() {
 	// load routes
@@ -13,7 +13,7 @@ function App() {
 		<ContextProvider>{content}</ContextProvider>
 	) : (
 		<PageContainer>
-			<PageLoader />
+			<Loader icon={faSpinner} />
 		</PageContainer>
 	)
 }

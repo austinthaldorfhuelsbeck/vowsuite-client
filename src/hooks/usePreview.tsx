@@ -22,7 +22,6 @@ function usePreview() {
 
 	// function to get signed url, and set preview state
 	async function getUrlFromAws(key: string) {
-		console.log("Getting url...")
 		const target = {
 			Bucket: S3_BUCKET,
 			Key: key,
@@ -31,12 +30,10 @@ function usePreview() {
 			.getSignedUrl("getObject", target)
 			.toString()
 		setValidUrl(response)
-		console.log(response)
 	}
 
 	// function to upload, set progress bar, and call getUrl
 	async function uploadToAws(file: File) {
-		console.log("Upload ran")
 		const target = {
 			Bucket: S3_BUCKET,
 			Key: file.name,

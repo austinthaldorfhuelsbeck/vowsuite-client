@@ -2,7 +2,7 @@ import { MouseEvent, useEffect } from "react"
 
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 
-import { copy, imagePaths } from "../../data/app-constants"
+import { copy } from "../../data/app-constants"
 import { GalleryList } from "../lists/GalleryList"
 import {
 	useGalleryContext,
@@ -38,7 +38,7 @@ function CompanyTabButton() {
 	// Context
 	const { user } = useUserContext()
 	const { setGallery } = useGalleryContext()
-	const { preview, getUrlFromAws } = usePreview()
+	const { validUrl, getUrlFromAws } = usePreview()
 
 	// Effects
 	useEffect(() => {
@@ -48,9 +48,9 @@ function CompanyTabButton() {
 	// button shows company name or "new company"
 	return (
 		<TabButton onClick={() => setGallery(undefined)}>
-			<NavProfileImg src={preview} />
+			{validUrl && <NavProfileImg src={validUrl} />}
 			<ButtonTitle>
-				{user ? user.company.company_name : copy.companyTabNew}
+				{user?.company ? user.company.company_name : copy.companyTabNew}
 			</ButtonTitle>
 		</TabButton>
 	)

@@ -107,7 +107,6 @@ function CheckboxGroup({
 			<Checkbox checked={value} onClick={onChange}>
 				<FontAwesomeIcon icon={faCheck} />
 			</Checkbox>
-
 			<InputError validation={validation} value={value.toString()} />
 		</CheckboxContainer>
 	)
