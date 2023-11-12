@@ -5,7 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { copy } from "../../data/app-constants"
 import { IApiResponse } from "../../interfaces/api"
 import { deleteGallery } from "../../services/vs-api/galleries.service"
-import { Form, FormRow } from "../../styles/components/forms.style"
+import { FormContainer, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -68,9 +68,9 @@ function GalleryDeleteForm() {
 	}
 
 	return (
-		<Form>
+		<FormContainer>
 			<ConfirmDelete onDelete={onDelete} />
-		</Form>
+		</FormContainer>
 	)
 }
 
@@ -102,9 +102,9 @@ function VideoDeleteForm() {
 	}
 
 	return (
-		<Form>
+		<FormContainer>
 			<ConfirmDelete onDelete={onDelete} />
-		</Form>
+		</FormContainer>
 	)
 }
 

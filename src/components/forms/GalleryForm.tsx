@@ -2,17 +2,25 @@ import { copy, imagePaths } from "../../data/app-constants"
 import { FileUpload } from "./utils/FileUpload"
 import { useGalleryForm } from "../../hooks/useGalleryForm"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"
-import { FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
+	FormColumn,
+	FormContainer,
+	FormRow,
+} from "../../styles/components/forms.style"
+import {
+	color_validation,
 	font_validation,
 	gallery_name_validation,
 } from "./utils/inputValidation"
-import { DashboardHeader } from "../../styles/layouts/dashboard-layout.style"
+import {
+	DashboardHeader,
+	StudioHeaderContainer,
+} from "../../styles/layouts/dashboard-layout.style"
 import { PropsWithChildren, useEffect, useState } from "react"
 import { IFont, IGallery } from "../../interfaces/models"
 import { listFonts } from "../../services/vs-api/fonts.service"
 import { usePreview } from "../../hooks/usePreview"
-import { useStatus } from "../../hooks/useStatus"
+import { BannerActions } from "./utils/BannerActions"
 
 interface ComponentProps {
 	gallery: IGallery
@@ -20,7 +28,7 @@ interface ComponentProps {
 
 function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 	// Context
-	const { preview, validUrl, getUrlFromAws } = usePreview()
+	const { getUrlFromAws } = usePreview()
 	const { useBase, useColor0, useColor1, useColor2, bannerProps } =
 		useGalleryForm(gallery)
 
@@ -40,17 +48,21 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 		}
 		getAllFonts()
 	}, [])
-	// update gallery if it exists
-	useEffect(() => {
-		if (gallery) useBase.setFormData(gallery)
-	}, [gallery, useBase])
 	// load preview image from aws
 	useEffect(() => {
 		if (gallery?.img_URL) getUrlFromAws(gallery.img_URL)
 	})
+	// load gallery on switch
+	useEffect(() => {
+		useBase.setFormData(gallery)
+	}, [gallery])
 
 	return (
-		<>
+		<FormContainer noValidate autoComplete="off">
+			<StudioHeaderContainer>
+				<DashboardHeader>{copy.galleryFormHeader}</DashboardHeader>
+				<BannerActions {...bannerProps} />
+			</StudioHeaderContainer>
 			<FormRow>
 				<FormColumn>
 					<DashboardHeader>
@@ -64,15 +76,11 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 						formData={useBase.formData}
 						setFormData={useBase.setFormData}
 						label="Cover Image"
-						defaultUrl={
-							validUrl || preview || imagePaths.defaultUser
-						}
+						defaultUrl={imagePaths.defaultUser}
 					/>
 				</FormColumn>
 				<FormColumn>
-					<DashboardHeader>
-						{copy.companyFormSubheader}
-					</DashboardHeader>
+					<DashboardHeader>Branding</DashboardHeader>
 					{fonts && (
 						<ControlGroup
 							{...font_validation}
@@ -81,10 +89,35 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 							onChange={useBase.onChange}
 						/>
 					)}
-					{/* <GalleryColorsForm {...formProps} /> */}
+					<FormRow>
+						<FormColumn>
+							<label>Primary Color</label>
+							<InputGroup
+								{...color_validation}
+								value={useColor0.formData.value}
+								onChange={useColor0.onChange}
+							/>
+						</FormColumn>
+						<FormColumn>
+							<label>Secondary Color</label>
+							<InputGroup
+								{...color_validation}
+								value={useColor1.formData.value}
+								onChange={useColor1.onChange}
+							/>
+						</FormColumn>
+						<FormColumn>
+							<label>Accent Color</label>
+							<InputGroup
+								{...color_validation}
+								value={useColor2.formData.value}
+								onChange={useColor2.onChange}
+							/>
+						</FormColumn>
+					</FormRow>
 				</FormColumn>
 			</FormRow>
-		</>
+		</FormContainer>
 	)
 }
 

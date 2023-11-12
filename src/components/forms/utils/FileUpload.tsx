@@ -53,6 +53,7 @@ function FileUpload({
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
+			console.log("Drop: ", files[0].name)
 			if (files[0]) {
 				setPreview(URL.createObjectURL(files[0]))
 				setFormData(
@@ -74,10 +75,11 @@ function FileUpload({
 		// rerenders preview on form reset
 		if (formData.img_URL) {
 			getUrlFromAws(formData.img_URL)
+			if (validUrl) setPreview(validUrl)
 		} else {
 			setPreview(defaultUrl)
 		}
-	}, [defaultUrl, formData.img_URL, setPreview, getUrlFromAws])
+	}, [defaultUrl, formData.img_URL, setPreview, getUrlFromAws, validUrl])
 
 	return (
 		<FormRow>
@@ -86,12 +88,12 @@ function FileUpload({
 				<Modal
 					button={
 						isCircle ? (
-							<PreviewImg src={validUrl || preview} />
+							<PreviewImg src={preview} />
 						) : (
-							<ThumbnailImg src={validUrl || preview} />
+							<ThumbnailImg src={preview} />
 						)
 					}
-					content={<ShadowboxImg src={validUrl || preview} />}
+					content={<ShadowboxImg src={preview} />}
 				/>
 			)}
 			{100 > progress && 0 < progress ? (

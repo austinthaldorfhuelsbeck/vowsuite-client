@@ -5,7 +5,7 @@ import { useStatus } from "../../hooks/useStatus"
 import { useUserForm } from "../../hooks/useUserForm"
 import { BannerActions } from "./utils/BannerActions"
 import { useUserContext } from "../../context/ContextProvider"
-import { Form, FormRow } from "../../styles/components/forms.style"
+import { FormContainer, FormRow } from "../../styles/components/forms.style"
 import {
 	user_email_validation,
 	user_name_validation,
@@ -42,7 +42,7 @@ function UserForm() {
 	})
 
 	return (
-		<Form onSubmit={onSubmit} noValidate autoComplete="off">
+		<FormContainer onSubmit={onSubmit} noValidate autoComplete="off">
 			<StudioHeaderContainer>
 				<DashboardHeader>{copy.userFormHeader}</DashboardHeader>
 				<BannerActions {...bannerActionsProps} />
@@ -70,7 +70,7 @@ function UserForm() {
 					isCircle
 				/>
 			</FormRow>
-		</Form>
+		</FormContainer>
 	)
 }
 

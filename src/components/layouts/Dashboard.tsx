@@ -13,7 +13,11 @@ import { VideoForm } from "../forms/VideoForm"
 import { CompanyForm } from "../forms/CompanyForm"
 import { IGallery, IUser } from "../../interfaces/models"
 import { formatGreeting } from "../../services/util.service"
-import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
+import {
+	FormContainer,
+	FormColumn,
+	FormRow,
+} from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -124,7 +128,6 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 	return (
 		<>
 			<StudioHeaderContainer>
-				<DashboardHeader>Gallery Details</DashboardHeader>
 				<FormRow>
 					<Link
 						to={galleryUrl}
@@ -132,15 +135,14 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 						rel="noopener noreferrer"
 					>
 						<TransparentButton>
+							{"View Gallery "}
 							<FontAwesomeIcon icon={faExternalLinkSquareAlt} />
 						</TransparentButton>
 					</Link>
 				</FormRow>
 			</StudioHeaderContainer>
 			<DashboardBlock>
-				<Form noValidate autoComplete="off">
-					<GalleryForm gallery={gallery} />
-				</Form>
+				<GalleryForm gallery={gallery} />
 			</DashboardBlock>
 			<StudioHeaderContainer>
 				<DashboardHeader>Videos</DashboardHeader>

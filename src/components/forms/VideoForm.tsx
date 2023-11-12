@@ -9,7 +9,7 @@ import { copy, imagePaths } from "../../data/app-constants"
 import { CheckboxGroup, InputGroup } from "./utils/InputGroups"
 import { video_name_validation } from "./utils/inputValidation"
 import { useVideoContext } from "../../context/ContextProvider"
-import { Form, FormRow } from "../../styles/components/forms.style"
+import { FormContainer, FormRow } from "../../styles/components/forms.style"
 import {
 	DashboardHeader,
 	StudioHeaderContainer,
@@ -46,8 +46,8 @@ function VideoForm() {
 	})
 
 	return (
-		<Form onSubmit={onSubmit} noValidate autoComplete="off">
-			{/* {JSON.stringify(formData)} */}
+		<FormContainer onSubmit={onSubmit} noValidate autoComplete="off">
+			<pre>{JSON.stringify(formData, null, "\t")}</pre>
 			<StudioHeaderContainer>
 				<DashboardHeader>{copy.videoFormHeader}</DashboardHeader>
 				<BannerActions {...bannerActionsProps} />
@@ -90,7 +90,7 @@ function VideoForm() {
 					onChange={onCheck}
 				/>
 			</FormRow>
-		</Form>
+		</FormContainer>
 	)
 }
 

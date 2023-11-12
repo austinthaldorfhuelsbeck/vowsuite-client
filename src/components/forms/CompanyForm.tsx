@@ -11,7 +11,11 @@ import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { listFonts } from "../../services/vs-api/fonts.service"
 import { Loader } from "../../styles/layouts/page-layout.style"
 import { useCompanyForm } from "../../hooks/useCompanyForm"
-import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
+import {
+	FormContainer,
+	FormColumn,
+	FormRow,
+} from "../../styles/components/forms.style"
 import {
 	DashboardHeader,
 	StudioHeaderContainer,
@@ -66,7 +70,7 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 	}, [getUrlFromAws, company?.img_URL])
 
 	return (
-		<Form noValidate autoComplete="off">
+		<FormContainer noValidate autoComplete="off">
 			{/* <pre>{JSON.stringify(company, null, "\t")}</pre> */}
 			<StudioHeaderContainer>
 				<DashboardHeader>{copy.companyFormHeader}</DashboardHeader>
@@ -83,9 +87,6 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 						formData={useBase.formData}
 						setFormData={useBase.setFormData}
 						label="Company Logo"
-						defaultUrl={
-							validUrl || preview || imagePaths.defaultUser
-						}
 						isCircle
 					/>
 
@@ -187,7 +188,7 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 			<pre>{JSON.stringify(useLink4.formData, null, "\t")}</pre>
 			<DashboardHeader>Link5</DashboardHeader>
 			<pre>{JSON.stringify(useLink5.formData, null, "\t")}</pre> */}
-		</Form>
+		</FormContainer>
 	)
 }
 

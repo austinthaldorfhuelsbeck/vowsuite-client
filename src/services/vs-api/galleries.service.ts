@@ -46,6 +46,7 @@ export const updateGallery = async (
 		gallery_id: gallery.gallery_id,
 		user_id: gallery.user_id,
 		gallery_name: gallery.gallery_name,
+		font_id: gallery.font_id,
 		img_URL: gallery.img_URL,
 		updated_at: new Date(),
 	}

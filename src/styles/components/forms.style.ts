@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { TransparentButton } from "./buttons.style"
 
-export const Form = styled.form`
+export const FormContainer = styled.form`
 	position: relative;
 	color: var(--aluminium);
 
