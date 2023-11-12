@@ -10,7 +10,7 @@ import { copy, imagePaths } from "../../data/app-constants"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { listFonts } from "../../services/vs-api/fonts.service"
 import { Loader } from "../../styles/layouts/page-layout.style"
-import { useCompanyForm } from "../../hooks/useCompanyForm/useCompanyForm"
+import { useCompanyForm } from "../../hooks/useCompanyForm"
 import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	DashboardHeader,
@@ -89,7 +89,7 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 						isCircle
 					/>
 
-					<DashboardHeader>Font</DashboardHeader>
+					<DashboardHeader>Branding</DashboardHeader>
 					{fonts ? (
 						<ControlGroup
 							{...font_validation}
@@ -100,7 +100,6 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 					) : (
 						<Loader icon={faSpinner} />
 					)}
-					<DashboardHeader>Colors</DashboardHeader>
 					<FormRow>
 						<FormColumn>
 							<label>Primary Color</label>

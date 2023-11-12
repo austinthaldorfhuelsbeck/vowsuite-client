@@ -22,7 +22,6 @@ import {
 	DashboardBlock,
 	DashboardContainer,
 	DashboardHeader,
-	DashboardSubheader,
 	StudioHeaderContainer,
 } from "../../styles/layouts/dashboard-layout.style"
 import { GalleryForm } from "../forms/GalleryForm"

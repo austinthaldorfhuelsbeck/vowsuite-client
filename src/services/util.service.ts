@@ -1,9 +1,8 @@
 import {
 	IBaseCompany,
+	IBaseGallery,
 	ICompany,
-	ICompanyColor,
-	ICompanyForm,
-	ICompanyUrl,
+	IGallery,
 } from "../interfaces/models"
 
 function formatDatePretty(now: Date): string {
@@ -24,7 +23,7 @@ function formatGreeting(now: Date, name: string): string {
 	return message
 }
 
-function baseifyCompany(company: ICompany | ICompanyForm): IBaseCompany {
+function baseifyCompany(company: ICompany): IBaseCompany {
 	const {
 		company_id,
 		user_id,
@@ -46,44 +45,26 @@ function baseifyCompany(company: ICompany | ICompanyForm): IBaseCompany {
 	return result
 }
 
-function formifyCompany(company: ICompany): ICompanyForm {
+function baseifyGallery(gallery: IGallery): IBaseGallery {
 	const {
-		company_id,
+		gallery_id,
 		user_id,
 		font_id,
-		company_name,
+		gallery_name,
 		img_URL,
 		created_at,
 		updated_at,
-	} = company
-	const color0: ICompanyColor = company.colors[0]
-	const color1: ICompanyColor = company.colors[1]
-	const color2: ICompanyColor = company.colors[2]
-	const url0: ICompanyUrl = company.urls[0]
-	const url1: ICompanyUrl = company.urls[1]
-	const url2: ICompanyUrl = company.urls[2]
-	const url3: ICompanyUrl = company.urls[3]
-	const url4: ICompanyUrl = company.urls[4]
-	const url5: ICompanyUrl = company.urls[5]
-	const result: ICompanyForm = {
-		company_id,
+	} = gallery
+	const result: IBaseGallery = {
+		gallery_id,
 		user_id,
 		font_id,
-		company_name,
+		gallery_name,
 		img_URL,
 		created_at,
 		updated_at,
-		color0,
-		color1,
-		color2,
-		url0,
-		url1,
-		url2,
-		url3,
-		url4,
-		url5,
 	}
 	return result
 }
 
-export { formatDatePretty, formatGreeting, baseifyCompany, formifyCompany }
+export { formatDatePretty, formatGreeting, baseifyCompany, baseifyGallery }

@@ -20,10 +20,9 @@ interface ComponentProps {
 
 function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 	// Context
-	const { success, error, handleSuccess, handleError } = useStatus()
-	const { formData, setFormData, onChange, onReset, onSubmit } =
-		useGalleryForm(handleSuccess, handleError)
-	const { preview, getUrlFromAws } = usePreview()
+	const { preview, validUrl, getUrlFromAws } = usePreview()
+	const { useBase, useColor0, useColor1, useColor2, bannerProps } =
+		useGalleryForm(gallery)
 
 	// State
 	const [fonts, setFonts] = useState<(IFont | undefined)[]>([])
@@ -43,8 +42,8 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 	}, [])
 	// update gallery if it exists
 	useEffect(() => {
-		if (gallery) setFormData(gallery)
-	}, [gallery, setFormData])
+		if (gallery) useBase.setFormData(gallery)
+	}, [gallery, useBase])
 	// load preview image from aws
 	useEffect(() => {
 		if (gallery?.img_URL) getUrlFromAws(gallery.img_URL)
@@ -57,15 +56,17 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 					<DashboardHeader>
 						<InputGroup
 							{...gallery_name_validation}
-							value={formData.gallery_name}
-							onChange={onChange}
+							value={useBase.formData.gallery_name}
+							onChange={useBase.onChange}
 						/>
 					</DashboardHeader>
 					<FileUpload
-						formData={formData}
-						setFormData={setFormData}
+						formData={useBase.formData}
+						setFormData={useBase.setFormData}
 						label="Cover Image"
-						defaultUrl={preview || imagePaths.defaultUser}
+						defaultUrl={
+							validUrl || preview || imagePaths.defaultUser
+						}
 					/>
 				</FormColumn>
 				<FormColumn>
@@ -76,8 +77,8 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 						<ControlGroup
 							{...font_validation}
 							options={fonts}
-							value={formData.font_id}
-							onChange={onChange}
+							value={useBase.formData.font_id}
+							onChange={useBase.onChange}
 						/>
 					)}
 					{/* <GalleryColorsForm {...formProps} /> */}

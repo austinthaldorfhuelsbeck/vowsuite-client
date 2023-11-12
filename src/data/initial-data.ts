@@ -13,7 +13,7 @@ export const initialGalleryData: IBaseGallery = {
 	user_id: 0,
 	font_id: 0,
 	gallery_name: "",
-	img_URL: imagePaths.defaultUser,
+	img_URL: "",
 	created_at: new Date(),
 	updated_at: new Date(),
 }
@@ -24,7 +24,7 @@ export const initialVideoData: IVideo = {
 	gallery_id: 0,
 	video_URL: "",
 	video_name: "",
-	img_URL: imagePaths.defaultUser,
+	img_URL: "",
 	views: 0,
 	downloads: 0,
 	is_displayed: true,
@@ -42,7 +42,7 @@ export const initialCompanyData: IBaseCompany = {
 	user_id: 0,
 	font_id: 0,
 	company_name: "",
-	img_URL: imagePaths.defaultUser,
+	img_URL: "",
 	// color0: {
 	// 	company_color_id: new Date().valueOf(),
 	// 	company_id: id,
@@ -111,7 +111,7 @@ export const initialUserData: IBaseUser = {
 	user_id: 0,
 	user_name: "",
 	email: "",
-	img_URL: imagePaths.defaultUser,
+	img_URL: "",
 	created_at: new Date(),
 	updated_at: new Date(),
 }

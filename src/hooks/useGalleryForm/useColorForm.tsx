@@ -2,25 +2,24 @@ import { ChangeEvent, SyntheticEvent, useState } from "react"
 
 import { useStatus } from "../useStatus"
 import { IApiResponse } from "../../interfaces/api"
-import { ICompanyColor } from "../../interfaces/models"
-import { useUserContext } from "../../context/ContextProvider"
+import { IGalleryColor } from "../../interfaces/models"
 import {
-	createCompanyColor,
-	updateCompanyColor,
-} from "../../services/vs-api/companies.service"
+	createGalleryColor,
+	updateGalleryColor,
+} from "../../services/vs-api/galleries.service"
 
-function useCompanyColorForm(color: ICompanyColor) {
+function useGalleryColorForm(color: IGalleryColor) {
 	// Context
-	const { user } = useUserContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
 
 	// State
-	const [formData, setFormData] = useState<ICompanyColor>(color)
+	const [formData, setFormData] = useState<IGalleryColor>(color)
 
 	// Handlers
 	async function onChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.target
-		setFormData({ ...formData, [name]: value, updated_at: new Date() })
+		const newData: IGalleryColor = { ...formData, [name]: value }
+		setFormData(newData)
 	}
 	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
 		e.preventDefault()
@@ -28,9 +27,9 @@ function useCompanyColorForm(color: ICompanyColor) {
 	}
 	async function onSubmit(e: SyntheticEvent) {
 		e.preventDefault()
-		const response: IApiResponse = user?.company?.colors[2]
-			? await updateCompanyColor(formData)
-			: await createCompanyColor(formData)
+		const response: IApiResponse = color
+			? await updateGalleryColor(formData)
+			: await createGalleryColor(formData)
 		if (response.data) {
 			handleSuccess()
 		}
@@ -42,4 +41,4 @@ function useCompanyColorForm(color: ICompanyColor) {
 	return { formData, onChange, onReset, onSubmit, success, error }
 }
 
-export { useCompanyColorForm }
+export { useGalleryColorForm }
