@@ -1,7 +1,8 @@
-import { MouseEvent, PropsWithChildren } from "react"
+import { MouseEvent, PropsWithChildren, useState } from "react"
 
 import {
 	faExternalLinkSquareAlt,
+	faMinus,
 	faPlus,
 	faSpinner,
 } from "@fortawesome/free-solid-svg-icons"
@@ -12,7 +13,7 @@ import { VideoForm } from "../forms/VideoForm"
 import { CompanyForm } from "../forms/CompanyForm"
 import { IGallery, IUser } from "../../interfaces/models"
 import { formatGreeting } from "../../services/util.service"
-import { Form, FormRow } from "../../styles/components/forms.style"
+import { Form, FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
@@ -39,6 +40,51 @@ interface GalleryEditorProps {
 	gallery: IGallery
 }
 
+// Components
+function Debugger() {
+	const { user } = useUserContext()
+	const { gallery } = useGalleryContext()
+
+	const [isUser, setIsUser] = useState<boolean>(false)
+	const [isGallery, setIsGallery] = useState<boolean>(false)
+
+	function toggleUser(c: boolean) {
+		setIsUser(!c)
+	}
+	function toggleGallery(c: boolean) {
+		setIsGallery(!c)
+	}
+
+	return (
+		<DashboardBlock>
+			<FormRow>
+				<FormColumn>
+					<DashboardHeader>
+						<FontAwesomeIcon
+							icon={isUser ? faMinus : faPlus}
+							onClick={() => toggleUser(isUser)}
+						/>
+						User
+					</DashboardHeader>
+					{isUser && <pre>{JSON.stringify(user, null, "\t")}</pre>}
+				</FormColumn>
+				<FormColumn>
+					<DashboardHeader>
+						<FontAwesomeIcon
+							icon={isGallery ? faMinus : faPlus}
+							onClick={() => toggleGallery(isGallery)}
+						/>
+						Gallery
+					</DashboardHeader>
+					{isGallery && (
+						<pre>{JSON.stringify(gallery, null, "\t")}</pre>
+					)}
+				</FormColumn>
+			</FormRow>
+		</DashboardBlock>
+	)
+}
+
 function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 	// Constants
 	const now: Date = new Date()
@@ -58,10 +104,6 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 			<DashboardBlock>
 				<CompanyForm company={user.company} />
 			</DashboardBlock>
-			{/* <DashboardBlock>
-				<DashboardHeader>Debugging:</DashboardHeader>
-				<pre>{JSON.stringify(user, null, "\t")}</pre>
-			</DashboardBlock> */}
 		</>
 	)
 }
@@ -124,6 +166,7 @@ function Dashboard() {
 
 	return user ? (
 		<DashboardContainer>
+			<Debugger />
 			{gallery === undefined ? (
 				<UserDashboard user={user} />
 			) : (
