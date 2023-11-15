@@ -3,6 +3,7 @@ import {
 	MouseEvent,
 	PropsWithChildren,
 	SetStateAction,
+	SyntheticEvent,
 	useCallback,
 	useEffect,
 } from "react"
@@ -10,7 +11,11 @@ import {
 import { useDropzone } from "react-dropzone"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSquarePlus, faUpload } from "@fortawesome/free-solid-svg-icons"
+import {
+	faArrowUp,
+	faSquarePlus,
+	faUpload,
+} from "@fortawesome/free-solid-svg-icons"
 
 import {
 	DragUploadButton,
@@ -22,7 +27,10 @@ import {
 	ShadowboxImg,
 	ThumbnailImg,
 } from "../../../styles/components/forms.style"
-import { ButtonTitle } from "../../../styles/components/buttons.style"
+import {
+	ButtonTitle,
+	TransparentButton,
+} from "../../../styles/components/buttons.style"
 import { usePreview } from "../../../hooks/usePreview"
 import { Modal } from "../../menus/Modal"
 
@@ -47,14 +55,23 @@ function FileUpload({
 	isVideo,
 }: PropsWithChildren<ComponentProps>) {
 	// Context
-	const { preview, progress, validUrl, getUrlFromAws, setPreview } =
-		usePreview()
+	const {
+		file,
+		setFile,
+		preview,
+		progress,
+		validUrl,
+		getUrlFromAws,
+		uploadToAws,
+		setPreview,
+	} = usePreview()
 
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
 			console.log("Drop: ", files[0].name)
 			if (files[0]) {
+				setFile(files[0])
 				setPreview(URL.createObjectURL(files[0]))
 				setFormData(
 					isVideo
@@ -63,11 +80,18 @@ function FileUpload({
 				)
 			}
 		},
-		[formData, isVideo, setFormData, setPreview],
+		[formData, isVideo, setFile, setFormData, setPreview],
 	)
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 	})
+
+	// Handlers
+	function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
+		e.preventDefault()
+		console.log("Submit: ", file)
+		if (file) uploadToAws(file)
+	}
 
 	// Effects
 	useEffect(() => {
@@ -105,7 +129,7 @@ function FileUpload({
 			) : (
 				<div {...getRootProps()}>
 					<FormInput {...getInputProps()} />
-					<p>{formData.img_URL}</p>
+					<p>{isVideo ? formData.video_URL : formData.img_URL}</p>
 					<DragUploadButton
 						onClick={(e: MouseEvent<HTMLButtonElement>) =>
 							e.preventDefault()
@@ -119,6 +143,12 @@ function FileUpload({
 					</DragUploadButton>
 				</div>
 			)}
+			<TransparentButton onClick={onSubmit}>
+				<>
+					<FontAwesomeIcon icon={faArrowUp} />
+					{" Upload"}
+				</>
+			</TransparentButton>
 		</FormRow>
 	)
 }

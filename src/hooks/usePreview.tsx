@@ -16,6 +16,7 @@ const s3 = new AWS.S3({
 })
 
 function usePreview() {
+	const [file, setFile] = useState<File | undefined>()
 	const [preview, setPreview] = useState<string | undefined>()
 	const [validUrl, setValidUrl] = useState<string | undefined>()
 	const [progress, setProgress] = useState<number>(0)
@@ -49,6 +50,8 @@ function usePreview() {
 	}
 
 	return {
+		file,
+		setFile,
 		preview,
 		progress,
 		validUrl,
