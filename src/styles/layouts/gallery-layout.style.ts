@@ -83,7 +83,7 @@ export const BrandLink = styled(Link)`
 	width: 4rem;
 	height: 4rem;
 	cursor: pointer;
-	font-size: 170%;
+	font-size: 150%;
 	text-align: center;
 	padding: 0.5rem 1rem;
 	border: solid;

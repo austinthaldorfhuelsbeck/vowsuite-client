@@ -40,16 +40,19 @@ function BrandIcon({ url }: PropsWithChildren<IconProps>) {
 function BrandSocials({ company }: PropsWithChildren<ComponentProps>) {
 	return (
 		<BrandSocialContainer>
-			{company.urls?.map((url) => (
-				<BrandLink
-					key={url.company_url_id}
-					to={url.target}
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<BrandIcon url={url} />
-				</BrandLink>
-			))}
+			{company.urls?.map(
+				(url) =>
+					url.label !== "Website" && (
+						<BrandLink
+							key={url.company_url_id}
+							to={url.target}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<BrandIcon url={url} />
+						</BrandLink>
+					),
+			)}
 		</BrandSocialContainer>
 	)
 }

@@ -19,12 +19,13 @@ import { Divider } from "../../styles/components/util.style"
 
 interface ComponentProps {
 	company: ICompany
+	imgPath: string | undefined
 }
 
-function BrandDetails({ company }: PropsWithChildren<ComponentProps>) {
+function BrandDetails({ company, imgPath }: PropsWithChildren<ComponentProps>) {
 	return (
 		<GalleryModalContainer>
-			<CompanyLogo src={company.img_URL} />
+			<CompanyLogo src={imgPath} />
 			<AltHeader>{company.company_name}</AltHeader>
 			<Divider />
 			<Link

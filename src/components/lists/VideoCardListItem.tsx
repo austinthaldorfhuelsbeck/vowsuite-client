@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react"
+import { PropsWithChildren, useEffect, useState } from "react"
 
 import ReactPlayer from "react-player"
 
@@ -14,29 +14,33 @@ import {
 	CardImageContainer,
 	CardPlayIcon,
 } from "../../styles/layouts/gallery-layout.style"
+import { usePreview } from "../../hooks/usePreview"
 
 interface ComponentProps {
 	video: IVideo
 }
 
 function VideoCardListItem({ video }: PropsWithChildren<ComponentProps>) {
-	// play button state
-	const [isPlayButton, setIsPlayButton] = useState<boolean>(false)
+	// Context
+	const imagePreview = usePreview()
+	const videoPreview = usePreview()
+
+	// Effects
+	useEffect(() => {
+		if (video.img_URL) imagePreview.getUrlFromAws(video.img_URL)
+		if (video.video_URL) videoPreview.getUrlFromAws(video.video_URL)
+	}, [imagePreview, video, videoPreview])
 
 	return (
 		<Modal
 			button={
 				<CardImageContainer
-					url={video.img_URL}
-					onMouseOver={() => setIsPlayButton(true)}
-					onMouseLeave={() => setIsPlayButton(false)}
+					url={imagePreview.validUrl || video.img_URL}
 				>
 					<>
-						{isPlayButton && (
-							<CardPlayIcon>
-								<FontAwesomeIcon icon={faPlay} />
-							</CardPlayIcon>
-						)}
+						<CardPlayIcon>
+							<FontAwesomeIcon icon={faPlay} />
+						</CardPlayIcon>
 						<AltHeader>{video.video_name}</AltHeader>
 						<AltSubheader>
 							<FontAwesomeIcon icon={faPlay} />
@@ -50,7 +54,7 @@ function VideoCardListItem({ video }: PropsWithChildren<ComponentProps>) {
 					controls
 					width={"80vw"}
 					height={"100%"}
-					url={video.video_URL}
+					url={videoPreview.validUrl || video.video_URL}
 				/>
 			}
 		/>

@@ -1,4 +1,9 @@
-import React, { useState, MouseEvent, PropsWithChildren } from "react"
+import React, {
+	useState,
+	MouseEvent,
+	PropsWithChildren,
+	useEffect,
+} from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -23,6 +28,7 @@ import {
 	HeaderLinkWrapper,
 } from "../../styles/layouts/gallery-layout.style"
 import { Alert } from "../../styles/components/forms.style"
+import { usePreview } from "../../hooks/usePreview"
 
 interface ComponentProps {
 	company: ICompany
@@ -50,9 +56,17 @@ function GalleryNavBar({
 		copyText(url)
 	}
 
+	// Context
+	const { validUrl, getUrlFromAws } = usePreview()
+
+	// Effects
+	useEffect(() => {
+		if (company?.img_URL) getUrlFromAws(company.img_URL)
+	}, [company, getUrlFromAws])
+
 	return (
 		<GalleryNavContainer>
-			<CompanyLogo src={company.img_URL} />
+			<CompanyLogo src={validUrl} />
 			<BrandInfo>
 				<AltHeader>{company.company_name}</AltHeader>
 				<Modal
@@ -62,7 +76,9 @@ function GalleryNavBar({
 							<FontAwesomeIcon icon={faChevronDown} />
 						</AltSubheader>
 					}
-					content={<BrandDetails company={company} />}
+					content={
+						<BrandDetails company={company} imgPath={validUrl} />
+					}
 				/>
 			</BrandInfo>
 			<HeaderLinkWrapper>
