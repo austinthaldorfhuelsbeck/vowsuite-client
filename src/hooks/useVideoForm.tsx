@@ -42,7 +42,7 @@ function useVideoForm(
 		e.preventDefault()
 		setFormData(blankForm)
 	}
-	function onReset(e: SyntheticEvent<HTMLButtonElement>) {
+	function onReset(e: SyntheticEvent) {
 		e.preventDefault()
 		setFormData(initialData)
 	}
@@ -63,8 +63,9 @@ function useVideoForm(
 			setVideo(response.data)
 			setGallery(updatedGallery)
 			setUser(updatedUser)
-			// update success banner
+			// update success banner, clear data
 			handleSuccess()
+			onReset(e)
 		}
 		if (response.error) {
 			// update error banner

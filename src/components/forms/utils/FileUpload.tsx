@@ -13,6 +13,9 @@ import { useDropzone } from "react-dropzone"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
 	faArrowUp,
+	faCheckCircle,
+	faEye,
+	faPlayCircle,
 	faSquarePlus,
 	faUpload,
 } from "@fortawesome/free-solid-svg-icons"
@@ -33,6 +36,8 @@ import {
 } from "../../../styles/components/buttons.style"
 import { usePreview } from "../../../hooks/usePreview"
 import { Modal } from "../../menus/Modal"
+import ReactPlayer from "react-player"
+import { BigIcon } from "../../../styles/components/util.style"
 
 // Models
 interface BaseProps {
@@ -56,8 +61,6 @@ function FileUpload({
 }: PropsWithChildren<ComponentProps>) {
 	// Context
 	const {
-		file,
-		setFile,
 		preview,
 		progress,
 		validUrl,
@@ -71,27 +74,20 @@ function FileUpload({
 		(files: File[]) => {
 			console.log("Drop: ", files[0].name)
 			if (files[0]) {
-				setFile(files[0])
 				setPreview(URL.createObjectURL(files[0]))
 				setFormData(
 					isVideo
 						? { ...formData, video_URL: files[0].name }
 						: { ...formData, img_URL: files[0].name },
 				)
+				uploadToAws(files[0])
 			}
 		},
-		[formData, isVideo, setFile, setFormData, setPreview],
+		[formData, isVideo, setFormData, setPreview, uploadToAws],
 	)
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 	})
-
-	// Handlers
-	function onSubmit(e: SyntheticEvent<HTMLButtonElement>) {
-		e.preventDefault()
-		console.log("Submit: ", file)
-		if (file) uploadToAws(file)
-	}
 
 	// Effects
 	useEffect(() => {
@@ -129,13 +125,14 @@ function FileUpload({
 			) : (
 				<div {...getRootProps()}>
 					<FormInput {...getInputProps()} />
-					<p>{isVideo ? formData.video_URL : formData.img_URL}</p>
 					<DragUploadButton
 						onClick={(e: MouseEvent<HTMLButtonElement>) =>
 							e.preventDefault()
 						}
 					>
-						{isDragActive ? (
+						{progress === 100 ? (
+							<FontAwesomeIcon icon={faCheckCircle} />
+						) : isDragActive ? (
 							<FontAwesomeIcon icon={faSquarePlus} />
 						) : (
 							<FontAwesomeIcon icon={faUpload} />
@@ -143,12 +140,6 @@ function FileUpload({
 					</DragUploadButton>
 				</div>
 			)}
-			<TransparentButton onClick={onSubmit}>
-				<>
-					<FontAwesomeIcon icon={faArrowUp} />
-					{" Upload"}
-				</>
-			</TransparentButton>
 		</FormRow>
 	)
 }

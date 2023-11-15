@@ -47,7 +47,7 @@ function VideoForm() {
 
 	return (
 		<FormContainer noValidate autoComplete="off">
-			<pre>{JSON.stringify(formData, null, "\t")}</pre>
+			{/* <pre>{JSON.stringify(formData, null, "\t")}</pre> */}
 			<StudioHeaderContainer>
 				<DashboardHeader>{copy.videoFormHeader}</DashboardHeader>
 				<BannerActions {...bannerActionsProps} />

@@ -7,7 +7,7 @@ export const BlankSpan = styled.span`
 `
 
 export const BigIcon = styled(FontAwesomeIcon)`
-	font-size: 1000%;
+	font-size: 800%;
 	color: var(--aluminium);
 	text-align: center;
 	padding: 3rem;
