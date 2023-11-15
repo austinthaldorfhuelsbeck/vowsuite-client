@@ -1,13 +1,14 @@
 import styled from "styled-components"
 
 export const TabButton = styled.button`
+	align-self: baseline;
 	cursor: pointer;
 	font-weight: 500;
 	color: var(--aluminium);
 	font-size: 14px;
 	line-height: 16px;
 	background: none;
-	padding: 1rem 0;
+	padding: 1rem;
 	border: none;
 	&:hover {
 		color: var(--white);

@@ -80,7 +80,7 @@ export const StudioHeaderContainer = styled.div`
 	max-height: 8rem;
 	width: 100%;
 	max-width: 1200px;
-	padding: 0 1rem;
+	padding-left: 1rem;
 	margin: 0;
 `
 

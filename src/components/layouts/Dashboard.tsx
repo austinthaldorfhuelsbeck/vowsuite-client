@@ -13,11 +13,7 @@ import { VideoForm } from "../forms/VideoForm"
 import { CompanyForm } from "../forms/CompanyForm"
 import { IGallery, IUser } from "../../interfaces/models"
 import { formatGreeting } from "../../services/util.service"
-import {
-	FormContainer,
-	FormColumn,
-	FormRow,
-} from "../../styles/components/forms.style"
+import { FormColumn, FormRow } from "../../styles/components/forms.style"
 import {
 	useGalleryContext,
 	useUserContext,
