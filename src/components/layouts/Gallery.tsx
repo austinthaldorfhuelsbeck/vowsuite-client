@@ -82,9 +82,12 @@ function Gallery() {
 					/>
 				)}
 				<CardsList>
-					{gallery.videos.map((video: IVideo) => (
-						<VideoCardListItem video={video} />
-					))}
+					{gallery.videos.map(
+						(video: IVideo) =>
+							video.is_displayed && (
+								<VideoCardListItem video={video} />
+							),
+					)}
 				</CardsList>
 			</SidebarContainer>
 		)

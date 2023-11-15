@@ -123,20 +123,12 @@ function GalleryEditor({ gallery }: PropsWithChildren<GalleryEditorProps>) {
 
 	return (
 		<>
-			<StudioHeaderContainer>
-				<FormRow>
-					<Link
-						to={galleryUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<TransparentButton>
-							{"View Gallery "}
-							<FontAwesomeIcon icon={faExternalLinkSquareAlt} />
-						</TransparentButton>
-					</Link>
-				</FormRow>
-			</StudioHeaderContainer>
+			<Link to={galleryUrl} target="_blank" rel="noopener noreferrer">
+				<TransparentButton>
+					{"View Gallery "}
+					<FontAwesomeIcon icon={faExternalLinkSquareAlt} />
+				</TransparentButton>
+			</Link>
 			<DashboardBlock>
 				<GalleryForm gallery={gallery} />
 			</DashboardBlock>
@@ -164,7 +156,7 @@ function Dashboard() {
 
 	return user ? (
 		<DashboardContainer>
-			<Debugger />
+			{/* <Debugger /> */}
 			{gallery === undefined ? (
 				<UserDashboard user={user} />
 			) : (
