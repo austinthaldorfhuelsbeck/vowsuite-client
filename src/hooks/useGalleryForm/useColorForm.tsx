@@ -38,7 +38,15 @@ function useGalleryColorForm(color: IGalleryColor) {
 		}
 	}
 
-	return { formData, onChange, onReset, onSubmit, success, error }
+	return {
+		formData,
+		setFormData,
+		onChange,
+		onReset,
+		onSubmit,
+		success,
+		error,
+	}
 }
 
 export { useGalleryColorForm }

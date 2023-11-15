@@ -54,8 +54,15 @@ function GalleryForm({ gallery }: PropsWithChildren<ComponentProps>) {
 	})
 	// load gallery on switch
 	useEffect(() => {
-		useBase.setFormData(gallery)
-	}, [gallery])
+		if (useBase.formData.gallery_id !== gallery.gallery_id)
+			useBase.setFormData(gallery)
+		if (gallery?.colors && gallery.colors[0])
+			useColor0.setFormData(gallery.colors[0])
+		if (gallery?.colors && gallery.colors[1])
+			useColor1.setFormData(gallery.colors[1])
+		if (gallery?.colors && gallery.colors[2])
+			useColor2.setFormData(gallery.colors[2])
+	}, [gallery, useBase, useColor0, useColor1, useColor2])
 
 	return (
 		<FormContainer noValidate autoComplete="off">
