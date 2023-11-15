@@ -63,7 +63,7 @@ function VideoListItem({ displayedVideo }: PropsWithChildren<ComponentProps>) {
 			<Modal
 				button={
 					<DashboardImg
-						src={ImagePreview.preview || imagePaths.defaultUser}
+						src={ImagePreview.validUrl || imagePaths.defaultUser}
 						alt={displayedVideo.video_name}
 					/>
 				}
@@ -72,7 +72,7 @@ function VideoListItem({ displayedVideo }: PropsWithChildren<ComponentProps>) {
 						controls
 						width={"80vw"}
 						height={"100%"}
-						url={VideoPreview.preview}
+						url={VideoPreview.validUrl}
 					/>
 				}
 			/>
