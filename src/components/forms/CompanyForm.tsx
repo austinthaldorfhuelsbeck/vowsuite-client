@@ -6,7 +6,7 @@ import { FileUpload } from "./utils/FileUpload"
 import { usePreview } from "../../hooks/usePreview"
 import { BannerActions } from "./utils/BannerActions"
 import { ICompany, IFont } from "../../interfaces/models"
-import { copy, imagePaths } from "../../data/app-constants"
+import { copy } from "../../data/app-constants"
 import { ControlGroup, InputGroup } from "./utils/InputGroups"
 import { listFonts } from "../../services/vs-api/fonts.service"
 import { Loader } from "../../styles/layouts/page-layout.style"
@@ -33,7 +33,7 @@ interface ComponentProps {
 
 function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 	// Context
-	const { preview, validUrl, getUrlFromAws } = usePreview()
+	const { getUrlFromAws } = usePreview()
 	const {
 		useBase,
 		useColor0,

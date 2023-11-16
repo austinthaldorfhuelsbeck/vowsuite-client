@@ -9,9 +9,9 @@ import React, {
 	useState,
 } from "react"
 
-import { useAuth0 } from "@auth0/auth0-react"
+import { User, useAuth0 } from "@auth0/auth0-react"
 
-import { getUserByEmail } from "../services/vs-api/users.service"
+import { createUser, getUserByEmail } from "../services/vs-api/users.service"
 import { IGallery, IUser, IVideo } from "../interfaces/models"
 
 // DEFINE INTERFACES
@@ -75,19 +75,30 @@ interface ComponentProps {
 	children: ReactNode
 }
 function ContextProvider({ children }: PropsWithChildren<ComponentProps>) {
-	const userMetadata = useAuth0().user
+	const userMetadata: User | undefined = useAuth0().user
 	const [user, setUser] = useState<IUser | undefined>(undefined)
 	const [gallery, setGallery] = useState<IGallery | undefined>(undefined)
 	const [video, setVideo] = useState<IVideo | undefined>(undefined)
 
 	// load initial user metadata
 	useEffect(() => {
-		const getUserResponse = async (email: string) => {
-			const userResponse = await getUserByEmail(email)
-			setUser(userResponse.data)
-			setGallery(undefined)
+		async function getUserResponse(user: User) {
+			const userResponse = await getUserByEmail(user.email || "")
+			if (userResponse.data) {
+				setUser(userResponse.data)
+			} else {
+				const newUserResponse = await createUser({
+					user_id: new Date().valueOf(),
+					user_name: user.name || "",
+					email: user.email || "",
+					img_URL: "",
+					created_at: new Date(),
+					updated_at: new Date(),
+				})
+				if (newUserResponse.data) setUser(newUserResponse.data)
+			}
 		}
-		if (userMetadata?.email) getUserResponse(userMetadata.email)
+		if (userMetadata) getUserResponse(userMetadata)
 	}, [userMetadata])
 
 	if (!user) return <>{children}</>

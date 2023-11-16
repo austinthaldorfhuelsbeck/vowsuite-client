@@ -31,6 +31,7 @@ import { TransparentButton } from "../../styles/components/buttons.style"
 import { baseUrls } from "../../data/app-constants"
 import { Link } from "react-router-dom"
 import { Loader } from "../../styles/layouts/page-layout.style"
+import { StaticContentContainer } from "../../styles/components/static.style"
 
 // Data Models
 interface DashboardProps {
@@ -97,8 +98,22 @@ function UserDashboard({ user }: PropsWithChildren<DashboardProps>) {
 			</StudioHeaderContainer>
 			{user.company === undefined && (
 				<DashboardBlock>
-					<DashboardHeader>Welcome to Vowsuite.</DashboardHeader>
-					<p>Let us know some details about your company.</p>
+					<StaticContentContainer>
+						<h1>Welcome to Vowsuite!</h1>
+						<p>
+							Get started by filling in some details about your
+							company.
+						</p>
+						<p>
+							Here, you can change the default presentation of
+							your galleries for your clients.
+						</p>
+						<p>
+							You can always get back to this page by clicking
+							your company name at the top of the Sidebar.
+						</p>
+						<br />
+					</StaticContentContainer>
 				</DashboardBlock>
 			)}
 			<DashboardBlock>
@@ -156,7 +171,7 @@ function Dashboard() {
 
 	return user ? (
 		<DashboardContainer>
-			{/* <Debugger /> */}
+			<Debugger />
 			{gallery === undefined ? (
 				<UserDashboard user={user} />
 			) : (

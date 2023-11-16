@@ -9,7 +9,7 @@ export interface IBaseUser {
 
 export interface IUser extends IBaseUser {
 	company: ICompany
-	galleries: IGallery[]
+	galleries: (IGallery | undefined)[]
 }
 
 export interface IBaseCompany {

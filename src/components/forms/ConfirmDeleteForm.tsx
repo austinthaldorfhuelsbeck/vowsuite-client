@@ -52,13 +52,19 @@ function GalleryDeleteForm() {
 			// update context if response is successful
 			if (response.data) {
 				// user
-				if (user)
+				if (user?.galleries.length === 1) {
+					console.log("Yep!")
+					setUser({ ...user, galleries: [] })
+					console.log(user.galleries)
+				} else if (user) {
+					console.log("Nope.")
 					setUser({
 						...user,
 						galleries: user.galleries.filter(
-							(gallery) => gallery.gallery_id !== id,
+							(gallery) => gallery?.gallery_id !== id,
 						),
 					})
+				}
 				// gallery
 				setGallery(undefined)
 			}

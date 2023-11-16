@@ -30,28 +30,34 @@ function useCompanyForm(company?: ICompany) {
 		company ? baseifyCompany(company) : initialBaseData,
 	)
 	const useColor0 = useCompanyColorForm(
-		company?.colors[0] || {
-			company_color_id: id,
-			company_id: company?.company_id || id,
-			value: "#ffffff",
-			...dates,
-		},
+		company?.colors
+			? company.colors[0]
+			: {
+					company_color_id: id,
+					company_id: company?.company_id || id,
+					value: "#ffffff",
+					...dates,
+			  },
 	)
 	const useColor1 = useCompanyColorForm(
-		company?.colors[1] || {
-			company_color_id: id + 1,
-			company_id: company?.company_id || id,
-			value: "#ffffff",
-			...dates,
-		},
+		company?.colors
+			? company.colors[1]
+			: {
+					company_color_id: id + 1,
+					company_id: company?.company_id || id,
+					value: "#ffffff",
+					...dates,
+			  },
 	)
 	const useColor2 = useCompanyColorForm(
-		company?.colors[2] || {
-			company_color_id: id + 2,
-			company_id: company?.company_id || id,
-			value: "#ffffff",
-			...dates,
-		},
+		company?.colors
+			? company.colors[2]
+			: {
+					company_color_id: id + 2,
+					company_id: company?.company_id || id,
+					value: "#ffffff",
+					...dates,
+			  },
 	)
 	const useLink0 = useUrlForm(
 		company?.urls[0] || {

@@ -73,7 +73,7 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	const { gallery, setGallery } = useGalleryContext()
 
 	// Handlers
-	async function onClick(e: MouseEvent<HTMLLabelElement>) {
+	async function onClick(e: MouseEvent<HTMLLIElement>) {
 		e.preventDefault()
 		if (gallery?.gallery_id !== currentGallery.gallery_id) {
 			setGallery(currentGallery)
@@ -88,9 +88,10 @@ function GalleryListItem({ currentGallery }: PropsWithChildren<ListItemProps>) {
 	// selected is determined if gallery is equal to context gallery
 	return (
 		<SelectorListItem
+			onClick={onClick}
 			aria-selected={currentGallery.gallery_id === gallery?.gallery_id}
 		>
-			<SidebarLabel onClick={onClick}>
+			<SidebarLabel>
 				<FontAwesomeIcon icon={faFolder} />
 				{" " + currentGallery.gallery_name}
 			</SidebarLabel>
@@ -113,12 +114,8 @@ function GalleryList() {
 
 	// Effects
 	useEffect(() => {
-		// Function to get a list of full galleries
-		async function validateGalleries(galleries: IGallery[]) {
-			setListedGalleries(galleries)
-		}
-		if (user?.galleries?.length) validateGalleries(user.galleries)
-	}, [user])
+		if (user?.galleries) setListedGalleries(user.galleries)
+	}, [user?.galleries])
 
 	return (
 		<List>
