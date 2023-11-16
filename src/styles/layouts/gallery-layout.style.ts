@@ -58,13 +58,13 @@ export const SidebarContainer = styled.div<SidebarContainerProps>`
 	}
 
 	button {
-		background-color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex3};
+		background-color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex2};
 		margin-bottom: 1rem;
 
 		&:hover {
 			background-color: ${(GalleryHeaderProps) =>
-				GalleryHeaderProps.hex2};
-			color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex3};
+				GalleryHeaderProps.hex3};
+			color: ${(GalleryHeaderProps) => GalleryHeaderProps.hex2};
 		}
 	}
 `

@@ -53,11 +53,8 @@ function GalleryDeleteForm() {
 			if (response.data) {
 				// user
 				if (user?.galleries.length === 1) {
-					console.log("Yep!")
 					setUser({ ...user, galleries: [] })
-					console.log(user.galleries)
 				} else if (user) {
-					console.log("Nope.")
 					setUser({
 						...user,
 						galleries: user.galleries.filter(

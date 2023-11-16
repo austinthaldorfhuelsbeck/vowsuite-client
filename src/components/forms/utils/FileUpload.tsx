@@ -72,7 +72,6 @@ function FileUpload({
 	// Callbacks
 	const onDrop = useCallback(
 		(files: File[]) => {
-			console.log("Drop: ", files[0].name)
 			if (files[0]) {
 				setPreview(URL.createObjectURL(files[0]))
 				setFormData(

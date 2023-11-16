@@ -71,7 +71,6 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 
 	return (
 		<FormContainer noValidate autoComplete="off">
-			{/* <pre>{JSON.stringify(company, null, "\t")}</pre> */}
 			<StudioHeaderContainer>
 				<DashboardHeader>{copy.companyFormHeader}</DashboardHeader>
 				<BannerActions {...bannerProps} />
@@ -106,7 +105,7 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 							<label>Primary Color</label>
 							<InputGroup
 								{...color_validation}
-								value={useColor0.formData.value}
+								value={useColor0.formData?.value}
 								onChange={useColor0.onChange}
 							/>
 						</FormColumn>
@@ -114,7 +113,7 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 							<label>Secondary Color</label>
 							<InputGroup
 								{...color_validation}
-								value={useColor1.formData.value}
+								value={useColor1.formData?.value}
 								onChange={useColor1.onChange}
 							/>
 						</FormColumn>
@@ -122,7 +121,7 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 							<label>Accent Color</label>
 							<InputGroup
 								{...color_validation}
-								value={useColor2.formData.value}
+								value={useColor2.formData?.value}
 								onChange={useColor2.onChange}
 							/>
 						</FormColumn>
@@ -168,26 +167,6 @@ function CompanyForm({ company }: PropsWithChildren<ComponentProps>) {
 					/>
 				</FormColumn>
 			</FormRow>
-			{/* <DashboardHeader>Base Form</DashboardHeader>
-			<pre>{JSON.stringify(useBase.formData, null, "\t")}</pre>
-			<DashboardHeader>Color0</DashboardHeader>
-			<pre>{JSON.stringify(useColor0.formData, null, "\t")}</pre>
-			<DashboardHeader>Color1</DashboardHeader>
-			<pre>{JSON.stringify(useColor1.formData, null, "\t")}</pre>
-			<DashboardHeader>Color2</DashboardHeader>
-			<pre>{JSON.stringify(useColor2.formData, null, "\t")}</pre>
-			<DashboardHeader>Link0</DashboardHeader>
-			<pre>{JSON.stringify(useLink0.formData, null, "\t")}</pre>
-			<DashboardHeader>Link1</DashboardHeader>
-			<pre>{JSON.stringify(useLink1.formData, null, "\t")}</pre>
-			<DashboardHeader>Link2</DashboardHeader>
-			<pre>{JSON.stringify(useLink2.formData, null, "\t")}</pre>
-			<DashboardHeader>Link3</DashboardHeader>
-			<pre>{JSON.stringify(useLink3.formData, null, "\t")}</pre>
-			<DashboardHeader>Link4</DashboardHeader>
-			<pre>{JSON.stringify(useLink4.formData, null, "\t")}</pre>
-			<DashboardHeader>Link5</DashboardHeader>
-			<pre>{JSON.stringify(useLink5.formData, null, "\t")}</pre> */}
 		</FormContainer>
 	)
 }

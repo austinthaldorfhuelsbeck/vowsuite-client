@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons"
 
 import { Modal } from "../menus/Modal"
-import { copy, imagePaths } from "../../data/app-constants"
+import { copy } from "../../data/app-constants"
 import { GalleryNavBar } from "../nav/GalleryNavBar"
 import { readUser } from "../../services/vs-api/users.service"
 import { readGallery } from "../../services/vs-api/galleries.service"

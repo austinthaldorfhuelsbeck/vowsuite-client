@@ -21,10 +21,8 @@ function UserForm() {
 	// Context
 	const { user } = useUserContext()
 	const { success, error, handleSuccess, handleError } = useStatus()
-	const { formData, setFormData, onChange, onReset, onSubmit } = useUserForm(
-		handleSuccess,
-		handleError,
-	)
+	const { formData, setFormData, onChange, onReset, onSubmit } =
+		useUserForm(user)
 	const { preview, getUrlFromAws } = usePreview()
 
 	// Props

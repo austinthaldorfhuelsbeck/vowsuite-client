@@ -42,7 +42,8 @@ function BrandSocials({ company }: PropsWithChildren<ComponentProps>) {
 		<BrandSocialContainer>
 			{company.urls?.map(
 				(url) =>
-					url.label !== "Website" && (
+					url.label !== "Website" &&
+					url.target !== "" && (
 						<BrandLink
 							key={url.company_url_id}
 							to={url.target}

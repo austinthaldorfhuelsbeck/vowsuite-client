@@ -1,29 +1,25 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react"
 
-import { IBaseUser } from "../interfaces/models"
-import { initialUserData } from "../data/initial-data"
+import { useStatus } from "./useStatus"
+import { IApiResponse } from "../interfaces/api"
+import { IBaseUser, IUser } from "../interfaces/models"
 import { useUserContext } from "../context/ContextProvider"
-import { IApiResponse, IAppError } from "../interfaces/api"
-import { createUser, updateUser } from "../services/vs-api/users.service"
+import { updateUser } from "../services/vs-api/users.service"
 
-function useUserForm(
-	handleSuccess: () => void,
-	handleError: (e: IAppError) => void,
-) {
+function useUserForm(user: IUser | undefined) {
 	// context
-	const { user, setUser } = useUserContext()
+	const { setUser } = useUserContext()
+	const { success, error, handleSuccess, handleError } = useStatus()
+
 	// construct initial form data
-	// in base user format (without galleries and company)
-	const initialFormData: IBaseUser = user
-		? {
-				user_id: user.user_id,
-				user_name: user.user_name,
-				email: user.email,
-				img_URL: user.img_URL,
-				created_at: user.created_at,
-				updated_at: new Date(),
-		  }
-		: initialUserData
+	const initialFormData: IBaseUser = {
+		user_id: user?.user_id || 0,
+		user_name: user?.user_name || "",
+		email: user?.email || "",
+		img_URL: user?.img_URL || "",
+		created_at: user?.created_at || new Date(),
+		updated_at: new Date(),
+	}
 
 	// state
 	const [formData, setFormData] = useState<IBaseUser>(initialFormData)
@@ -40,17 +36,15 @@ function useUserForm(
 	async function onSubmit(e: SyntheticEvent) {
 		e.preventDefault()
 		// call API
-		const response: IApiResponse = user?.company
-			? await updateUser(formData)
-			: await createUser(formData)
+		const response: IApiResponse = await updateUser(formData)
+
 		if (response.data) {
 			// update context
-			if (user)
-				setUser({
-					...response.data,
-					company: user.company,
-					galleries: user.galleries,
-				})
+			setUser({
+				...response.data,
+				company: user?.company,
+				galleries: user?.galleries,
+			})
 			// useStatus
 			handleSuccess()
 		}
@@ -60,7 +54,15 @@ function useUserForm(
 		}
 	}
 
-	return { formData, setFormData, onChange, onReset, onSubmit }
+	return {
+		formData,
+		setFormData,
+		onChange,
+		onReset,
+		onSubmit,
+		success,
+		error,
+	}
 }
 
 export { useUserForm }

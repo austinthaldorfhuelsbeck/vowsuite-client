@@ -60,58 +60,70 @@ function useCompanyForm(company?: ICompany) {
 			  },
 	)
 	const useLink0 = useUrlForm(
-		company?.urls[0] || {
-			company_url_id: id,
-			company_id: company?.company_id || id,
-			label: "Website",
-			target: "",
-			...dates,
-		},
+		company?.urls
+			? company.urls[0]
+			: {
+					company_url_id: id,
+					company_id: company?.company_id || id,
+					label: "Website",
+					target: "",
+					...dates,
+			  },
 	)
 	const useLink1 = useUrlForm(
-		company?.urls[1] || {
-			company_url_id: id + 1,
-			company_id: company?.company_id || id,
-			label: "Facebook",
-			target: "",
-			...dates,
-		},
+		company?.urls
+			? company.urls[1]
+			: {
+					company_url_id: id + 1,
+					company_id: company?.company_id || id,
+					label: "Facebook",
+					target: "",
+					...dates,
+			  },
 	)
 	const useLink2 = useUrlForm(
-		company?.urls[2] || {
-			company_url_id: id + 2,
-			company_id: company?.company_id || id,
-			label: "Instagram",
-			target: "",
-			...dates,
-		},
+		company?.urls
+			? company.urls[2]
+			: {
+					company_url_id: id + 2,
+					company_id: company?.company_id || id,
+					label: "Instagram",
+					target: "",
+					...dates,
+			  },
 	)
 	const useLink3 = useUrlForm(
-		company?.urls[3] || {
-			company_url_id: id + 3,
-			company_id: company?.company_id || id,
-			label: "YouTube",
-			target: "",
-			...dates,
-		},
+		company?.urls
+			? company.urls[3]
+			: {
+					company_url_id: id + 3,
+					company_id: company?.company_id || id,
+					label: "YouTube",
+					target: "",
+					...dates,
+			  },
 	)
 	const useLink4 = useUrlForm(
-		company?.urls[4] || {
-			company_url_id: id + 4,
-			company_id: company?.company_id || id,
-			label: "Vimeo",
-			target: "",
-			...dates,
-		},
+		company?.urls
+			? company.urls[4]
+			: {
+					company_url_id: id + 4,
+					company_id: company?.company_id || id,
+					label: "Vimeo",
+					target: "",
+					...dates,
+			  },
 	)
 	const useLink5 = useUrlForm(
-		company?.urls[5] || {
-			company_url_id: id + 5,
-			company_id: company?.company_id || id,
-			label: "TikTok",
-			target: "",
-			...dates,
-		},
+		company?.urls
+			? company.urls[5]
+			: {
+					company_url_id: id + 5,
+					company_id: company?.company_id || id,
+					label: "TikTok",
+					target: "",
+					...dates,
+			  },
 	)
 
 	// Handlers

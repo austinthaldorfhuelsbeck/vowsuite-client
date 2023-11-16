@@ -171,7 +171,7 @@ function Dashboard() {
 
 	return user ? (
 		<DashboardContainer>
-			<Debugger />
+			{/* <Debugger /> */}
 			{gallery === undefined ? (
 				<UserDashboard user={user} />
 			) : (
